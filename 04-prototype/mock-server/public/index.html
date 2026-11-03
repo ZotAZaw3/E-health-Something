@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prototype E-Health An Tâm</title>
+<style>
+  :root { --bg:#f5f6f8; --card:#fff; --ink:#1d2430; --muted:#5d6878; --line:#dde2e8; --pri:#0f6e8c; --pri-ink:#fff;
+          --ok:#1d7a46; --ok-bg:#e6f4ec; --warn:#8a5a00; --warn-bg:#fff4dc; --bad:#a32020; --bad-bg:#fdeaea; --flag:#7a2fa0; --flag-bg:#f3e9fa; }
+  * { box-sizing:border-box } body { margin:0; font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; background:var(--bg); color:var(--ink) }
+  header { background:var(--pri); color:var(--pri-ink); padding:12px 16px; display:flex; gap:12px; align-items:center; flex-wrap:wrap }
+  header h1 { font-size:17px; margin:0 12px 0 0 } header select { font:inherit; padding:4px 6px; border-radius:6px; border:0 }
+  header .who { margin-left:auto; font-size:13px; opacity:.9 }
+  nav { display:flex; gap:4px; padding:8px 16px 0; flex-wrap:wrap; border-bottom:1px solid var(--line); background:#fff }
+  nav button { border:0; background:none; padding:8px 12px; font:inherit; color:var(--muted); border-bottom:3px solid transparent; cursor:pointer }
+  nav button.on { color:var(--pri); border-color:var(--pri); font-weight:600 }
+  main { max-width:1100px; margin:0 auto; padding:16px; display:grid; gap:16px }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:16px }
+  .card h2 { font-size:16px; margin:0 0 4px } .card .sub { color:var(--muted); font-size:13px; margin:0 0 12px }
+  .row { display:flex; gap:8px; flex-wrap:wrap; align-items:center } label { font-size:13px; color:var(--muted) }
+  input, select, textarea { font:inherit; padding:7px 9px; border:1px solid var(--line); border-radius:6px; background:#fff; color:var(--ink) }
+  button.b { font:inherit; padding:7px 14px; border-radius:6px; border:1px solid var(--pri); background:var(--pri); color:#fff; cursor:pointer }
+  button.g { background:#fff; color:var(--pri) } button.r { background:var(--bad); border-color:var(--bad) }
+  table { width:100%; border-collapse:collapse; font-size:14px } th, td { text-align:left; padding:6px 8px; border-bottom:1px solid var(--line); vertical-align:top } th { color:var(--muted); font-weight:600 }
+  .pill { display:inline-block; padding:1px 8px; border-radius:999px; font-size:12px; font-weight:600 }
+  .ok { background:var(--ok-bg); color:var(--ok) } .warn { background:var(--warn-bg); color:var(--warn) } .bad { background:var(--bad-bg); color:var(--bad) } .flag { background:var(--flag-bg); color:var(--flag) }
+  .msg { padding:10px 12px; border-radius:8px; margin-top:10px; font-size:14px } .msg > b:first-child { display:block; margin-bottom:2px }
+  .slots { display:flex; gap:8px; flex-wrap:wrap } .slot { padding:8px 12px; border:1px solid var(--line); border-radius:8px; background:#fff; cursor:pointer; font:inherit }
+  .slot.sel { border-color:var(--pri); background:#e7f3f7 } .slot:disabled { opacity:.4; cursor:not-allowed }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:16px } @media (max-width:760px){ .grid2 { grid-template-columns:1fr } }
+  .trace { font:12px/1.4 ui-monospace,Menlo,Consolas,monospace; background:#0f1720; color:#cfe3ef; padding:10px; border-radius:8px; max-height:220px; overflow:auto; white-space:pre-wrap }
+  .hash { font:11px ui-monospace,monospace; color:var(--muted) } .hidden { display:none }
+</style>
+</head>
+<body>
+<header>
+  <h1>Phòng khám Đa khoa An Tâm · Prototype</h1>
+  <label style="color:#fff">Đăng nhập với vai trò</label>
+  <select id="who">
+    <option value="tok-bn-p001">Bệnh nhân P001 (Nguyễn Văn Hùng)</option>
+    <option value="tok-letan-cs1">Lễ tân CS1</option>
+    <option value="tok-bs-an">BS Trần An (phụ trách)</option>
+    <option value="tok-bs-binh">BS Lê Bình (không phụ trách)</option>
+    <option value="tok-ds-nt01">Dược sĩ NT-01 (đối tác)</option>
+    <option value="tok-ds-nbcs1">Dược sĩ nhà thuốc nội bộ CS1</option>
+    <option value="tok-dpo">DPO / Quản trị bảo mật</option>
+  </select>
+  <span class="who">Mock: không có MFA thật · dữ liệu giả lập</span>
+</header>
+<nav id="tabs"></nav>
+<main id="main"></main>
+<main><div class="card"><h2>Nhật ký gọi API</h2><p class="sub">Mỗi thao tác gọi đúng endpoint trong openapi.yaml (để chụp làm "API trace" cho báo cáo).</p><div class="trace" id="trace"></div></div></main>
+
+<script>
+const $ = (s, el = document) => el.querySelector(s);
+const esc = (v) => String(v ?? '').replace(/[&<>"]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c]));
+const state = { slot: null, qr: null, enc: null, rx: null, rxCode: null };
+const pill = (st) => { const m = { ISSUED:'ok', DISPENSED:'ok', PARTIALLY_DISPENSED:'warn', DRAFT:'warn', REVOKED:'bad', SUPERSEDED:'bad', PERMIT:'ok', DENY:'bad', WAITING:'warn', IN_PROGRESS:'ok', BOOKED:'ok', CHECKED_IN:'ok' }; return `<span class="pill ${m[st] || 'warn'}">${esc(st)}</span>`; };
+async function api(method, path, body, headers = {}) {
+  const r = await fetch(path, { method, headers: { 'Authorization': 'Bearer ' + $('#who').value, 'Content-Type': 'application/json', ...headers }, body: body ? JSON.stringify(body) : undefined });
+  const data = await r.json().catch(() => ({}));
+  $('#trace').textContent = `${method} ${path}  [${$('#who').value}]  → HTTP ${r.status}\n${JSON.stringify(data).slice(0, 400)}\n\n` + $('#trace').textContent;
+  return { status: r.status, data };
+}
+const box = (kind, title, text) => `<div class="msg ${kind}"><b>${esc(title)}</b>${text}</div>`;
+
+const screens = {
+  'S1 Đặt lịch': { roles: ['tok-bn-p001', 'tok-letan-cs1'], render: async (el) => {
+    const { data } = await api('GET', '/slots?specialty=NOI');
+    el.innerHTML = `<div class="card"><h2>S1 · Đặt lịch khám (BP-01, AS-BookAppointment)</h2><p class="sub">Chuyên khoa Nội · CS1 Cầu Giấy · Thứ Năm 05/11/2026</p>
+      <div class="slots">${data.map(s => `<button class="slot" data-id="${s.slotId}" ${s.available ? '' : 'disabled'}>${s.start.slice(11, 16)}<br><small>${esc(s.practitionerName)}</small></button>`).join('')}</div>
+      <div class="row" style="margin-top:12px"><input id="reason" placeholder="Lý do khám" value="Ho, sốt 3 ngày" style="flex:1;min-width:200px">
+      ${$('#who').value === 'tok-letan-cs1' ? '<input id="pid" value="P002" style="width:90px" title="Mã BN (lễ tân đặt hộ)">' : ''}
+      <button class="b" id="book">Xác nhận đặt lịch</button></div><div id="out"></div></div>`;
+    el.querySelectorAll('.slot').forEach(b => b.onclick = () => { el.querySelectorAll('.slot').forEach(x => x.classList.remove('sel')); b.classList.add('sel'); state.slot = b.dataset.id; });
+    $('#book', el).onclick = async () => {
+      const r = await api('POST', '/appointments', { slotId: state.slot, reason: $('#reason', el).value, patientId: $('#pid', el)?.value });
+      if (r.status === 201) { state.qr = r.data.checkInCode; $('#out', el).innerHTML = box('ok', 'Đã đặt lịch ' + r.data.appointmentId, `Mã check-in: <b>${esc(r.data.checkInCode)}</b> (QR gửi qua SMS tới ${esc(r.data.notification.to)}). Đến trước giờ hẹn 15 phút, mang CCCD.`); }
+      else $('#out', el).innerHTML = box('bad', r.data.title || 'Lỗi', esc(r.data.detail) + (r.data.alternatives ? `<br>Gợi ý: ${r.data.alternatives.join(', ')}` : ''));
+    }; } },
+
+  'S2 Tiếp đón': { roles: ['tok-letan-cs1'], render: async (el) => {
+    el.innerHTML = `<div class="card"><h2>S2 · Check-in (BP-02, AS-CheckIn + AS-VerifyInsurance)</h2><p class="sub">Quét QR lịch hẹn, đặt CCCD lên đầu đọc (DV-IdCardReader). Hệ thống tự kiểm tra thẻ BHYT (mock).</p>
+      <div class="row"><label>Mã QR</label><input id="qr" value="${esc(state.qr || 'QR-APT-0001')}"><label>CCCD (chip)</label><input id="idn" value="001085012345"><button class="b" id="ci">Check-in</button></div><div id="out"></div></div>
+      <div class="card"><h2>Hàng chờ hôm nay</h2><div id="q"></div></div>`;
+    const loadQ = async () => { const { data } = await api('GET', '/encounters'); $('#q', el).innerHTML = `<table><tr><th>STT</th><th>Lượt khám</th><th>Bệnh nhân</th><th>Bác sĩ</th><th>BHYT</th><th>Trạng thái</th></tr>${data.map(e => `<tr><td>${e.queueNumber}</td><td>${e.encounterId}</td><td>${esc(e.patientName)}</td><td>${e.practitionerId}</td><td>${e.insurance.verified ? pill('PERMIT').replace('PERMIT', 'Hợp lệ') : ''}</td><td>${pill(e.status)}</td></tr>`).join('') || '<tr><td colspan=6>Chưa có</td></tr>'}</table>`; };
+    $('#ci', el).onclick = async () => { const r = await api('POST', '/encounters', { checkInCode: $('#qr', el).value, idNumber: $('#idn', el).value });
+      $('#out', el).innerHTML = r.status === 201 ? box('ok', `Đã mở lượt khám ${r.data.encounterId} · số thứ tự ${r.data.queueNumber}`, `Phân cho ${esc(r.data.practitionerId)}, BHYT ${esc(r.data.insurance.cardNumber)} đã xác minh.`) : box('bad', r.data.title, esc(r.data.detail));
+      if (r.status === 201) state.enc = r.data.encounterId; loadQ(); };
+    loadQ(); } },
+
+  'S3 Khám & kê đơn': { roles: ['tok-bs-an', 'tok-bs-binh'], render: async (el) => {
+    const { data: q } = await api('GET', '/encounters');
+    el.innerHTML = `<div class="grid2"><div class="card"><h2>S3a · Hàng chờ của tôi</h2><p class="sub">Bác sĩ chỉ thấy bệnh nhân được phân cho mình (POL-01).</p>
+      <table><tr><th>STT</th><th>Bệnh nhân</th><th></th></tr>${q.map(e => `<tr><td>${e.queueNumber}</td><td>${esc(e.patientName)}<br><small>${e.encounterId}</small></td><td><button class="b g" data-p="${e.patientId}" data-e="${e.encounterId}">Mở hồ sơ</button></td></tr>`).join('') || '<tr><td colspan=3>Không có bệnh nhân nào được phân cho bạn</td></tr>'}</table>
+      <div class="row" style="margin-top:12px"><label>Mở hồ sơ theo mã BN</label><input id="pid" value="P001" style="width:80px"><button class="b g" id="open">Mở</button></div></div>
+      <div class="card" id="rec"><h2>S3b · Hồ sơ bệnh nhân</h2><p class="sub">Chọn bệnh nhân ở bên trái.</p></div></div>
+      <div class="card ${q.length ? '' : 'hidden'}" id="rxc"><h2>S3c · Kê đơn điện tử (BP-04, AS-IssuePrescription + AS-CheckDrugSafety)</h2><p class="sub">Kiểm tra dị ứng/tương tác chạy khi lưu đơn; đơn chỉ có hiệu lực sau khi ký số.</p>
+      <div class="row"><label>Chẩn đoán</label><input id="dx" value="J20.9 Viêm phế quản cấp" style="flex:1"></div>
+      <table id="items"><tr><th>Thuốc</th><th>Liều dùng</th><th>SL</th></tr>
+        <tr><td><select class="dc"><option value="AMOX500">Amoxicillin 500mg</option><option value="CEFU500">Cefuroxim 500mg</option><option value="LORA10">Loratadin 10mg</option><option value="DIAZ5">Diazepam 5mg (kiểm soát)</option></select></td><td><input class="ds" value="1 viên x 2 lần/ngày, 7 ngày"></td><td><input class="qt" type="number" value="14" style="width:70px"></td></tr>
+        <tr><td><select class="dc"><option value="PARA500">Paracetamol 500mg</option></select></td><td><input class="ds" value="1 viên khi sốt > 38.5°C"></td><td><input class="qt" type="number" value="10" style="width:70px"></td></tr></table>
+      <div class="row" style="margin-top:10px"><button class="b" id="save">Lưu & kiểm tra an toàn</button><button class="b hidden" id="sign">Ký số & phát hành</button></div><div id="rxout"></div></div>`;
+    const openRec = async (pid, enc) => { if (enc) state.enc = enc; const r = await api('GET', `/patients/${pid}/records`); const c = $('#rec', el);
+      if (r.status === 403) { c.innerHTML = `<h2>S6 · Truy cập bị từ chối</h2>${box('bad', 'Bạn không có quan hệ điều trị với bệnh nhân ' + esc(pid), `Chính sách ${esc(r.data.policyId)}: ${esc(r.data.detail)}. Lần truy cập này <b>đã được ghi nhật ký</b>.`)}
+          ${r.data.breakGlassAllowed ? `<div class="msg flag"><b>Truy cập khẩn cấp (break-glass)</b>Chỉ dùng khi có nguy cơ cho người bệnh. Quyền xem 4 giờ, không được kê đơn, DPO sẽ rà soát trong 24 giờ.<textarea id="bgr" rows="2" style="width:100%;margin:8px 0" placeholder="Lý do (bắt buộc, ≥ 10 ký tự)"></textarea><button class="b r" id="bg">Xác nhận truy cập khẩn cấp</button></div>` : ''}`;
+        $('#bg', c) && ($('#bg', c).onclick = async () => { const g = await api('POST', '/access/break-glass', { patientId: pid, reason: $('#bgr', c).value }); if (g.status === 201) openRec(pid); else alert(g.data.detail); }); return; }
+      const d = r.data; c.innerHTML = `<h2>S3b · ${esc(d.fullName)} (${d.birthYear}) ${d.access.breakGlass ? '<span class="pill flag">BREAK-GLASS</span>' : ''}</h2><p class="sub">Quyền truy cập: ${esc(d.access.policyId)}</p>
+        ${d.allergies.map(a => `<div class="msg bad"><b>Dị ứng: ${esc(a.substanceClass)}</b>${esc(a.note)}</div>`).join('')}
+        <h3 style="font-size:14px">Tiền sử</h3><table>${d.history.map(h => `<tr><td>${h.date}</td><td>${h.icd10}</td><td>${esc(h.text)}</td></tr>`).join('')}</table>
+        <h3 style="font-size:14px">Đơn thuốc</h3><table>${d.prescriptions.map(p => `<tr><td>${p.prescriptionId}</td><td>${esc(p.rxCode || '')}</td><td>${pill(p.status)}</td></tr>`).join('') || '<tr><td>Chưa có</td></tr>'}</table>`; };
+    el.querySelectorAll('[data-p]').forEach(b => b.onclick = () => openRec(b.dataset.p, b.dataset.e));
+    $('#open', el).onclick = () => openRec($('#pid', el).value);
+    $('#save', el).onclick = async () => { const [icd10, ...t] = $('#dx', el).value.split(' ');
+      const items = [...el.querySelectorAll('#items tr')].slice(1).map(tr => ({ drugCode: $('.dc', tr).value, dosage: $('.ds', tr).value, quantity: +$('.qt', tr).value }));
+      const r = await api('POST', '/prescriptions', { encounterId: state.enc || q[0]?.encounterId, diagnosis: { icd10, text: t.join(' ') }, items });
+      if (r.status === 201) { state.rx = r.data.prescriptionId; $('#rxout', el).innerHTML = box('ok', `Đơn nháp ${r.data.prescriptionId} đạt kiểm tra an toàn`, 'Bấm "Ký số & phát hành" để gửi đơn.'); $('#sign', el).classList.remove('hidden'); }
+      else $('#rxout', el).innerHTML = box(r.status === 422 && r.data.alerts ? 'bad' : 'bad', r.data.title, (r.data.alerts || []).map(a => `⚠ ${esc(a.message)}`).join('<br>') || esc(r.data.detail)); };
+    $('#sign', el).onclick = async () => { const r = await api('POST', `/prescriptions/${state.rx}/issue`);
+      if (r.status === 200) { state.rxCode = r.data.rxCode; $('#rxout', el).innerHTML = box('ok', `Đã phát hành đơn ${r.data.rxCode}`, `Ký số bởi ${esc(r.data.signature.signedBy)} (${esc(r.data.signature.provider)}). Liên thông đơn thuốc quốc gia: ${esc(r.data.nationalRx.status)}. SMS mã đơn đã gửi BN.`); $('#sign', el).classList.add('hidden'); }
+      else $('#rxout', el).innerHTML = box('bad', r.data.title, esc(r.data.detail)); };
+    if (q[0]) openRec(q[0].patientId, q[0].encounterId); } },
+
+  'S4 Nhà thuốc': { roles: ['tok-ds-nt01', 'tok-ds-nbcs1'], render: async (el) => {
+    el.innerHTML = `<div class="card"><h2>S4 · Nhận đơn & cấp thuốc (BP-05, AS-ReceivePrescription + AS-RecordDispense)</h2><p class="sub">Dược sĩ nhập mã đơn trên SMS/QR và 4 số cuối điện thoại bệnh nhân (POL-04). Chỉ thấy dữ liệu tối thiểu, không thấy chẩn đoán.</p>
+      <div class="row"><label>Mã đơn</label><input id="code" value="${esc(state.rxCode || '')}" placeholder="CS1…"><label>4 số cuối SĐT</label><input id="ver" value="5678" style="width:80px"><button class="b" id="find">Tra cứu</button></div><div id="out"></div></div>`;
+    $('#find', el).onclick = async () => { const r = await api('GET', `/pharmacy/prescriptions/${encodeURIComponent($('#code', el).value)}?verifier=${$('#ver', el).value}`); const o = $('#out', el);
+      if (r.status !== 200) { o.innerHTML = box('bad', r.data.title, esc(r.data.detail)); return; }
+      const d = r.data; o.innerHTML = `<div class="msg ${d.dispensable ? 'ok' : 'bad'}"><b>Đơn ${esc(d.rxCode)} · v${d.version} · ${esc(d.status)}</b>${esc(d.patient.fullName)} (${d.patient.birthYear}) · BS kê: ${esc(d.prescriber)} · Chữ ký: ${d.signatureValid ? 'hợp lệ' : 'KHÔNG hợp lệ'} ${d.note ? '<br>' + esc(d.note) : ''}</div>
+        <table><tr><th>Dòng</th><th>Thuốc</th><th>Liều</th><th>Kê</th><th>Đã cấp</th><th>Cấp lần này</th></tr>${d.items.map(i => `<tr><td>${i.itemId}</td><td>${esc(i.drugName)} ${i.controlled ? '<span class="pill bad">Kiểm soát</span>' : ''}</td><td>${esc(i.dosage)}</td><td>${i.quantity}</td><td>${i.dispensedQty}</td><td><input type="number" data-i="${i.itemId}" value="${i.quantity - i.dispensedQty}" style="width:70px" ${d.dispensable ? '' : 'disabled'}></td></tr>`).join('')}</table>
+        <div class="row" style="margin-top:10px"><button class="b" id="disp" ${d.dispensable ? '' : 'disabled'}>Xác nhận đã cấp</button><span class="hash" id="key"></span></div><div id="dout"></div>`;
+      const key = ($('#who').value === 'tok-ds-nt01' ? 'NT01-' : 'NBCS1-') + Date.now(); $('#key', o).textContent = 'Idempotency-Key: ' + key;
+      $('#disp', o).onclick = async () => { const items = [...o.querySelectorAll('[data-i]')].map(i => ({ itemId: i.dataset.i, quantity: +i.value })).filter(i => i.quantity > 0);
+        const x = await api('POST', '/pharmacy/dispenses', { rxCode: d.rxCode, items }, { 'Idempotency-Key': key });
+        $('#dout', o).innerHTML = (x.status === 201 || x.status === 200) ? box('ok', x.data.idempotentReplay ? 'Đã ghi nhận trước đó (gửi lại cùng khóa, không tạo bản ghi mới)' : `Đã ghi nhận ${x.data.dispenseId}`, `Trạng thái đơn: ${esc(x.data.prescriptionStatus)}. Bệnh nhân nhận SMS xác nhận.`) : box('bad', x.data.title, esc(x.data.detail)); }; }; } },
+
+  'S5 Nhật ký truy cập': { roles: ['tok-dpo', 'tok-bn-p001'], render: async (el) => {
+    const isBN = $('#who').value === 'tok-bn-p001';
+    el.innerHTML = `<div class="card"><h2>S5 · ${isBN ? 'Ai đã xem hồ sơ của tôi' : 'Nhật ký truy cập & kiểm chứng (BF-01, AS-QueryAudit)'}</h2><p class="sub">${isBN ? 'Bệnh nhân xem được mọi lần truy cập hồ sơ của mình.' : 'Chỉ DPO được xem. Việc xem nhật ký cũng được ghi nhật ký.'}</p>
+      <div class="row">${isBN ? '' : '<label>Bệnh nhân</label><input id="pr" value="P001" style="width:80px"><select id="dec"><option value="">Tất cả</option><option>DENY</option><option>PERMIT</option></select>'}<button class="b g" id="load">Tải</button>${isBN ? '' : '<button class="b" id="ver">Kiểm chứng chuỗi băm</button><button class="b r" id="tam" title="Chỉ có trong mock">Giả lập sửa 1 bản ghi</button>'}</div><div id="vout"></div><div id="list" style="margin-top:10px"></div></div>`;
+    const load = async () => { const qs = isBN ? '' : `?patientRef=${$('#pr', el).value}${$('#dec', el).value ? '&decision=' + $('#dec', el).value : ''}`; const { data } = await api('GET', '/audit-events' + qs);
+      $('#list', el).innerHTML = `<table><tr><th>Thời điểm</th><th>Người</th><th>Hành động</th><th>Đối tượng</th><th>Quyết định</th><th>Băm</th></tr>${data.items.slice().reverse().map(e => `<tr><td>${e.ts.slice(11, 19)}</td><td>${esc(e.actor?.userId)}<br><small>${esc(e.actor?.role)}</small></td><td>${esc(e.action)} ${e.breakGlass ? '<span class="pill flag">BREAK-GLASS</span>' : ''}${e.reason ? `<br><small>${esc(e.reason)}</small>` : ''}</td><td>${esc(e.resource?.type)} ${esc(e.resource?.id || '')}</td><td>${pill(e.decision?.result)} <small>${esc(e.decision?.policyId)}</small></td><td class="hash">${e.hash.slice(0, 10)}…</td></tr>`).join('')}</table>`; };
+    $('#load', el).onclick = load;
+    if (!isBN) { $('#ver', el).onclick = async () => { const { data } = await api('GET', '/audit-events/verify'); $('#vout', el).innerHTML = data.valid ? box('ok', `Chuỗi hợp lệ · ${data.checked} bản ghi`, `Băm cuối: <span class="hash">${data.lastHash}</span>`) : box('bad', `PHÁT HIỆN SỬA ĐỔI tại bản ghi #${data.firstBrokenIndex}`, `eventId ${esc(data.firstBrokenEventId)} · đã kiểm ${data.checked} bản ghi`); };
+      $('#tam', el).onclick = async () => { await api('POST', '/_demo/tamper', { index: 1 }); $('#vout', el).innerHTML = box('warn', 'Đã giả lập kẻ xấu sửa bản ghi #1', 'Bấm "Kiểm chứng chuỗi băm" để thấy hệ thống phát hiện.'); }; }
+    load(); } },
+};
+
+function renderTabs() {
+  const tok = $('#who').value; const nav = $('#tabs'); nav.innerHTML = '';
+  const names = Object.keys(screens).filter(n => screens[n].roles.includes(tok));
+  names.forEach((n, i) => { const b = document.createElement('button'); b.textContent = n; b.onclick = () => { nav.querySelectorAll('button').forEach(x => x.classList.remove('on')); b.classList.add('on'); screens[n].render($('#main')); }; nav.appendChild(b); if (i === 0) b.click(); });
+}
+$('#who').onchange = renderTabs; renderTabs();
+</script>
+</body>
+</html>

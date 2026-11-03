@@ -1,0 +1,1145 @@
+
+================ LUỒNG CHÍNH (E2E) — BP-01 → BP-05 ================
+
+================ 1. BN P001 xem khung giờ và đặt lịch (AS-BookAppointment, FR-01) ================
+
+$ GET /slots?specialty=NOI  [token: tok-bn-p001]
+[
+  {
+    "slotId": "S-20261105-AN-1",
+    "practitionerId": "bs-an",
+    "practitionerName": "BS Trần An",
+    "specialty": "NOI",
+    "facility": "CS1",
+    "start": "2026-11-05T08:00:00+07:00",
+    "available": true
+  },
+  {
+    "slotId": "S-20261105-AN-2",
+    "practitionerId": "bs-an",
+    "practitionerName": "BS Trần An",
+    "specialty": "NOI",
+    "facility": "CS1",
+    "start": "2026-11-05T08:15:00+07:00",
+    "available": true
+  },
+  {
+    "slotId": "S-20261105-AN-3",
+    "practitionerId": "bs-an",
+    "practitionerName": "BS Trần An",
+    "specialty": "NOI",
+    "facility": "CS1",
+    "start": "2026-11-05T08:30:00+07:00",
+    "available": true
+  },
+  {
+    "slotId": "S-20261105-AN-4",
+    "practitionerId": "bs-an",
+    "practitionerName": "BS Trần An",
+    "specialty": "NOI",
+    "facility": "CS1",
+    "start": "2026-11-05T08:45:00+07:00",
+    "available": true
+  },
+  {
+    "slotId": "S-20261105-AN-5",
+    "practitionerId": "bs-an",
+    "practitionerName": "BS Trần An",
+    "specialty": "NOI",
+    "facility": "CS1",
+    "start": "2026-11-05T09:00:00+07:00",
+    "available": true
+  }
+]
+<<HTTP 200>>
+
+$ POST /appointments  [token: tok-bn-p001]  body: {"slotId":"S-20261105-AN-1","reason":"Ho, sốt 3 ngày"}
+{
+  "appointmentId": "APT-0001",
+  "patientId": "P001",
+  "slotId": "S-20261105-AN-1",
+  "practitionerId": "bs-an",
+  "facility": "CS1",
+  "start": "2026-11-05T08:00:00+07:00",
+  "reason": "Ho, sốt 3 ngày",
+  "status": "BOOKED",
+  "checkInCode": "QR-APT-0001",
+  "notification": {
+    "channel": "SMS",
+    "to": "*******678",
+    "status": "QUEUED"
+  }
+}
+<<HTTP 201>>
+
+================ 1b. Ngoại lệ phụ: người khác đặt trùng khung giờ → 409 + gợi ý ================
+
+$ POST /appointments  [token: tok-letan-cs1]  body: {"slotId":"S-20261105-AN-1","patientId":"P002"}
+{
+  "type": "https://ehealth.example/errors/409",
+  "title": "Khung giờ đã có người đặt",
+  "status": 409,
+  "detail": "Vui lòng chọn khung giờ khác",
+  "alternatives": [
+    "S-20261105-AN-2",
+    "S-20261105-AN-3",
+    "S-20261105-AN-4"
+  ]
+}
+<<HTTP 409>>
+
+================ 1c. BN P002 đặt khung 08:15 rồi đổi sang 08:30 (FR-02, khung cũ được giải phóng) ================
+
+$ POST /appointments  [token: tok-letan-cs1]  body: {"slotId":"S-20261105-AN-2","patientId":"P002"}
+{
+  "appointmentId": "APT-0002",
+  "patientId": "P002",
+  "slotId": "S-20261105-AN-2",
+  "practitionerId": "bs-an",
+  "facility": "CS1",
+  "start": "2026-11-05T08:15:00+07:00",
+  "reason": null,
+  "status": "BOOKED",
+  "checkInCode": "QR-APT-0002",
+  "notification": {
+    "channel": "SMS",
+    "to": "*******321",
+    "status": "QUEUED"
+  }
+}
+<<HTTP 201>>
+
+$ PATCH /appointments/APT-0002  [token: tok-letan-cs1]  body: {"action":"RESCHEDULE","newSlotId":"S-20261105-AN-3"}
+{
+  "appointmentId": "APT-0002",
+  "patientId": "P002",
+  "slotId": "S-20261105-AN-3",
+  "practitionerId": "bs-an",
+  "facility": "CS1",
+  "start": "2026-11-05T08:30:00+07:00",
+  "reason": null,
+  "status": "BOOKED",
+  "checkInCode": "QR-APT-0002",
+  "notification": {
+    "channel": "SMS",
+    "status": "QUEUED"
+  }
+}
+<<HTTP 200>>
+
+================ 2. Lễ tân check-in bằng QR + CCCD (AS-CheckIn, AS-VerifyInsurance, FR-03) ================
+
+$ POST /encounters  [token: tok-letan-cs1]  body: {"checkInCode":"QR-APT-0001","idNumber":"001085012345"}
+{
+  "encounterId": "ENC-0003",
+  "patientId": "P001",
+  "appointmentId": "APT-0001",
+  "practitionerId": "bs-an",
+  "facility": "CS1",
+  "status": "WAITING",
+  "queueNumber": 1,
+  "openedAt": "2026-11-03T10:43:13.852Z",
+  "insurance": {
+    "cardNumber": "DN4010123456789",
+    "verified": true,
+    "source": "EXT-InsurancePortal (mock)"
+  }
+}
+<<HTTP 201>>
+
+================ 3. BS An (được phân công) xem hàng chờ và hồ sơ (AS-ViewMedicalRecord, POL-01 PERMIT) ================
+
+$ GET /encounters  [token: tok-bs-an]
+[
+  {
+    "encounterId": "ENC-0003",
+    "patientId": "P001",
+    "appointmentId": "APT-0001",
+    "practitionerId": "bs-an",
+    "facility": "CS1",
+    "status": "WAITING",
+    "queueNumber": 1,
+    "openedAt": "2026-11-03T10:43:13.852Z",
+    "insurance": {
+      "cardNumber": "DN4010123456789",
+      "verified": true,
+      "source": "EXT-InsurancePortal (mock)"
+    },
+    "patientName": "Nguyễn Văn Hùng"
+  }
+]
+<<HTTP 200>>
+
+$ GET /patients/P001/records  [token: tok-bs-an]
+{
+  "patientId": "P001",
+  "fullName": "Nguyễn Văn Hùng",
+  "birthYear": 1985,
+  "allergies": [
+    {
+      "substanceClass": "PENICILLIN",
+      "note": "Phát ban 2019"
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-06-10",
+      "icd10": "J02.9",
+      "text": "Viêm họng cấp"
+    }
+  ],
+  "prescriptions": [],
+  "access": {
+    "policyId": "POL-01",
+    "breakGlass": false
+  }
+}
+<<HTTP 200>>
+
+================ 4. BS An kê Amoxicillin → hệ thống chặn vì dị ứng penicillin (AS-CheckDrugSafety, FR-05) ================
+
+$ POST /prescriptions  [token: tok-bs-an]  body: {"encounterId":"ENC-0003","diagnosis":{"icd10":"J20.9","text":"Viêm phế quản cấp"},"items":[{"drugCode":"AMOX500","dosage":"1 viên x 2 lần/ngày","quantity":14},{"drugCode":"PARA500","dosage":"khi sốt","quantity":10}]}
+{
+  "type": "https://ehealth.example/errors/422",
+  "title": "Cảnh báo an toàn thuốc",
+  "status": 422,
+  "detail": "Đơn có cảnh báo mức cao; sửa đơn hoặc ghi lý do bỏ qua (overrideReason)",
+  "alerts": [
+    {
+      "severity": "HIGH",
+      "type": "ALLERGY",
+      "itemId": "L1",
+      "message": "Amoxicillin 500mg thuộc nhóm PENICILLIN, BN có tiền sử dị ứng (Phát ban 2019)"
+    }
+  ]
+}
+<<HTTP 422>>
+
+================ 5. BS An đổi sang Cefuroxim → đơn nháp, rồi ký số và phát hành (FR-05, FR-06, CON-03) ================
+
+$ POST /prescriptions  [token: tok-bs-an]  body: {"encounterId":"ENC-0003","diagnosis":{"icd10":"J20.9","text":"Viêm phế quản cấp"},"items":[{"drugCode":"CEFU500","dosage":"1 viên x 2 lần/ngày, 7 ngày","quantity":14},{"drugCode":"PARA500","dosage":"khi sốt","quantity":10}]}
+{
+  "prescriptionId": "RX-0004",
+  "version": 1,
+  "encounterId": "ENC-0003",
+  "patientId": "P001",
+  "practitionerId": "bs-an",
+  "facility": "CS1",
+  "diagnosis": {
+    "icd10": "J20.9",
+    "text": "Viêm phế quản cấp"
+  },
+  "items": [
+    {
+      "itemId": "L1",
+      "drugCode": "CEFU500",
+      "drugName": "Cefuroxim 500mg",
+      "dosage": "1 viên x 2 lần/ngày, 7 ngày",
+      "quantity": 14,
+      "dispensedQty": 0,
+      "controlled": false
+    },
+    {
+      "itemId": "L2",
+      "drugCode": "PARA500",
+      "drugName": "Paracetamol 500mg",
+      "dosage": "khi sốt",
+      "quantity": 10,
+      "dispensedQty": 0,
+      "controlled": false
+    }
+  ],
+  "status": "DRAFT",
+  "safetyCheck": {
+    "alerts": [],
+    "overrideReason": null
+  }
+}
+<<HTTP 201>>
+
+$ POST /prescriptions/RX-0004/issue  [token: tok-bs-an]
+{
+  "prescriptionId": "RX-0004",
+  "version": 1,
+  "encounterId": "ENC-0003",
+  "patientId": "P001",
+  "practitionerId": "bs-an",
+  "facility": "CS1",
+  "diagnosis": {
+    "icd10": "J20.9",
+    "text": "Viêm phế quản cấp"
+  },
+  "items": [
+    {
+      "itemId": "L1",
+      "drugCode": "CEFU500",
+      "drugName": "Cefuroxim 500mg",
+      "dosage": "1 viên x 2 lần/ngày, 7 ngày",
+      "quantity": 14,
+      "dispensedQty": 0,
+      "controlled": false
+    },
+    {
+      "itemId": "L2",
+      "drugCode": "PARA500",
+      "drugName": "Paracetamol 500mg",
+      "dosage": "khi sốt",
+      "quantity": 10,
+      "dispensedQty": 0,
+      "controlled": false
+    }
+  ],
+  "status": "ISSUED",
+  "safetyCheck": {
+    "alerts": [],
+    "overrideReason": null
+  },
+  "issuedAt": "2026-11-03T10:43:14.053Z",
+  "rxCode": "CS102594053-c",
+  "signature": {
+    "alg": "RS256",
+    "keyId": "kms://cs1/bs-an/2026",
+    "value": "UFwllXHGREw/dFwMR9K4I4OPCT7Tm2Zd…",
+    "signedBy": "bs-an",
+    "provider": "CA ký số từ xa (mock)"
+  },
+  "nationalRx": {
+    "system": "EXT-NationalRxSystem (mock)",
+    "status": "SUBMITTED",
+    "submittedAt": "2026-11-03T10:43:14.053Z"
+  },
+  "notification": {
+    "channel": "SMS",
+    "message": "Đơn thuốc CS102594053-c đã phát hành",
+    "status": "QUEUED"
+  }
+}
+<<HTTP 200>>
+
+================ 6. Nhà thuốc đối tác NT-01 tra đơn bằng mã + 4 số cuối SĐT (AS-ReceivePrescription, POL-04) ================
+
+$ GET /pharmacy/prescriptions/CS102594053-c?verifier=5678  [token: tok-ds-nt01]
+{
+  "rxCode": "CS102594053-c",
+  "prescriptionId": "RX-0004",
+  "version": 1,
+  "status": "ISSUED",
+  "patient": {
+    "fullName": "Nguyễn Văn Hùng",
+    "birthYear": 1985
+  },
+  "prescriber": "BS Trần An",
+  "issuedAt": "2026-11-03T10:43:14.053Z",
+  "signatureValid": true,
+  "items": [
+    {
+      "itemId": "L1",
+      "drugCode": "CEFU500",
+      "drugName": "Cefuroxim 500mg",
+      "dosage": "1 viên x 2 lần/ngày, 7 ngày",
+      "quantity": 14,
+      "dispensedQty": 0,
+      "controlled": false
+    },
+    {
+      "itemId": "L2",
+      "drugCode": "PARA500",
+      "drugName": "Paracetamol 500mg",
+      "dosage": "khi sốt",
+      "quantity": 10,
+      "dispensedQty": 0,
+      "controlled": false
+    }
+  ],
+  "dispensable": true
+}
+<<HTTP 200>>
+
+================ 7. NT-01 ghi nhận cấp đủ thuốc, có Idempotency-Key (AS-RecordDispense, NFR-DAT-01) ================
+
+$ POST /pharmacy/dispenses  [token: tok-ds-nt01]  body: {"rxCode":"CS102594053-c","items":[{"itemId":"L1","quantity":14},{"itemId":"L2","quantity":10}]}
+{
+  "dispenseId": "DSP-0005",
+  "idempotencyKey": "NT01-20261105-000001",
+  "rxCode": "CS102594053-c",
+  "prescriptionId": "RX-0004",
+  "pharmacyId": "NT-01",
+  "pharmacistId": "ds-nt01",
+  "items": [
+    {
+      "itemId": "L1",
+      "quantity": 14
+    },
+    {
+      "itemId": "L2",
+      "quantity": 10
+    }
+  ],
+  "dispensedAt": "2026-11-03T10:43:14.135Z",
+  "prescriptionStatus": "DISPENSED"
+}
+<<HTTP 201>>
+
+================ 7b. Mạng chập chờn, phần mềm nhà thuốc gửi lại cùng khóa → không tạo bản ghi thứ 2 ================
+
+$ POST /pharmacy/dispenses  [token: tok-ds-nt01]  body: {"rxCode":"CS102594053-c","items":[{"itemId":"L1","quantity":14},{"itemId":"L2","quantity":10}]}
+{
+  "dispenseId": "DSP-0005",
+  "idempotencyKey": "NT01-20261105-000001",
+  "rxCode": "CS102594053-c",
+  "prescriptionId": "RX-0004",
+  "pharmacyId": "NT-01",
+  "pharmacistId": "ds-nt01",
+  "items": [
+    {
+      "itemId": "L1",
+      "quantity": 14
+    },
+    {
+      "itemId": "L2",
+      "quantity": 10
+    }
+  ],
+  "dispensedAt": "2026-11-03T10:43:14.135Z",
+  "prescriptionStatus": "DISPENSED",
+  "idempotentReplay": true
+}
+<<HTTP 200>>
+
+================ 7c. Nhà thuốc khác cố cấp đơn đã giao NT-01 → 403 (ASSUMP-10); NT-01 cấp thêm → 409 vượt số lượng ================
+
+$ POST /pharmacy/dispenses  [token: tok-ds-nbcs1]  body: {"rxCode":"CS102594053-c","items":[{"itemId":"L1","quantity":14}]}
+{
+  "type": "https://ehealth.example/errors/403",
+  "title": "Đơn đang giao nhà thuốc khác",
+  "status": 403,
+  "detail": "Đơn giao NT-01; BN cần đổi nhà thuốc trước khi cấp (ASSUMP-10)",
+  "policyId": "POL-04"
+}
+<<HTTP 403>>
+
+$ POST /pharmacy/dispenses  [token: tok-ds-nt01]  body: {"rxCode":"CS102594053-c","items":[{"itemId":"L1","quantity":1}]}
+{
+  "type": "https://ehealth.example/errors/409",
+  "title": "Đơn không còn hiệu lực để cấp",
+  "status": 409,
+  "detail": "Trạng thái: DISPENSED",
+  "policyId": "POL-05",
+  "currentStatus": "DISPENSED"
+}
+<<HTTP 409>>
+
+================ NGOẠI LỆ LÕI — truy cập trái phép bị chặn, break-glass, kiểm chứng nhật ký (NFR-SEC-02/03) ================
+
+================ E1. BS Bình (không phụ trách P001) mở hồ sơ → 403, ghi DENY ================
+
+$ GET /patients/P001/records  [token: tok-bs-binh]
+{
+  "type": "https://ehealth.example/errors/403",
+  "title": "Truy cập bị từ chối",
+  "status": 403,
+  "detail": "Không có quan hệ điều trị với bệnh nhân này",
+  "policyId": "POL-01",
+  "breakGlassAllowed": true,
+  "breakGlassEndpoint": "/access/break-glass"
+}
+<<HTTP 403>>
+
+================ E2. BS Bình khai báo truy cập khẩn cấp có lý do → được xem 4 giờ, có cờ breakGlass ================
+
+$ POST /access/break-glass  [token: tok-bs-binh]  body: {"patientId":"P001","reason":"BN khó thở tại phòng chờ, BS An đang làm thủ thuật"}
+{
+  "grantId": "BG-0006",
+  "userId": "bs-binh",
+  "patientId": "P001",
+  "reason": "BN khó thở tại phòng chờ, BS An đang làm thủ thuật",
+  "grantedAt": "2026-11-03T10:43:14.288Z",
+  "expiresAt": "2026-11-03T14:43:14.288Z",
+  "reviewDueBy": "2026-11-04T10:43:14.288Z",
+  "reviewer": "BR-QuanTriBaoMat"
+}
+<<HTTP 201>>
+
+$ GET /patients/P001/records  [token: tok-bs-binh]
+{
+  "patientId": "P001",
+  "fullName": "Nguyễn Văn Hùng",
+  "birthYear": 1985,
+  "allergies": [
+    {
+      "substanceClass": "PENICILLIN",
+      "note": "Phát ban 2019"
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-06-10",
+      "icd10": "J02.9",
+      "text": "Viêm họng cấp"
+    }
+  ],
+  "prescriptions": [
+    {
+      "prescriptionId": "RX-0004",
+      "rxCode": "CS102594053-c",
+      "status": "DISPENSED",
+      "issuedAt": "2026-11-03T10:43:14.053Z"
+    }
+  ],
+  "access": {
+    "policyId": "POL-07",
+    "breakGlass": true
+  }
+}
+<<HTTP 200>>
+
+================ E3. Break-glass không cho phép kê đơn ================
+
+$ POST /prescriptions  [token: tok-bs-binh]  body: {"encounterId":"ENC-0003","items":[{"drugCode":"PARA500","quantity":5}]}
+{
+  "type": "https://ehealth.example/errors/403",
+  "title": "Không được kê đơn",
+  "status": 403,
+  "detail": "Chỉ bác sĩ phụ trách lượt khám được kê đơn (break-glass chỉ cho phép xem)",
+  "policyId": "POL-01"
+}
+<<HTTP 403>>
+
+================ E4. Lễ tân cố xem bệnh án → 403 (RBAC) ================
+
+$ GET /patients/P001/records  [token: tok-letan-cs1]
+{
+  "type": "https://ehealth.example/errors/403",
+  "title": "Truy cập bị từ chối",
+  "status": 403,
+  "detail": "Vai trò không được xem bệnh án",
+  "policyId": "RBAC-ROLE",
+  "breakGlassAllowed": false,
+  "breakGlassEndpoint": "/access/break-glass"
+}
+<<HTTP 403>>
+
+================ E5. DPO xem các lần bị từ chối và break-glass trên hồ sơ P001 ================
+
+$ GET /audit-events?patientRef=P001&decision=DENY  [token: tok-dpo]
+{
+  "count": 5,
+  "items": [
+    {
+      "eventId": "2c3135b9-fd6f-4078-b7b3-7d580561503e",
+      "ts": "2026-11-03T10:43:14.197Z",
+      "actor": {
+        "userId": "ds-nbcs1",
+        "role": "BR-DuocSi",
+        "facility": "CS1",
+        "pharmacyId": "NB-CS1"
+      },
+      "action": "DISPENSE",
+      "resource": {
+        "type": "Prescription",
+        "id": "RX-0004",
+        "patientRef": "P001"
+      },
+      "decision": {
+        "result": "DENY",
+        "policyId": "POL-04"
+      },
+      "breakGlass": false,
+      "reason": null,
+      "outcome": "FAILURE",
+      "correlationId": null,
+      "prevHash": "7005deb51254971594841d2bbaf9780e2bd8eebe29958f8bc6d94b02f73c2f46",
+      "hash": "f224cad4b4eb15723033b368b6696a8787c802c2e9f4aec0895edcea6bae1bfd"
+    },
+    {
+      "eventId": "5c175312-7142-472c-9332-81acd81d9894",
+      "ts": "2026-11-03T10:43:14.227Z",
+      "actor": {
+        "userId": "ds-nt01",
+        "role": "BR-DuocSi",
+        "facility": null,
+        "pharmacyId": "NT-01"
+      },
+      "action": "DISPENSE",
+      "resource": {
+        "type": "Prescription",
+        "id": "RX-0004",
+        "patientRef": "P001"
+      },
+      "decision": {
+        "result": "DENY",
+        "policyId": "POL-05"
+      },
+      "breakGlass": false,
+      "reason": null,
+      "outcome": "FAILURE",
+      "correlationId": null,
+      "prevHash": "f224cad4b4eb15723033b368b6696a8787c802c2e9f4aec0895edcea6bae1bfd",
+      "hash": "ee520122ce4e56811a92263141d7586ee532d530aa0aa6fec2ace77a180974c8"
+    },
+    {
+      "eventId": "e16ed967-156b-4bb1-a032-3bf9df356816",
+      "ts": "2026-11-03T10:43:14.258Z",
+      "actor": {
+        "userId": "bs-binh",
+        "role": "BR-BacSi",
+        "facility": "CS1",
+        "pharmacyId": null
+      },
+      "action": "READ",
+      "resource": {
+        "type": "ClinicalRecord",
+        "id": "P001",
+        "patientRef": "P001"
+      },
+      "decision": {
+        "result": "DENY",
+        "policyId": "POL-01"
+      },
+      "breakGlass": false,
+      "reason": "Không có quan hệ điều trị với bệnh nhân này",
+      "outcome": "FAILURE",
+      "correlationId": null,
+      "prevHash": "ee520122ce4e56811a92263141d7586ee532d530aa0aa6fec2ace77a180974c8",
+      "hash": "a5ab6e475aa88f55821be972d206d5b5ece5d83abd64c1081c2ddc28911c9680"
+    },
+    {
+      "eventId": "de555045-df82-4bff-8ed0-488bf32efa8f",
+      "ts": "2026-11-03T10:43:14.348Z",
+      "actor": {
+        "userId": "bs-binh",
+        "role": "BR-BacSi",
+        "facility": "CS1",
+        "pharmacyId": null
+      },
+      "action": "CREATE",
+      "resource": {
+        "type": "Prescription",
+        "patientRef": "P001"
+      },
+      "decision": {
+        "result": "DENY",
+        "policyId": "POL-07"
+      },
+      "breakGlass": false,
+      "reason": null,
+      "outcome": "FAILURE",
+      "correlationId": null,
+      "prevHash": "f968dfbf179059256fe2e4429ab4819e23fe88c2f481e7df32e723a72342fcbe",
+      "hash": "45b215ce36a8deede0eebd1b6103ef774751fca1651957fccc4480f91fc9b764"
+    },
+    {
+      "eventId": "773c6976-87ed-4ba5-ac6f-87a728eb342f",
+      "ts": "2026-11-03T10:43:14.379Z",
+      "actor": {
+        "userId": "letan-cs1",
+        "role": "BR-LeTan",
+        "facility": "CS1",
+        "pharmacyId": null
+      },
+      "action": "READ",
+      "resource": {
+        "type": "ClinicalRecord",
+        "id": "P001",
+        "patientRef": "P001"
+      },
+      "decision": {
+        "result": "DENY",
+        "policyId": "RBAC-ROLE"
+      },
+      "breakGlass": false,
+      "reason": "Vai trò không được xem bệnh án",
+      "outcome": "FAILURE",
+      "correlationId": null,
+      "prevHash": "45b215ce36a8deede0eebd1b6103ef774751fca1651957fccc4480f91fc9b764",
+      "hash": "787b9c5bd34ebe9164a98bf678e01393ce7c8fe94e3cf4912f0ae576ba684dfa"
+    }
+  ]
+}
+<<HTTP 200>>
+
+================ E6. DPO kiểm chứng chuỗi băm → hợp lệ; giả lập sửa 1 bản ghi DENY thành PERMIT → phát hiện ================
+
+$ GET /audit-events/verify  [token: tok-dpo]
+{
+  "valid": true,
+  "checked": 18,
+  "lastHash": "b35aeeb8e3d3e2989baa72f10154559b77313116a3cc9deaddc0f77ec33de67a"
+}
+<<HTTP 200>>
+
+$ POST /_demo/tamper  [token: tok-dpo]  body: {"index":10}
+{
+  "tampered": "2c3135b9-fd6f-4078-b7b3-7d580561503e"
+}
+<<HTTP 200>>
+
+$ GET /audit-events/verify  [token: tok-dpo]
+{
+  "valid": false,
+  "checked": 11,
+  "firstBrokenIndex": 10,
+  "firstBrokenEventId": "2c3135b9-fd6f-4078-b7b3-7d580561503e"
+}
+<<HTTP 200>>
+
+================ BIẾN THỂ C — sửa/thu hồi đơn ================
+
+$ POST /prescriptions/RX-0004/revoke  [token: tok-bs-an]  body: {"reason":"Kê nhầm liều"}
+{
+  "type": "https://ehealth.example/errors/409",
+  "title": "Không thu hồi được đơn đã cấp",
+  "status": 409,
+  "detail": "Đơn đã DISPENSED; tạo đơn điều chỉnh (POST /prescriptions/{id}/amend) và thông báo nhà thuốc + BN",
+  "policyId": "POL-05",
+  "currentStatus": "DISPENSED"
+}
+<<HTTP 409>>
+
+================ C1. Đơn đã cấp đủ → không thu hồi được, bác sĩ lập phiên bản điều chỉnh (đơn cũ SUPERSEDED, giữ lịch sử) ================
+
+$ POST /prescriptions/RX-0004/amend  [token: tok-bs-an]  body: {"reason":"Giảm liều Paracetamol do men gan tăng","items":[{"drugCode":"CEFU500","dosage":"1 viên x 2 lần/ngày, 7 ngày","quantity":14},{"drugCode":"PARA500","dosage":"tối đa 2 viên/ngày","quantity":4}]}
+{
+  "previous": {
+    "prescriptionId": "RX-0004",
+    "status": "SUPERSEDED",
+    "dispensedBefore": [
+      {
+        "itemId": "L1",
+        "drugName": "Cefuroxim 500mg",
+        "dispensedQty": 14
+      },
+      {
+        "itemId": "L2",
+        "drugName": "Paracetamol 500mg",
+        "dispensedQty": 10
+      }
+    ]
+  },
+  "current": {
+    "prescriptionId": "RX-0007",
+    "version": 2,
+    "encounterId": "ENC-0003",
+    "patientId": "P001",
+    "practitionerId": "bs-an",
+    "facility": "CS1",
+    "diagnosis": {
+      "icd10": "J20.9",
+      "text": "Viêm phế quản cấp"
+    },
+    "items": [
+      {
+        "itemId": "L1",
+        "drugCode": "CEFU500",
+        "drugName": "Cefuroxim 500mg",
+        "dosage": "1 viên x 2 lần/ngày, 7 ngày",
+        "quantity": 14,
+        "dispensedQty": 14,
+        "controlled": false
+      },
+      {
+        "itemId": "L2",
+        "drugCode": "PARA500",
+        "drugName": "Paracetamol 500mg",
+        "dosage": "tối đa 2 viên/ngày",
+        "quantity": 4,
+        "dispensedQty": 4,
+        "controlled": false
+      }
+    ],
+    "status": "DISPENSED",
+    "safetyCheck": {
+      "alerts": [],
+      "overrideReason": null
+    },
+    "issuedAt": "2026-11-03T10:43:14.629Z",
+    "rxCode": "CS102594053-v2",
+    "signature": {
+      "alg": "RS256",
+      "keyId": "kms://cs1/bs-an/2026",
+      "value": "j5bRI8vMP7r60ZTNBy1NLydGgE/e+pVl…",
+      "signedBy": "bs-an",
+      "provider": "CA ký số từ xa (mock)"
+    },
+    "nationalRx": {
+      "system": "EXT-NationalRxSystem (mock)",
+      "status": "SUBMITTED",
+      "submittedAt": "2026-11-03T10:43:14.053Z"
+    },
+    "assignedPharmacyId": "NT-01",
+    "supersedes": "RX-0004",
+    "amendReason": "Giảm liều Paracetamol do men gan tăng"
+  },
+  "warnings": [
+    {
+      "drugName": "Paracetamol 500mg",
+      "dispensed": 10,
+      "newQuantity": 4,
+      "message": "BN đã nhận nhiều hơn số lượng mới — dược sĩ liên hệ BN hướng dẫn/thu hồi thuốc thừa"
+    }
+  ],
+  "events": [
+    {
+      "type": "PrescriptionAmended",
+      "to": [
+        "AC-PharmacyGateway",
+        "AC-Notification"
+      ],
+      "status": "PUBLISHED"
+    }
+  ]
+}
+<<HTTP 201>>
+
+$ GET /pharmacy/prescriptions/CS102594053-c?verifier=5678  [token: tok-ds-nt01]
+{
+  "rxCode": "CS102594053-c",
+  "prescriptionId": "RX-0004",
+  "version": 1,
+  "status": "SUPERSEDED",
+  "patient": {
+    "fullName": "Nguyễn Văn Hùng",
+    "birthYear": 1985
+  },
+  "prescriber": "BS Trần An",
+  "issuedAt": "2026-11-03T10:43:14.053Z",
+  "signatureValid": true,
+  "items": [
+    {
+      "itemId": "L1",
+      "drugCode": "CEFU500",
+      "drugName": "Cefuroxim 500mg",
+      "dosage": "1 viên x 2 lần/ngày, 7 ngày",
+      "quantity": 14,
+      "dispensedQty": 14,
+      "controlled": false
+    },
+    {
+      "itemId": "L2",
+      "drugCode": "PARA500",
+      "drugName": "Paracetamol 500mg",
+      "dosage": "khi sốt",
+      "quantity": 10,
+      "dispensedQty": 10,
+      "controlled": false
+    }
+  ],
+  "dispensable": false,
+  "note": "Đơn đã được thay bằng phiên bản mới (CS102594053-v2)"
+}
+<<HTTP 200>>
+
+$ POST /pharmacy/prescriptions/CS102594053-c/ack  [token: tok-ds-nt01]
+{
+  "pharmacyId": "NT-01",
+  "pharmacistId": "ds-nt01",
+  "event": "PrescriptionAmended",
+  "ackAt": "2026-11-03T10:43:14.803Z"
+}
+<<HTTP 200>>
+
+================ C2. Đơn thứ hai chưa cấp → thu hồi được, nhà thuốc tra thấy REVOKED và không cấp được ================
+
+$ POST /prescriptions  [token: tok-bs-an]  body: {"encounterId":"ENC-0003","items":[{"drugCode":"LORA10","dosage":"1 viên/ngày","quantity":7}]}
+{
+  "prescriptionId": "RX-0008",
+  "version": 1,
+  "encounterId": "ENC-0003",
+  "patientId": "P001",
+  "practitionerId": "bs-an",
+  "facility": "CS1",
+  "diagnosis": null,
+  "items": [
+    {
+      "itemId": "L1",
+      "drugCode": "LORA10",
+      "drugName": "Loratadin 10mg",
+      "dosage": "1 viên/ngày",
+      "quantity": 7,
+      "dispensedQty": 0,
+      "controlled": false
+    }
+  ],
+  "status": "DRAFT",
+  "safetyCheck": {
+    "alerts": [],
+    "overrideReason": null
+  }
+}
+<<HTTP 201>>
+
+$ POST /prescriptions/RX-0008/issue  [token: tok-bs-an]
+{
+  "prescriptionId": "RX-0008",
+  "version": 1,
+  "encounterId": "ENC-0003",
+  "patientId": "P001",
+  "practitionerId": "bs-an",
+  "facility": "CS1",
+  "diagnosis": null,
+  "items": [
+    {
+      "itemId": "L1",
+      "drugCode": "LORA10",
+      "drugName": "Loratadin 10mg",
+      "dosage": "1 viên/ngày",
+      "quantity": 7,
+      "dispensedQty": 0,
+      "controlled": false
+    }
+  ],
+  "status": "ISSUED",
+  "safetyCheck": {
+    "alerts": [],
+    "overrideReason": null
+  },
+  "issuedAt": "2026-11-03T10:43:14.886Z",
+  "rxCode": "CS102594886-c",
+  "signature": {
+    "alg": "RS256",
+    "keyId": "kms://cs1/bs-an/2026",
+    "value": "6KSLkiPWcahnqSlzlcKaj+W+zM0YCGRL…",
+    "signedBy": "bs-an",
+    "provider": "CA ký số từ xa (mock)"
+  },
+  "nationalRx": {
+    "system": "EXT-NationalRxSystem (mock)",
+    "status": "SUBMITTED",
+    "submittedAt": "2026-11-03T10:43:14.886Z"
+  },
+  "notification": {
+    "channel": "SMS",
+    "message": "Đơn thuốc CS102594886-c đã phát hành",
+    "status": "QUEUED"
+  }
+}
+<<HTTP 200>>
+
+$ POST /prescriptions/RX-0008/revoke  [token: tok-bs-an]  body: {"reason":"BN báo đang dùng thuốc tương tự"}
+{
+  "prescriptionId": "RX-0008",
+  "version": 1,
+  "encounterId": "ENC-0003",
+  "patientId": "P001",
+  "practitionerId": "bs-an",
+  "facility": "CS1",
+  "diagnosis": null,
+  "items": [
+    {
+      "itemId": "L1",
+      "drugCode": "LORA10",
+      "drugName": "Loratadin 10mg",
+      "dosage": "1 viên/ngày",
+      "quantity": 7,
+      "dispensedQty": 0,
+      "controlled": false
+    }
+  ],
+  "status": "REVOKED",
+  "safetyCheck": {
+    "alerts": [],
+    "overrideReason": null
+  },
+  "issuedAt": "2026-11-03T10:43:14.886Z",
+  "rxCode": "CS102594886-c",
+  "signature": {
+    "alg": "RS256",
+    "keyId": "kms://cs1/bs-an/2026",
+    "value": "6KSLkiPWcahnqSlzlcKaj+W+zM0YCGRL…",
+    "signedBy": "bs-an",
+    "provider": "CA ký số từ xa (mock)"
+  },
+  "nationalRx": {
+    "system": "EXT-NationalRxSystem (mock)",
+    "status": "SUBMITTED",
+    "submittedAt": "2026-11-03T10:43:14.886Z"
+  },
+  "revokedAt": "2026-11-03T10:43:14.935Z",
+  "revokeReason": "BN báo đang dùng thuốc tương tự",
+  "events": [
+    {
+      "type": "PrescriptionRevoked",
+      "to": [
+        "AC-PharmacyGateway",
+        "AC-Notification"
+      ],
+      "status": "PUBLISHED"
+    }
+  ]
+}
+<<HTTP 200>>
+
+$ POST /pharmacy/dispenses  [token: tok-ds-nt01]  body: {"rxCode":"CS102594886-c","items":[{"itemId":"L1","quantity":7}]}
+{
+  "type": "https://ehealth.example/errors/409",
+  "title": "Đơn không còn hiệu lực để cấp",
+  "status": 409,
+  "detail": "Trạng thái: REVOKED",
+  "policyId": "POL-05",
+  "currentStatus": "REVOKED"
+}
+<<HTTP 409>>
+
+================ BIẾN THỂ B — nhà thuốc mất kết nối, đồng bộ lại (ASSUMP-10: đơn chỉ giao 1 nhà thuốc) ================
+
+$ POST /prescriptions  [token: tok-bs-an]  body: {"encounterId":"ENC-0003","items":[{"drugCode":"PARA500","dosage":"khi sốt","quantity":10}]}
+{
+  "prescriptionId": "RX-0009",
+  "version": 1,
+  "encounterId": "ENC-0003",
+  "patientId": "P001",
+  "practitionerId": "bs-an",
+  "facility": "CS1",
+  "diagnosis": null,
+  "items": [
+    {
+      "itemId": "L1",
+      "drugCode": "PARA500",
+      "drugName": "Paracetamol 500mg",
+      "dosage": "khi sốt",
+      "quantity": 10,
+      "dispensedQty": 0,
+      "controlled": false
+    }
+  ],
+  "status": "DRAFT",
+  "safetyCheck": {
+    "alerts": [],
+    "overrideReason": null
+  }
+}
+<<HTTP 201>>
+
+$ POST /prescriptions/RX-0009/issue  [token: tok-bs-an]
+{
+  "prescriptionId": "RX-0009",
+  "version": 1,
+  "encounterId": "ENC-0003",
+  "patientId": "P001",
+  "practitionerId": "bs-an",
+  "facility": "CS1",
+  "diagnosis": null,
+  "items": [
+    {
+      "itemId": "L1",
+      "drugCode": "PARA500",
+      "drugName": "Paracetamol 500mg",
+      "dosage": "khi sốt",
+      "quantity": 10,
+      "dispensedQty": 0,
+      "controlled": false
+    }
+  ],
+  "status": "ISSUED",
+  "safetyCheck": {
+    "alerts": [],
+    "overrideReason": null
+  },
+  "issuedAt": "2026-11-03T10:43:15.054Z",
+  "rxCode": "CS102595054-c",
+  "signature": {
+    "alg": "RS256",
+    "keyId": "kms://cs1/bs-an/2026",
+    "value": "YDK335SIkl7rBTHI9zoaCStX4fUJ88f/…",
+    "signedBy": "bs-an",
+    "provider": "CA ký số từ xa (mock)"
+  },
+  "nationalRx": {
+    "system": "EXT-NationalRxSystem (mock)",
+    "status": "SUBMITTED",
+    "submittedAt": "2026-11-03T10:43:15.054Z"
+  },
+  "notification": {
+    "channel": "SMS",
+    "message": "Đơn thuốc CS102595054-c đã phát hành",
+    "status": "QUEUED"
+  }
+}
+<<HTTP 200>>
+
+================ B1. NT-01 tra đơn khi còn mạng → đơn được giao NT-01 và lưu vào bộ nhớ đệm của agent ================
+
+$ GET /pharmacy/prescriptions/CS102595054-c?verifier=5678  [token: tok-ds-nt01]
+{
+  "rxCode": "CS102595054-c",
+  "prescriptionId": "RX-0009",
+  "version": 1,
+  "status": "ISSUED",
+  "patient": {
+    "fullName": "Nguyễn Văn Hùng",
+    "birthYear": 1985
+  },
+  "prescriber": "BS Trần An",
+  "issuedAt": "2026-11-03T10:43:15.054Z",
+  "signatureValid": true,
+  "items": [
+    {
+      "itemId": "L1",
+      "drugCode": "PARA500",
+      "drugName": "Paracetamol 500mg",
+      "dosage": "khi sốt",
+      "quantity": 10,
+      "dispensedQty": 0,
+      "controlled": false
+    }
+  ],
+  "dispensable": true
+}
+<<HTTP 200>>
+
+================ B2. NT-01 mất mạng: quầy 1 cấp 10 viên (dispenseId NT01-OFF-001); quầy 2 không biết, cấp lại 10 viên (NT01-OFF-002) ================
+
+================ B3. Có mạng lại, agent đồng bộ lô: bản ghi đã gửi trước đó + 2 bản ghi offline ================
+
+$ POST /pharmacy/sync  [token: tok-ds-nt01]  body: {"dispenses":[{"idempotencyKey":"NT01-20261105-000001","rxCode":"CS102594053-c","items":[{"itemId":"L1","quantity":14}]},{"idempotencyKey":"NT01-OFF-001","rxCode":"CS102595054-c","dispensedAt":"2026-11-05T10:12:00+07:00","items":[{"itemId":"L1","quantity":10}]},{"idempotencyKey":"NT01-OFF-002","rxCode":"CS102595054-c","dispensedAt":"2026-11-05T10:20:00+07:00","items":[{"itemId":"L1","quantity":10}]}]}
+{
+  "batchId": "SYNC-0012",
+  "results": [
+    {
+      "idempotencyKey": "NT01-20261105-000001",
+      "result": "DUPLICATE",
+      "dispenseId": "DSP-0005"
+    },
+    {
+      "idempotencyKey": "NT01-OFF-001",
+      "result": "ACCEPTED",
+      "dispenseId": "DSP-0010"
+    },
+    {
+      "idempotencyKey": "NT01-OFF-002",
+      "result": "CONFLICT",
+      "reconciliationCaseId": "REC-0011",
+      "reason": "Cấp vượt số lượng (có thể đã cấp ở nơi khác)",
+      "action": "Chuyển BR-QuanLy + dược sĩ đối soát thủ công"
+    }
+  ]
+}
+<<HTTP 200>>
+
+================ BIẾN THỂ A — ghép định danh liên cơ sở ================
+
+$ GET /patients/match?idNumber=001190067890  [token: tok-letan-cs1]
+{
+  "decision": "AUTO_LINK",
+  "candidates": [
+    {
+      "patientId": "P002",
+      "facility": "CS2",
+      "score": 0.9
+    }
+  ]
+}
+<<HTTP 200>>
+
+$ GET /patients/match?fullName=Tr%E1%BA%A7n%20Th%E1%BB%8B%20Lan&birthYear=1990  [token: tok-letan-cs1]
+{
+  "decision": "MANUAL_REVIEW",
+  "candidates": [
+    {
+      "patientId": "P002",
+      "facility": "CS2",
+      "score": 0.1
+    }
+  ]
+}
+<<HTTP 200>>

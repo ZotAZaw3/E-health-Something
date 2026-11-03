@@ -1,0 +1,565 @@
+openapi: 3.0.3
+info:
+  title: E-Health ngoại trú — API mock (Phòng khám Đa khoa An Tâm)
+  version: 0.1.0
+  description: |
+    Hợp đồng API minh họa cho prototype BTL (TV3). Mỗi nhóm endpoint gắn với Application Service (AS-*) trong `02-models/app-catalog.md`
+    và chính sách truy cập POL-* trong ADR-002. Mọi truy cập dữ liệu bệnh nhân sinh AuditEvent (ADR-003).
+
+    **Kịch bản end-to-end:** đặt lịch → check-in → bác sĩ xem hồ sơ → kê đơn (cảnh báo dị ứng) → ký & phát hành → nhà thuốc tra đơn → ghi nhận cấp thuốc → tra cứu & kiểm chứng nhật ký.
+    **Ngoại lệ lõi (không phụ thuộc biến thể):** bác sĩ không phụ trách xem hồ sơ → 403 + log DENY → truy cập khẩn cấp (break-glass) có cờ.
+    **Ngoại lệ theo biến thể:** A `/patients/match`, B `/pharmacy/sync`, C `/prescriptions/{id}/revoke|amend`.
+
+    Xác thực trong mock: token cố định (xem `x-mock-tokens`). Hệ thống thật dùng OIDC + MFA (TS-Identity).
+  x-mock-tokens:
+    tok-bn-p001: BR-BenhNhan (bệnh nhân P001)
+    tok-letan-cs1: BR-LeTan, CS1
+    tok-bs-an: BR-BacSi, CS1 (bác sĩ phụ trách)
+    tok-bs-binh: BR-BacSi, CS1 (không phụ trách — dùng cho ngoại lệ)
+    tok-ds-nt01: BR-DuocSi, nhà thuốc đối tác NT-01
+    tok-ds-nbcs1: BR-DuocSi, nhà thuốc nội bộ CS1
+    tok-dpo: BR-QuanTriBaoMat
+servers:
+  - url: http://localhost:4010
+    description: Mock server (node 04-prototype/mock-server/server.js)
+security:
+  - bearerAuth: []
+tags:
+  - name: Booking
+    description: AS-BookAppointment (AC-Booking) — BP-01
+  - name: Reception
+    description: AS-CheckIn, AS-VerifyInsurance (AC-Reception) — BP-02
+  - name: EMR
+    description: AS-ViewMedicalRecord (AC-EMR) — BP-03
+  - name: ePrescription
+    description: AS-IssuePrescription, AS-CheckDrugSafety (AC-ePrescription) — BP-04
+  - name: Pharmacy
+    description: AS-ReceivePrescription, AS-RecordDispense (AC-PharmacyGateway) — BP-05
+  - name: Access
+    description: AS-Authorize (AC-IAM) — BF-01, ADR-002
+  - name: Audit
+    description: AS-QueryAudit (AC-Audit) — BF-01, ADR-003
+  - name: Variant
+    description: Ngoại lệ theo biến thể A/B/C (chỉ trình bày biến thể được giao)
+paths:
+  /slots:
+    get:
+      tags: [Booking]
+      summary: Danh sách khung giờ khám còn trống
+      operationId: listSlots
+      parameters:
+        - { name: specialty, in: query, schema: { type: string, example: NOI } }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { type: array, items: { $ref: '#/components/schemas/Slot' } }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /appointments:
+    post:
+      tags: [Booking]
+      summary: Đặt lịch khám (FR-01)
+      operationId: bookAppointment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [slotId]
+              properties:
+                slotId: { type: string, example: S-20261105-AN-1 }
+                patientId: { type: string, description: Bắt buộc khi lễ tân đặt hộ, example: P001 }
+                reason: { type: string, example: 'Ho, sốt 3 ngày' }
+      responses:
+        '201':
+          description: Đã đặt, trả mã check-in (QR) và thông báo SMS được xếp hàng (FR-10)
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Appointment' }
+        '409':
+          description: Khung giờ vừa có người đặt (gợi ý khung khác)
+          content: { application/problem+json: { schema: { $ref: '#/components/schemas/Problem' } } }
+        '422': { $ref: '#/components/responses/Invalid' }
+  /appointments/{appointmentId}:
+    patch:
+      tags: [Booking]
+      summary: Hủy hoặc đổi lịch, giải phóng khung giờ (FR-02, AS-CancelAppointment)
+      operationId: changeAppointment
+      parameters:
+        - { name: appointmentId, in: path, required: true, schema: { type: string, example: APT-0001 } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [action]
+              properties:
+                action: { type: string, enum: [CANCEL, RESCHEDULE] }
+                newSlotId: { type: string, example: S-20261105-AN-2 }
+      responses:
+        '200': { description: 'Đã hủy/đổi, khung cũ được giải phóng', content: { application/json: { schema: { $ref: '#/components/schemas/Appointment' } } } }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409': { description: Lịch đã check-in/hủy hoặc khung mới đã kín, content: { application/problem+json: { schema: { $ref: '#/components/schemas/Problem' } } } }
+        '422': { $ref: '#/components/responses/Invalid' }
+  /encounters:
+    post:
+      tags: [Reception]
+      summary: Check-in và mở lượt khám (FR-03)
+      operationId: checkIn
+      description: Lễ tân quét QR lịch hẹn và đầu đọc CCCD (DV-IdCardReader); xác minh BHYT qua EXT-InsurancePortal (mock).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                checkInCode: { type: string, example: QR-APT-0001 }
+                appointmentId: { type: string }
+                idNumber: { type: string, description: Số CCCD đọc từ chip, example: '001085012345' }
+      responses:
+        '201':
+          description: Lượt khám đã mở, xếp hàng chờ bác sĩ được phân công
+          content: { application/json: { schema: { $ref: '#/components/schemas/Encounter' } } }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409':
+          description: Lịch hẹn đã check-in/hủy
+          content: { application/problem+json: { schema: { $ref: '#/components/schemas/Problem' } } }
+        '422':
+          description: CCCD không khớp hồ sơ → xác minh thủ công
+          content: { application/problem+json: { schema: { $ref: '#/components/schemas/Problem' } } }
+    get:
+      tags: [Reception]
+      summary: Hàng chờ (bác sĩ chỉ thấy lượt khám của mình)
+      operationId: listEncounters
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { type: array, items: { $ref: '#/components/schemas/Encounter' } }
+  /patients/{patientId}/records:
+    get:
+      tags: [EMR]
+      summary: Xem hồ sơ bệnh án (FR-04) — kiểm soát RBAC+ABAC (POL-01, POL-07)
+      operationId: viewMedicalRecord
+      parameters:
+        - { name: patientId, in: path, required: true, schema: { type: string, example: P001 } }
+      responses:
+        '200':
+          description: Được phép (POL-01 quan hệ điều trị, hoặc POL-07 break-glass có cờ)
+          content: { application/json: { schema: { $ref: '#/components/schemas/MedicalRecord' } } }
+        '403':
+          description: Bị từ chối; AuditEvent DENY đã được ghi; có thể yêu cầu break-glass
+          content:
+            application/problem+json:
+              schema: { $ref: '#/components/schemas/Problem' }
+              example:
+                type: https://ehealth.example/errors/403
+                title: Truy cập bị từ chối
+                status: 403
+                detail: Không có quan hệ điều trị với bệnh nhân này
+                policyId: POL-01
+                breakGlassAllowed: true
+                breakGlassEndpoint: /access/break-glass
+        '404': { $ref: '#/components/responses/NotFound' }
+  /access/break-glass:
+    post:
+      tags: [Access]
+      summary: Truy cập khẩn cấp (POL-07) — hiệu lực 4 giờ, DPO rà soát trong 24 giờ
+      operationId: breakGlass
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [patientId, reason]
+              properties:
+                patientId: { type: string, example: P001 }
+                reason: { type: string, minLength: 10, example: 'BN khó thở tại phòng chờ, BS An đang bận thủ thuật' }
+      responses:
+        '201':
+          description: Đã cấp quyền tạm thời
+          content: { application/json: { schema: { $ref: '#/components/schemas/BreakGlassGrant' } } }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '422': { $ref: '#/components/responses/Invalid' }
+  /prescriptions:
+    post:
+      tags: [ePrescription]
+      summary: Lập đơn nháp + kiểm tra an toàn thuốc (FR-05, AS-CheckDrugSafety)
+      operationId: createPrescription
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [encounterId, items]
+              properties:
+                encounterId: { type: string, example: ENC-0002 }
+                diagnosis: { type: object, properties: { icd10: { type: string, example: J20.9 }, text: { type: string, example: Viêm phế quản cấp } } }
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required: [drugCode, quantity]
+                    properties:
+                      drugCode: { type: string, example: CEFU500 }
+                      dosage: { type: string, example: '1 viên x 2 lần/ngày, 7 ngày' }
+                      quantity: { type: integer, example: 14 }
+                overrideReason: { type: string, description: Lý do bỏ qua cảnh báo mức cao (được audit) }
+      responses:
+        '201':
+          description: Đơn nháp (DRAFT)
+          content: { application/json: { schema: { $ref: '#/components/schemas/Prescription' } } }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '422':
+          description: Cảnh báo an toàn mức cao (vd dị ứng nhóm penicillin) hoặc dữ liệu sai
+          content:
+            application/problem+json:
+              schema: { $ref: '#/components/schemas/Problem' }
+              example:
+                title: Cảnh báo an toàn thuốc
+                status: 422
+                alerts:
+                  - { severity: HIGH, type: ALLERGY, itemId: L1, message: 'Amoxicillin 500mg thuộc nhóm PENICILLIN, BN có tiền sử dị ứng' }
+  /prescriptions/{prescriptionId}:
+    get:
+      tags: [ePrescription]
+      summary: Xem đơn
+      operationId: getPrescription
+      parameters: [ { $ref: '#/components/parameters/PrescriptionId' } ]
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { $ref: '#/components/schemas/Prescription' } } } }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /prescriptions/{prescriptionId}/issue:
+    post:
+      tags: [ePrescription]
+      summary: Ký số và phát hành đơn, đẩy Hệ thống đơn thuốc quốc gia (FR-05, FR-06, CON-03)
+      operationId: issuePrescription
+      parameters: [ { $ref: '#/components/parameters/PrescriptionId' } ]
+      responses:
+        '200':
+          description: Đơn ISSUED, có rxCode, chữ ký, trạng thái liên thông
+          content: { application/json: { schema: { $ref: '#/components/schemas/Prescription' } } }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '409':
+          description: Đơn đã phát hành (POL-05)
+          content: { application/problem+json: { schema: { $ref: '#/components/schemas/Problem' } } }
+  /pharmacy/prescriptions/{rxCode}:
+    get:
+      tags: [Pharmacy]
+      summary: Nhà thuốc tra đơn theo mã + mã xác minh (POL-04, FR-07); nhà thuốc đầu tiên tra hợp lệ nhận giao đơn (ASSUMP-10)
+      operationId: receivePrescription
+      parameters:
+        - { name: rxCode, in: path, required: true, schema: { type: string } }
+        - { name: verifier, in: query, required: true, description: 4 số cuối SĐT bệnh nhân, schema: { type: string, example: '5678' } }
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { $ref: '#/components/schemas/PharmacyPrescriptionView' } } } }
+        '404':
+          description: Sai mã đơn hoặc mã xác minh (không tiết lộ đơn có tồn tại hay không)
+          content: { application/problem+json: { schema: { $ref: '#/components/schemas/Problem' } } }
+        '403':
+          description: Đơn đã được nhà thuốc khác nhận và cấp (ASSUMP-10)
+          content: { application/problem+json: { schema: { $ref: '#/components/schemas/Problem' } } }
+  /pharmacy/prescriptions/{rxCode}/ack:
+    post:
+      tags: [Variant]
+      summary: '[Biến thể C] Nhà thuốc xác nhận đã nhận thông báo sửa/thu hồi đơn (FR-C3, BP-06C.7)'
+      operationId: ackPrescriptionChange
+      parameters:
+        - { name: rxCode, in: path, required: true, schema: { type: string } }
+      responses:
+        '200': { description: Đã ghi nhận xác nhận (quá 30 phút chưa xác nhận → BP-06C.8 liên hệ trực tiếp) }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409': { description: Đơn không có thay đổi cần xác nhận, content: { application/problem+json: { schema: { $ref: '#/components/schemas/Problem' } } } }
+  /pharmacy/dispenses:
+    post:
+      tags: [Pharmacy]
+      summary: Ghi nhận cấp thuốc — idempotent (FR-07, NFR-DAT-01)
+      operationId: recordDispense
+      parameters:
+        - name: Idempotency-Key
+          in: header
+          required: true
+          description: dispenseId — khóa duy nhất cho mỗi lần cấp (sinh tại nhà thuốc, ADR-001/ADR-004). Gửi lại cùng khóa → trả kết quả cũ, không tạo bản ghi mới.
+          schema: { type: string, example: NT01-20261105-000123 }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [rxCode, items]
+              properties:
+                rxCode: { type: string }
+                items: { type: array, items: { type: object, properties: { itemId: { type: string, example: L1 }, quantity: { type: integer, example: 14 } } } }
+      responses:
+        '200': { description: 'Gửi lặp cùng Idempotency-Key (= dispenseId) → trả kết quả cũ, idempotentReplay = true', content: { application/json: { schema: { $ref: '#/components/schemas/DispenseRecord' } } } }
+        '201': { description: Đã ghi nhận, content: { application/json: { schema: { $ref: '#/components/schemas/DispenseRecord' } } } }
+        '400': { description: Thiếu Idempotency-Key, content: { application/problem+json: { schema: { $ref: '#/components/schemas/Problem' } } } }
+        '403': { description: 'Đơn đang giao nhà thuốc khác (POL-04, ASSUMP-10) hoặc thuốc kiểm soát đặc biệt tại nhà thuốc đối tác (POL-06, CON-04)', content: { application/problem+json: { schema: { $ref: '#/components/schemas/Problem' } } } }
+        '409': { description: 'Đơn đã thu hồi/thay thế/cấp đủ, hoặc vượt số lượng kê', content: { application/problem+json: { schema: { $ref: '#/components/schemas/Problem' } } } }
+  /audit-events:
+    get:
+      tags: [Audit]
+      summary: Tra cứu nhật ký (DPO; bệnh nhân chỉ xem vết hồ sơ của mình) — FR-09
+      operationId: queryAudit
+      parameters:
+        - { name: patientRef, in: query, schema: { type: string, example: P001 } }
+        - { name: decision, in: query, schema: { type: string, enum: [PERMIT, DENY] } }
+      responses:
+        '200':
+          description: OK (việc tra cứu cũng được ghi vết)
+          content:
+            application/json:
+              schema: { type: object, properties: { count: { type: integer }, items: { type: array, items: { $ref: '#/components/schemas/AuditEvent' } } } }
+        '403': { $ref: '#/components/responses/Forbidden' }
+  /audit-events/verify:
+    get:
+      tags: [Audit]
+      summary: Kiểm chứng chuỗi băm nhật ký (NFR-SEC-03)
+      operationId: verifyAudit
+      responses:
+        '200':
+          description: Kết quả kiểm chứng
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  valid: { type: boolean }
+                  checked: { type: integer }
+                  lastHash: { type: string }
+                  firstBrokenIndex: { type: integer }
+                  firstBrokenEventId: { type: string }
+  /patients/match:
+    get:
+      tags: [Variant]
+      summary: '[Biến thể A] Ghép định danh bệnh nhân giữa 2 cơ sở (FR-A1)'
+      operationId: matchPatient
+      parameters:
+        - { name: idNumber, in: query, schema: { type: string } }
+        - { name: fullName, in: query, schema: { type: string } }
+        - { name: birthYear, in: query, schema: { type: integer } }
+      responses:
+        '200':
+          description: AUTO_LINK (CCCD khớp) | MANUAL_REVIEW (chỉ khớp tên/năm sinh) | NO_MATCH
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  decision: { type: string, enum: [AUTO_LINK, MANUAL_REVIEW, NO_MATCH] }
+                  candidates: { type: array, items: { type: object, properties: { patientId: { type: string }, facility: { type: string }, score: { type: number } } } }
+  /pharmacy/sync:
+    post:
+      tags: [Variant]
+      summary: '[Biến thể B] Đồng bộ lô cấp thuốc ghi nhận lúc mất kết nối (FR-B2, FR-B3)'
+      operationId: syncDispenses
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                dispenses:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      idempotencyKey: { type: string }
+                      rxCode: { type: string }
+                      dispensedAt: { type: string, format: date-time }
+                      items: { type: array, items: { type: object, properties: { itemId: { type: string }, quantity: { type: integer } } } }
+      responses:
+        '200':
+          description: Kết quả từng bản ghi — ACCEPTED | DUPLICATE | CONFLICT (mở hồ sơ đối soát) | REJECTED
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  batchId: { type: string }
+                  results: { type: array, items: { type: object, properties: { idempotencyKey: { type: string }, result: { type: string }, reconciliationCaseId: { type: string }, reason: { type: string } } } }
+  /prescriptions/{prescriptionId}/revoke:
+    post:
+      tags: [Variant]
+      summary: '[Biến thể C] Thu hồi đơn (FR-C2) — chỉ khi chưa cấp'
+      operationId: revokePrescription
+      parameters: [ { $ref: '#/components/parameters/PrescriptionId' } ]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { type: object, required: [reason], properties: { reason: { type: string } } } } }
+      responses:
+        '200': { description: REVOKED + phát sự kiện PrescriptionRevoked, content: { application/json: { schema: { $ref: '#/components/schemas/Prescription' } } } }
+        '409': { description: Đơn đã cấp (một phần/toàn bộ) → phải dùng amend, content: { application/problem+json: { schema: { $ref: '#/components/schemas/Problem' } } } }
+  /prescriptions/{prescriptionId}/amend:
+    post:
+      tags: [Variant]
+      summary: '[Biến thể C] Điều chỉnh đơn — tạo phiên bản mới, đơn cũ SUPERSEDED (FR-C1, FR-C3)'
+      operationId: amendPrescription
+      parameters: [ { $ref: '#/components/parameters/PrescriptionId' } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [reason, items]
+              properties:
+                reason: { type: string }
+                items: { type: array, items: { type: object, properties: { drugCode: { type: string }, dosage: { type: string }, quantity: { type: integer } } } }
+      responses:
+        '201': { description: Phiên bản mới ISSUED; kèm số lượng đã cấp theo phiên bản cũ }
+        '409': { description: Đơn không ở trạng thái điều chỉnh được, content: { application/problem+json: { schema: { $ref: '#/components/schemas/Problem' } } } }
+components:
+  securitySchemes:
+    bearerAuth: { type: http, scheme: bearer, description: 'Mock: token cố định. Thật: OIDC access token (TS-Identity) có claim role, facility, amr=mfa' }
+  parameters:
+    PrescriptionId: { name: prescriptionId, in: path, required: true, schema: { type: string, example: RX-0004 } }
+  responses:
+    Unauthorized: { description: Chưa xác thực, content: { application/problem+json: { schema: { $ref: '#/components/schemas/Problem' } } } }
+    Forbidden: { description: Không đủ quyền (RBAC/ABAC), content: { application/problem+json: { schema: { $ref: '#/components/schemas/Problem' } } } }
+    NotFound: { description: Không tìm thấy, content: { application/problem+json: { schema: { $ref: '#/components/schemas/Problem' } } } }
+    Invalid: { description: Dữ liệu không hợp lệ, content: { application/problem+json: { schema: { $ref: '#/components/schemas/Problem' } } } }
+  schemas:
+    Problem:
+      type: object
+      description: RFC 9457 problem details, mở rộng policyId để giải thích quyết định truy cập
+      properties:
+        type: { type: string }
+        title: { type: string }
+        status: { type: integer }
+        detail: { type: string }
+        policyId: { type: string, example: POL-01 }
+        breakGlassAllowed: { type: boolean }
+        alerts: { type: array, items: { $ref: '#/components/schemas/SafetyAlert' } }
+    Slot:
+      type: object
+      properties:
+        slotId: { type: string }
+        practitionerId: { type: string }
+        practitionerName: { type: string }
+        specialty: { type: string }
+        facility: { type: string, enum: [CS1, CS2] }
+        start: { type: string, format: date-time }
+        available: { type: boolean }
+    Appointment:
+      type: object
+      description: DO-Appointment
+      properties:
+        appointmentId: { type: string }
+        patientId: { type: string }
+        slotId: { type: string }
+        practitionerId: { type: string }
+        facility: { type: string }
+        start: { type: string, format: date-time }
+        status: { type: string, enum: [BOOKED, CHECKED_IN, CANCELLED, NO_SHOW] }
+        checkInCode: { type: string }
+    Encounter:
+      type: object
+      description: DO-Encounter
+      properties:
+        encounterId: { type: string }
+        patientId: { type: string }
+        appointmentId: { type: string }
+        practitionerId: { type: string }
+        facility: { type: string }
+        status: { type: string, enum: [WAITING, IN_PROGRESS, FINISHED] }
+        queueNumber: { type: integer }
+        insurance: { type: object, properties: { cardNumber: { type: string }, verified: { type: boolean } } }
+    MedicalRecord:
+      type: object
+      description: DO-ClinicalRecord (rút gọn)
+      properties:
+        patientId: { type: string }
+        fullName: { type: string }
+        allergies: { type: array, items: { type: object, properties: { substanceClass: { type: string }, note: { type: string } } } }
+        history: { type: array, items: { type: object } }
+        access: { type: object, properties: { policyId: { type: string }, breakGlass: { type: boolean } } }
+    BreakGlassGrant:
+      type: object
+      properties:
+        grantId: { type: string }
+        patientId: { type: string }
+        reason: { type: string }
+        expiresAt: { type: string, format: date-time }
+        reviewDueBy: { type: string, format: date-time }
+    SafetyAlert:
+      type: object
+      properties:
+        severity: { type: string, enum: [HIGH, MEDIUM, LOW] }
+        type: { type: string, enum: [ALLERGY, INTERACTION, DUPLICATE, DOSE] }
+        itemId: { type: string }
+        message: { type: string }
+    PrescriptionItem:
+      type: object
+      description: DO-PrescriptionItem
+      properties:
+        itemId: { type: string }
+        drugCode: { type: string }
+        drugName: { type: string }
+        dosage: { type: string }
+        quantity: { type: integer }
+        dispensedQty: { type: integer }
+        controlled: { type: boolean }
+    Prescription:
+      type: object
+      description: DO-Prescription
+      properties:
+        prescriptionId: { type: string }
+        version: { type: integer }
+        rxCode: { type: string }
+        encounterId: { type: string }
+        patientId: { type: string }
+        practitionerId: { type: string }
+        status: { type: string, enum: [DRAFT, ISSUED, PARTIALLY_DISPENSED, DISPENSED, REVOKED, SUPERSEDED] }
+        items: { type: array, items: { $ref: '#/components/schemas/PrescriptionItem' } }
+        signature: { type: object, properties: { alg: { type: string }, keyId: { type: string }, value: { type: string } } }
+        nationalRx: { type: object, properties: { status: { type: string } } }
+    PharmacyPrescriptionView:
+      type: object
+      description: Dữ liệu tối thiểu cho dược sĩ (không có chẩn đoán, tiền sử)
+      properties:
+        rxCode: { type: string }
+        version: { type: integer }
+        status: { type: string }
+        patient: { type: object, properties: { fullName: { type: string }, birthYear: { type: integer } } }
+        prescriber: { type: string }
+        signatureValid: { type: boolean }
+        items: { type: array, items: { $ref: '#/components/schemas/PrescriptionItem' } }
+        dispensable: { type: boolean }
+    DispenseRecord:
+      type: object
+      description: DO-DispenseRecord
+      properties:
+        dispenseId: { type: string }
+        idempotencyKey: { type: string }
+        rxCode: { type: string }
+        pharmacyId: { type: string }
+        items: { type: array, items: { type: object } }
+        dispensedAt: { type: string, format: date-time }
+        prescriptionStatus: { type: string }
+        idempotentReplay: { type: boolean }
+    AuditEvent:
+      type: object
+      description: DO-AuditEvent (ADR-003 mục 4.1)
+      properties:
+        eventId: { type: string, format: uuid }
+        ts: { type: string, format: date-time }
+        actor: { type: object, properties: { userId: { type: string }, role: { type: string }, facility: { type: string, nullable: true }, pharmacyId: { type: string, nullable: true } } }
+        action: { type: string }
+        resource: { type: object, properties: { type: { type: string }, id: { type: string, nullable: true }, patientRef: { type: string, nullable: true } } }
+        decision: { type: object, properties: { result: { type: string, enum: [PERMIT, DENY] }, policyId: { type: string } } }
+        breakGlass: { type: boolean }
+        reason: { type: string, nullable: true }
+        outcome: { type: string, enum: [SUCCESS, FAILURE] }
+        prevHash: { type: string }
+        hash: { type: string }

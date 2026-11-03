@@ -1,0 +1,1048 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://www.opengroup.org/xsd/archimate/3.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengroup.org/xsd/archimate/3.0/ http://www.opengroup.org/xsd/archimate/3.1/archimate3_Diagram.xsd" identifier="id-ehealth-tv1">
+  <name xml:lang="vi">E-Health ngoại trú – TV1 (Motivation + Business)</name>
+  <documentation xml:lang="vi">Sinh từ danh mục 01-vision/catalog.md. Tên phần tử = mã + tên tiếng Việt.</documentation>
+  <elements>
+    <element identifier="id-SH-01" xsi:type="Stakeholder"><name xml:lang="vi">SH-01 Bệnh nhân</name></element>
+    <element identifier="id-SH-02" xsi:type="Stakeholder"><name xml:lang="vi">SH-02 Ban Giám đốc</name></element>
+    <element identifier="id-SH-03" xsi:type="Stakeholder"><name xml:lang="vi">SH-03 Bác sĩ</name></element>
+    <element identifier="id-SH-04" xsi:type="Stakeholder"><name xml:lang="vi">SH-04 Điều dưỡng</name></element>
+    <element identifier="id-SH-05" xsi:type="Stakeholder"><name xml:lang="vi">SH-05 Lễ tân / Thu ngân</name></element>
+    <element identifier="id-SH-06" xsi:type="Stakeholder"><name xml:lang="vi">SH-06 Dược sĩ</name></element>
+    <element identifier="id-SH-07" xsi:type="Stakeholder"><name xml:lang="vi">SH-07 Phòng CNTT</name></element>
+    <element identifier="id-SH-08" xsi:type="Stakeholder"><name xml:lang="vi">SH-08 Pháp chế / DPO</name></element>
+    <element identifier="id-SH-09" xsi:type="Stakeholder"><name xml:lang="vi">SH-09 Sở/Bộ Y tế</name></element>
+    <element identifier="id-SH-10" xsi:type="Stakeholder"><name xml:lang="vi">SH-10 BHXH</name></element>
+    <element identifier="id-SH-11" xsi:type="Stakeholder"><name xml:lang="vi">SH-11 NCC phần mềm hiện tại</name></element>
+    <element identifier="id-DRV-01" xsi:type="Driver"><name xml:lang="vi">DRV-01 Quá tải giờ cao điểm, chờ lâu</name></element>
+    <element identifier="id-DRV-02" xsi:type="Driver"><name xml:lang="vi">DRV-02 Sai sót đơn thuốc giấy</name></element>
+    <element identifier="id-DRV-03" xsi:type="Driver"><name xml:lang="vi">DRV-03 Quy định kê đơn điện tử &amp; liên thông</name></element>
+    <element identifier="id-DRV-04" xsi:type="Driver"><name xml:lang="vi">DRV-04 Bảo vệ dữ liệu cá nhân, lưu vết</name></element>
+    <element identifier="id-DRV-05" xsi:type="Driver"><name xml:lang="vi">DRV-05 Kết nối nhà thuốc đối tác</name></element>
+    <element identifier="id-DRV-06" xsi:type="Driver"><name xml:lang="vi">DRV-06 Hồ sơ phân tán 2 cơ sở</name></element>
+    <element identifier="id-ASM-01" xsi:type="Assessment"><name xml:lang="vi">ASM-01 Chờ TB 70 phút; 60% BN không hẹn</name></element>
+    <element identifier="id-ASM-02" xsi:type="Assessment"><name xml:lang="vi">ASM-02 ~3% đơn phải sửa; không cảnh báo tương tác</name></element>
+    <element identifier="id-ASM-03" xsi:type="Assessment"><name xml:lang="vi">ASM-03 CS2 chưa liên thông đơn; CS1 thủ công</name></element>
+    <element identifier="id-ASM-04" xsi:type="Assessment"><name xml:lang="vi">ASM-04 Tài khoản dùng chung, không log truy cập</name></element>
+    <element identifier="id-ASM-05" xsi:type="Assessment"><name xml:lang="vi">ASM-05 Nhà thuốc nhận đơn giấy/ảnh, không phản hồi</name></element>
+    <element identifier="id-ASM-06" xsi:type="Assessment"><name xml:lang="vi">ASM-06 BN có 2 mã ở 2 cơ sở</name></element>
+    <element identifier="id-G-01" xsi:type="Goal"><name xml:lang="vi">G-01 Giảm thời gian chờ khám</name></element>
+    <element identifier="id-G-02" xsi:type="Goal"><name xml:lang="vi">G-02 Nâng cao an toàn kê đơn</name></element>
+    <element identifier="id-G-03" xsi:type="Goal"><name xml:lang="vi">G-03 Bảo mật, tuân thủ, truy vết</name></element>
+    <element identifier="id-G-04" xsi:type="Goal"><name xml:lang="vi">G-04 Liên thông đơn thuốc</name></element>
+    <element identifier="id-G-05" xsi:type="Goal"><name xml:lang="vi">G-05 Hồ sơ bệnh nhân thống nhất</name></element>
+    <element identifier="id-OC-01" xsi:type="Outcome"><name xml:lang="vi">OC-01 Chờ TB ≤ 45 phút; ≥60% có hẹn</name></element>
+    <element identifier="id-OC-02" xsi:type="Outcome"><name xml:lang="vi">OC-02 100% đơn điện tử; đơn phải sửa ≤0,5%</name></element>
+    <element identifier="id-OC-03" xsi:type="Outcome"><name xml:lang="vi">OC-03 100% truy cập có log; 0 TK dùng chung</name></element>
+    <element identifier="id-OC-04" xsi:type="Outcome"><name xml:lang="vi">OC-04 ≥95% đơn liên thông ≤5 phút</name></element>
+    <element identifier="id-OC-05" xsi:type="Outcome"><name xml:lang="vi">OC-05 1 BN = 1 hồ sơ điện tử</name></element>
+    <element identifier="id-PR-01" xsi:type="Principle"><name xml:lang="vi">PR-01 An toàn người bệnh trên hết</name></element>
+    <element identifier="id-PR-02" xsi:type="Principle"><name xml:lang="vi">PR-02 Dữ liệu có chủ sở hữu</name></element>
+    <element identifier="id-PR-03" xsi:type="Principle"><name xml:lang="vi">PR-03 Tối thiểu quyền, đúng ngữ cảnh</name></element>
+    <element identifier="id-PR-04" xsi:type="Principle"><name xml:lang="vi">PR-04 Mọi truy cập để lại vết</name></element>
+    <element identifier="id-PR-05" xsi:type="Principle"><name xml:lang="vi">PR-05 Không ghi đè dữ liệu lâm sàng</name></element>
+    <element identifier="id-PR-06" xsi:type="Principle"><name xml:lang="vi">PR-06 Ưu tiên chuẩn mở (FHIR)</name></element>
+    <element identifier="id-PR-07" xsi:type="Principle"><name xml:lang="vi">PR-07 Nhập một lần, dùng nhiều nơi</name></element>
+    <element identifier="id-PR-08" xsi:type="Principle"><name xml:lang="vi">PR-08 Kết nối lỏng qua giao diện</name></element>
+    <element identifier="id-FR-01" xsi:type="Requirement"><name xml:lang="vi">FR-01 Đặt lịch trực tuyến</name></element>
+    <element identifier="id-FR-02" xsi:type="Requirement"><name xml:lang="vi">FR-02 Nhắc/hủy/đổi lịch</name></element>
+    <element identifier="id-FR-03" xsi:type="Requirement"><name xml:lang="vi">FR-03 Check-in, xác minh BHYT</name></element>
+    <element identifier="id-FR-04" xsi:type="Requirement"><name xml:lang="vi">FR-04 Xem tiền sử, ghi nhận khám</name></element>
+    <element identifier="id-FR-05" xsi:type="Requirement"><name xml:lang="vi">FR-05 Kê đơn có kiểm tra an toàn, ký số</name></element>
+    <element identifier="id-FR-06" xsi:type="Requirement"><name xml:lang="vi">FR-06 Gửi đơn liên thông</name></element>
+    <element identifier="id-FR-07" xsi:type="Requirement"><name xml:lang="vi">FR-07 Nhà thuốc tra cứu &amp; ghi nhận cấp</name></element>
+    <element identifier="id-FR-08" xsi:type="Requirement"><name xml:lang="vi">FR-08 Phân quyền RBAC+ABAC</name></element>
+    <element identifier="id-FR-09" xsi:type="Requirement"><name xml:lang="vi">FR-09 Ghi &amp; tra cứu nhật ký</name></element>
+    <element identifier="id-FR-10" xsi:type="Requirement"><name xml:lang="vi">FR-10 Thông báo bệnh nhân</name></element>
+    <element identifier="id-FR-11" xsi:type="Requirement"><name xml:lang="vi">FR-11 Báo cáo vận hành</name></element>
+    <element identifier="id-NFR-PRF-01" xsi:type="Requirement"><name xml:lang="vi">NFR-PRF-01 p95 API ≤ 2 s</name></element>
+    <element identifier="id-NFR-AVL-01" xsi:type="Requirement"><name xml:lang="vi">NFR-AVL-01 Sẵn sàng 99,5%</name></element>
+    <element identifier="id-NFR-SEC-01" xsi:type="Requirement"><name xml:lang="vi">NFR-SEC-01 MFA nhân viên</name></element>
+    <element identifier="id-NFR-SEC-02" xsi:type="Requirement"><name xml:lang="vi">NFR-SEC-02 RBAC + ABAC</name></element>
+    <element identifier="id-NFR-SEC-03" xsi:type="Requirement"><name xml:lang="vi">NFR-SEC-03 Audit bất biến 100%</name></element>
+    <element identifier="id-NFR-SEC-04" xsi:type="Requirement"><name xml:lang="vi">NFR-SEC-04 Mã hóa truyền/lưu</name></element>
+    <element identifier="id-NFR-SEC-05" xsi:type="Requirement"><name xml:lang="vi">NFR-SEC-05 Lưu audit ≥ 10 năm</name></element>
+    <element identifier="id-NFR-INT-01" xsi:type="Requirement"><name xml:lang="vi">NFR-INT-01 HL7 FHIR R4</name></element>
+    <element identifier="id-NFR-INT-02" xsi:type="Requirement"><name xml:lang="vi">NFR-INT-02 Thêm đối tác không sửa lõi</name></element>
+    <element identifier="id-NFR-DAT-01" xsi:type="Requirement"><name xml:lang="vi">NFR-DAT-01 Không mất/trùng đơn</name></element>
+    <element identifier="id-NFR-USB-01" xsi:type="Requirement"><name xml:lang="vi">NFR-USB-01 Kê đơn ≤ 90 s</name></element>
+    <element identifier="id-CON-01" xsi:type="Constraint"><name xml:lang="vi">CON-01 Quy định kê đơn điện tử, HSBA</name></element>
+    <element identifier="id-CON-02" xsi:type="Constraint"><name xml:lang="vi">CON-02 Bảo vệ dữ liệu cá nhân</name></element>
+    <element identifier="id-CON-03" xsi:type="Constraint"><name xml:lang="vi">CON-03 Ký số hợp lệ</name></element>
+    <element identifier="id-CON-04" xsi:type="Constraint"><name xml:lang="vi">CON-04 Thuốc kiểm soát: không cấp offline</name></element>
+    <element identifier="id-CON-05" xsi:type="Constraint"><name xml:lang="vi">CON-05 Giữ thu ngân/BHYT</name></element>
+    <element identifier="id-CON-06" xsi:type="Constraint"><name xml:lang="vi">CON-06 Không ép đối tác đổi phần mềm</name></element>
+    <element identifier="id-CON-07" xsi:type="Constraint"><name xml:lang="vi">CON-07 12 tháng, dữ liệu trong nước</name></element>
+    <element identifier="id-BA-BenhNhan" xsi:type="BusinessActor"><name xml:lang="vi">BA-BenhNhan Bệnh nhân</name></element>
+    <element identifier="id-BA-PhongKham" xsi:type="BusinessActor"><name xml:lang="vi">BA-PhongKham Phòng khám ĐK An Tâm</name></element>
+    <element identifier="id-BA-NhaThuocDoiTac" xsi:type="BusinessActor"><name xml:lang="vi">BA-NhaThuocDoiTac Nhà thuốc đối tác</name></element>
+    <element identifier="id-BA-NhaThuocNoiBo" xsi:type="BusinessActor"><name xml:lang="vi">BA-NhaThuocNoiBo Nhà thuốc nội bộ</name></element>
+    <element identifier="id-BA-BHXH" xsi:type="BusinessActor"><name xml:lang="vi">BA-BHXH Cơ quan BHXH</name></element>
+    <element identifier="id-BR-BenhNhan" xsi:type="BusinessRole"><name xml:lang="vi">BR-BenhNhan Người bệnh</name></element>
+    <element identifier="id-BR-LeTan" xsi:type="BusinessRole"><name xml:lang="vi">BR-LeTan Lễ tân</name></element>
+    <element identifier="id-BR-DieuDuong" xsi:type="BusinessRole"><name xml:lang="vi">BR-DieuDuong Điều dưỡng</name></element>
+    <element identifier="id-BR-BacSi" xsi:type="BusinessRole"><name xml:lang="vi">BR-BacSi Bác sĩ khám</name></element>
+    <element identifier="id-BR-DuocSi" xsi:type="BusinessRole"><name xml:lang="vi">BR-DuocSi Dược sĩ cấp thuốc</name></element>
+    <element identifier="id-BR-QuanLy" xsi:type="BusinessRole"><name xml:lang="vi">BR-QuanLy Quản lý vận hành</name></element>
+    <element identifier="id-BR-QuanTriBaoMat" xsi:type="BusinessRole"><name xml:lang="vi">BR-QuanTriBaoMat Quản trị bảo mật / DPO</name></element>
+    <element identifier="id-BR-ThuNgan" xsi:type="BusinessRole"><name xml:lang="vi">BR-ThuNgan Thu ngân</name></element>
+    <element identifier="id-BC-KhamKeDon" xsi:type="BusinessCollaboration"><name xml:lang="vi">BC-KhamKeDon Cộng tác Khám–Kê đơn</name></element>
+    <element identifier="id-BI-01" xsi:type="BusinessInterface"><name xml:lang="vi">BI-01 Web/App bệnh nhân</name></element>
+    <element identifier="id-BI-02" xsi:type="BusinessInterface"><name xml:lang="vi">BI-02 Tổng đài</name></element>
+    <element identifier="id-BI-03" xsi:type="BusinessInterface"><name xml:lang="vi">BI-03 Quầy/Kiosk tiếp đón</name></element>
+    <element identifier="id-BI-04" xsi:type="BusinessInterface"><name xml:lang="vi">BI-04 Kênh nhận đơn nhà thuốc</name></element>
+    <element identifier="id-BS-01" xsi:type="BusinessService"><name xml:lang="vi">BS-01 Dịch vụ đặt lịch khám</name></element>
+    <element identifier="id-BS-02" xsi:type="BusinessService"><name xml:lang="vi">BS-02 Dịch vụ tiếp đón</name></element>
+    <element identifier="id-BS-03" xsi:type="BusinessService"><name xml:lang="vi">BS-03 Dịch vụ khám ngoại trú</name></element>
+    <element identifier="id-BS-04" xsi:type="BusinessService"><name xml:lang="vi">BS-04 Dịch vụ kê đơn điện tử</name></element>
+    <element identifier="id-BS-05" xsi:type="BusinessService"><name xml:lang="vi">BS-05 Dịch vụ cấp thuốc theo đơn</name></element>
+    <element identifier="id-BS-06" xsi:type="BusinessService"><name xml:lang="vi">BS-06 Dịch vụ thông tin người bệnh</name></element>
+    <element identifier="id-BS-07" xsi:type="BusinessService"><name xml:lang="vi">BS-07 Dịch vụ kiểm soát truy cập &amp; lưu vết</name></element>
+    <element identifier="id-BE-01" xsi:type="BusinessEvent"><name xml:lang="vi">BE-01 BN có nhu cầu khám</name></element>
+    <element identifier="id-BE-02" xsi:type="BusinessEvent"><name xml:lang="vi">BE-02 BN đến cơ sở</name></element>
+    <element identifier="id-BE-03" xsi:type="BusinessEvent"><name xml:lang="vi">BE-03 Đơn thuốc đã phát hành</name></element>
+    <element identifier="id-BE-04" xsi:type="BusinessEvent"><name xml:lang="vi">BE-04 BN nhận đủ thuốc</name></element>
+    <element identifier="id-BP-01" xsi:type="BusinessProcess"><name xml:lang="vi">BP-01 Đặt lịch khám</name></element>
+    <element identifier="id-BP-02" xsi:type="BusinessProcess"><name xml:lang="vi">BP-02 Tiếp đón</name></element>
+    <element identifier="id-BP-03" xsi:type="BusinessProcess"><name xml:lang="vi">BP-03 Khám bệnh</name></element>
+    <element identifier="id-BP-04" xsi:type="BusinessProcess"><name xml:lang="vi">BP-04 Kê đơn điện tử</name></element>
+    <element identifier="id-BP-05" xsi:type="BusinessProcess"><name xml:lang="vi">BP-05 Cấp thuốc</name></element>
+    <element identifier="id-BF-01" xsi:type="BusinessFunction"><name xml:lang="vi">BF-01 Kiểm soát truy cập &amp; lưu vết</name></element>
+    <element identifier="id-BF-02" xsi:type="BusinessFunction"><name xml:lang="vi">BF-02 Quản lý vận hành &amp; báo cáo</name></element>
+    <element identifier="id-BO-HoSoBenhNhan" xsi:type="BusinessObject"><name xml:lang="vi">BO-HoSoBenhNhan Hồ sơ bệnh nhân</name></element>
+    <element identifier="id-BO-LichHen" xsi:type="BusinessObject"><name xml:lang="vi">BO-LichHen Lịch hẹn</name></element>
+    <element identifier="id-BO-TheBHYT" xsi:type="BusinessObject"><name xml:lang="vi">BO-TheBHYT Thẻ BHYT</name></element>
+    <element identifier="id-BO-LuotKham" xsi:type="BusinessObject"><name xml:lang="vi">BO-LuotKham Lượt khám</name></element>
+    <element identifier="id-BO-BenhAnNgoaiTru" xsi:type="BusinessObject"><name xml:lang="vi">BO-BenhAnNgoaiTru Bệnh án ngoại trú</name></element>
+    <element identifier="id-BO-DonThuoc" xsi:type="BusinessObject"><name xml:lang="vi">BO-DonThuoc Đơn thuốc</name></element>
+    <element identifier="id-BO-PhieuCapThuoc" xsi:type="BusinessObject"><name xml:lang="vi">BO-PhieuCapThuoc Phiếu cấp thuốc</name></element>
+    <element identifier="id-BO-NhatKyTruyCap" xsi:type="BusinessObject"><name xml:lang="vi">BO-NhatKyTruyCap Nhật ký truy cập</name></element>
+    <element identifier="id-BO-ChinhSachTruyCap" xsi:type="BusinessObject"><name xml:lang="vi">BO-ChinhSachTruyCap Chính sách truy cập</name></element>
+    <element identifier="id-RP-01" xsi:type="Representation"><name xml:lang="vi">RP-01 Mã đơn / QR (SMS, bản in)</name></element>
+    <element identifier="id-PRD-01" xsi:type="Product"><name xml:lang="vi">PRD-01 Gói khám ngoại trú</name></element>
+    <element identifier="id-CT-01" xsi:type="Contract"><name xml:lang="vi">CT-01 Thỏa thuận khám &amp; đồng ý xử lý dữ liệu</name></element>
+    <element identifier="id-CT-02" xsi:type="Contract"><name xml:lang="vi">CT-02 Hợp đồng liên kết nhà thuốc</name></element>
+    <element identifier="id-BP-01_1" xsi:type="BusinessProcess"><name xml:lang="vi">BP-01.1 Chọn chuyên khoa/bác sĩ/khung giờ</name></element>
+    <element identifier="id-BP-01_2" xsi:type="BusinessProcess"><name xml:lang="vi">BP-01.2 Xác nhận lịch hẹn</name></element>
+    <element identifier="id-BP-01_3" xsi:type="BusinessProcess"><name xml:lang="vi">BP-01.3 Nhắc lịch</name></element>
+    <element identifier="id-BP-02_1" xsi:type="BusinessProcess"><name xml:lang="vi">BP-02.1 Check-in</name></element>
+    <element identifier="id-BP-02_2" xsi:type="BusinessProcess"><name xml:lang="vi">BP-02.2 Xác minh danh tính &amp; BHYT</name></element>
+    <element identifier="id-BP-02_3" xsi:type="BusinessProcess"><name xml:lang="vi">BP-02.3 Mở lượt khám &amp; xếp hàng</name></element>
+    <element identifier="id-BP-03_1" xsi:type="BusinessProcess"><name xml:lang="vi">BP-03.1 Đo sinh hiệu</name></element>
+    <element identifier="id-BP-03_2" xsi:type="BusinessProcess"><name xml:lang="vi">BP-03.2 Xem hồ sơ &amp; tiền sử</name></element>
+    <element identifier="id-BP-03_3" xsi:type="BusinessProcess"><name xml:lang="vi">BP-03.3 Ghi nhận khám &amp; chẩn đoán</name></element>
+    <element identifier="id-BP-04_1" xsi:type="BusinessProcess"><name xml:lang="vi">BP-04.1 Lập đơn</name></element>
+    <element identifier="id-BP-04_2" xsi:type="BusinessProcess"><name xml:lang="vi">BP-04.2 Kiểm tra an toàn đơn</name></element>
+    <element identifier="id-BP-04_3" xsi:type="BusinessProcess"><name xml:lang="vi">BP-04.3 Ký số &amp; phát hành đơn</name></element>
+    <element identifier="id-BP-04_4" xsi:type="BusinessProcess"><name xml:lang="vi">BP-04.4 Gửi đơn liên thông</name></element>
+    <element identifier="id-BP-05_1" xsi:type="BusinessProcess"><name xml:lang="vi">BP-05.1 Tiếp nhận &amp; tra cứu đơn</name></element>
+    <element identifier="id-BP-05_2" xsi:type="BusinessProcess"><name xml:lang="vi">BP-05.2 Cấp thuốc &amp; tư vấn</name></element>
+    <element identifier="id-BP-05_3" xsi:type="BusinessProcess"><name xml:lang="vi">BP-05.3 Xác nhận cấp thuốc</name></element>
+    <element identifier="id-BP0-01" xsi:type="BusinessProcess"><name xml:lang="vi">BP0-01 Đặt lịch qua hotline/Zalo (ghi Google Sheet)</name></element>
+    <element identifier="id-BP0-02" xsi:type="BusinessProcess"><name xml:lang="vi">BP0-02 Lấy số &amp; tiếp đón tại quầy</name></element>
+    <element identifier="id-BP0-03" xsi:type="BusinessProcess"><name xml:lang="vi">BP0-03 Khám &amp; ghi bệnh án giấy</name></element>
+    <element identifier="id-BP0-04" xsi:type="BusinessProcess"><name xml:lang="vi">BP0-04 Kê đơn in/viết tay</name></element>
+    <element identifier="id-BP0-05" xsi:type="BusinessProcess"><name xml:lang="vi">BP0-05 Thanh toán &amp; giám định BHYT</name></element>
+    <element identifier="id-BP0-06" xsi:type="BusinessProcess"><name xml:lang="vi">BP0-06 Mua thuốc bằng đơn giấy</name></element>
+    <element identifier="id-BO0-01" xsi:type="BusinessObject"><name xml:lang="vi">BO0-01 Sổ lịch hẹn (Google Sheet)</name></element>
+    <element identifier="id-BO0-02" xsi:type="BusinessObject"><name xml:lang="vi">BO0-02 Phiếu số thứ tự</name></element>
+    <element identifier="id-BO0-03" xsi:type="BusinessObject"><name xml:lang="vi">BO0-03 Bệnh án giấy</name></element>
+    <element identifier="id-BO0-04" xsi:type="BusinessObject"><name xml:lang="vi">BO0-04 Đơn thuốc giấy</name></element>
+    <element identifier="id-AC-BookingSheet" xsi:type="ApplicationComponent"><name xml:lang="vi">AC-BookingSheet Google Sheet đặt lịch</name></element>
+    <element identifier="id-AC-HisLite-CS1" xsi:type="ApplicationComponent"><name xml:lang="vi">AC-HisLite-CS1 HIS-Lite (CS1)</name></element>
+    <element identifier="id-AC-ClinicSoft-CS2" xsi:type="ApplicationComponent"><name xml:lang="vi">AC-ClinicSoft-CS2 ClinicSoft (CS2)</name></element>
+  </elements>
+  <relationships>
+    <relationship identifier="id-r-0" source="id-SH-01" target="id-DRV-01" xsi:type="Association"/>
+    <relationship identifier="id-r-1" source="id-SH-01" target="id-DRV-02" xsi:type="Association"/>
+    <relationship identifier="id-r-2" source="id-SH-01" target="id-DRV-04" xsi:type="Association"/>
+    <relationship identifier="id-r-3" source="id-SH-01" target="id-DRV-05" xsi:type="Association"/>
+    <relationship identifier="id-r-4" source="id-SH-01" target="id-DRV-06" xsi:type="Association"/>
+    <relationship identifier="id-r-5" source="id-SH-02" target="id-DRV-01" xsi:type="Association"/>
+    <relationship identifier="id-r-6" source="id-SH-02" target="id-DRV-03" xsi:type="Association"/>
+    <relationship identifier="id-r-7" source="id-SH-03" target="id-DRV-02" xsi:type="Association"/>
+    <relationship identifier="id-r-8" source="id-SH-03" target="id-DRV-06" xsi:type="Association"/>
+    <relationship identifier="id-r-9" source="id-SH-04" target="id-DRV-01" xsi:type="Association"/>
+    <relationship identifier="id-r-10" source="id-SH-05" target="id-DRV-01" xsi:type="Association"/>
+    <relationship identifier="id-r-11" source="id-SH-06" target="id-DRV-02" xsi:type="Association"/>
+    <relationship identifier="id-r-12" source="id-SH-06" target="id-DRV-05" xsi:type="Association"/>
+    <relationship identifier="id-r-13" source="id-SH-07" target="id-DRV-04" xsi:type="Association"/>
+    <relationship identifier="id-r-14" source="id-SH-08" target="id-DRV-04" xsi:type="Association"/>
+    <relationship identifier="id-r-15" source="id-SH-09" target="id-DRV-03" xsi:type="Association"/>
+    <relationship identifier="id-r-16" source="id-SH-10" target="id-DRV-03" xsi:type="Association"/>
+    <relationship identifier="id-r-17" source="id-SH-11" target="id-DRV-06" xsi:type="Association"/>
+    <relationship identifier="id-r-18" source="id-ASM-01" target="id-DRV-01" xsi:type="Association"/>
+    <relationship identifier="id-r-19" source="id-ASM-02" target="id-DRV-02" xsi:type="Association"/>
+    <relationship identifier="id-r-20" source="id-ASM-03" target="id-DRV-03" xsi:type="Association"/>
+    <relationship identifier="id-r-21" source="id-ASM-04" target="id-DRV-04" xsi:type="Association"/>
+    <relationship identifier="id-r-22" source="id-ASM-05" target="id-DRV-05" xsi:type="Association"/>
+    <relationship identifier="id-r-23" source="id-ASM-06" target="id-DRV-06" xsi:type="Association"/>
+    <relationship identifier="id-r-24" source="id-DRV-01" target="id-G-01" xsi:type="Influence"/>
+    <relationship identifier="id-r-25" source="id-DRV-02" target="id-G-02" xsi:type="Influence"/>
+    <relationship identifier="id-r-26" source="id-DRV-03" target="id-G-02" xsi:type="Influence"/>
+    <relationship identifier="id-r-27" source="id-DRV-03" target="id-G-04" xsi:type="Influence"/>
+    <relationship identifier="id-r-28" source="id-DRV-04" target="id-G-03" xsi:type="Influence"/>
+    <relationship identifier="id-r-29" source="id-DRV-05" target="id-G-04" xsi:type="Influence"/>
+    <relationship identifier="id-r-30" source="id-DRV-06" target="id-G-05" xsi:type="Influence"/>
+    <relationship identifier="id-r-31" source="id-OC-01" target="id-G-01" xsi:type="Realization"/>
+    <relationship identifier="id-r-32" source="id-OC-02" target="id-G-02" xsi:type="Realization"/>
+    <relationship identifier="id-r-33" source="id-OC-03" target="id-G-03" xsi:type="Realization"/>
+    <relationship identifier="id-r-34" source="id-OC-04" target="id-G-04" xsi:type="Realization"/>
+    <relationship identifier="id-r-35" source="id-OC-05" target="id-G-05" xsi:type="Realization"/>
+    <relationship identifier="id-r-36" source="id-PR-01" target="id-G-02" xsi:type="Realization"/>
+    <relationship identifier="id-r-37" source="id-PR-02" target="id-G-05" xsi:type="Realization"/>
+    <relationship identifier="id-r-38" source="id-PR-03" target="id-G-03" xsi:type="Realization"/>
+    <relationship identifier="id-r-39" source="id-PR-04" target="id-G-03" xsi:type="Realization"/>
+    <relationship identifier="id-r-40" source="id-PR-05" target="id-G-02" xsi:type="Realization"/>
+    <relationship identifier="id-r-41" source="id-PR-06" target="id-G-04" xsi:type="Realization"/>
+    <relationship identifier="id-r-42" source="id-PR-07" target="id-G-01" xsi:type="Realization"/>
+    <relationship identifier="id-r-43" source="id-PR-08" target="id-G-04" xsi:type="Realization"/>
+    <relationship identifier="id-r-44" source="id-FR-01" target="id-OC-01" xsi:type="Realization"/>
+    <relationship identifier="id-r-45" source="id-FR-02" target="id-OC-01" xsi:type="Realization"/>
+    <relationship identifier="id-r-46" source="id-FR-03" target="id-OC-01" xsi:type="Realization"/>
+    <relationship identifier="id-r-47" source="id-FR-04" target="id-OC-05" xsi:type="Realization"/>
+    <relationship identifier="id-r-48" source="id-FR-05" target="id-OC-02" xsi:type="Realization"/>
+    <relationship identifier="id-r-49" source="id-FR-06" target="id-OC-04" xsi:type="Realization"/>
+    <relationship identifier="id-r-50" source="id-FR-07" target="id-OC-04" xsi:type="Realization"/>
+    <relationship identifier="id-r-51" source="id-FR-08" target="id-OC-03" xsi:type="Realization"/>
+    <relationship identifier="id-r-52" source="id-FR-09" target="id-OC-03" xsi:type="Realization"/>
+    <relationship identifier="id-r-53" source="id-FR-10" target="id-OC-01" xsi:type="Realization"/>
+    <relationship identifier="id-r-54" source="id-FR-11" target="id-OC-01" xsi:type="Realization"/>
+    <relationship identifier="id-r-55" source="id-NFR-PRF-01" target="id-OC-01" xsi:type="Realization"/>
+    <relationship identifier="id-r-56" source="id-NFR-AVL-01" target="id-OC-04" xsi:type="Realization"/>
+    <relationship identifier="id-r-57" source="id-NFR-SEC-01" target="id-OC-03" xsi:type="Realization"/>
+    <relationship identifier="id-r-58" source="id-NFR-SEC-02" target="id-OC-03" xsi:type="Realization"/>
+    <relationship identifier="id-r-59" source="id-NFR-SEC-03" target="id-OC-03" xsi:type="Realization"/>
+    <relationship identifier="id-r-60" source="id-NFR-SEC-04" target="id-OC-03" xsi:type="Realization"/>
+    <relationship identifier="id-r-61" source="id-NFR-SEC-05" target="id-OC-03" xsi:type="Realization"/>
+    <relationship identifier="id-r-62" source="id-NFR-INT-01" target="id-OC-04" xsi:type="Realization"/>
+    <relationship identifier="id-r-63" source="id-NFR-INT-02" target="id-OC-04" xsi:type="Realization"/>
+    <relationship identifier="id-r-64" source="id-NFR-DAT-01" target="id-OC-02" xsi:type="Realization"/>
+    <relationship identifier="id-r-65" source="id-NFR-USB-01" target="id-OC-01" xsi:type="Realization"/>
+    <relationship identifier="id-r-66" source="id-CON-01" target="id-G-02" xsi:type="Influence"/>
+    <relationship identifier="id-r-67" source="id-CON-02" target="id-G-03" xsi:type="Influence"/>
+    <relationship identifier="id-r-68" source="id-CON-03" target="id-G-02" xsi:type="Influence"/>
+    <relationship identifier="id-r-69" source="id-CON-04" target="id-G-02" xsi:type="Influence"/>
+    <relationship identifier="id-r-70" source="id-CON-05" target="id-G-01" xsi:type="Influence"/>
+    <relationship identifier="id-r-71" source="id-CON-06" target="id-G-04" xsi:type="Influence"/>
+    <relationship identifier="id-r-72" source="id-CON-07" target="id-G-01" xsi:type="Influence"/>
+    <relationship identifier="id-r-73" source="id-FR-08" target="id-PR-03" xsi:type="Realization"/>
+    <relationship identifier="id-r-74" source="id-FR-09" target="id-PR-04" xsi:type="Realization"/>
+    <relationship identifier="id-r-75" source="id-NFR-INT-01" target="id-PR-06" xsi:type="Realization"/>
+    <relationship identifier="id-r-76" source="id-NFR-DAT-01" target="id-PR-01" xsi:type="Realization"/>
+    <relationship identifier="id-r-77" source="id-BP-01" target="id-BP-01_1" xsi:type="Composition"/>
+    <relationship identifier="id-r-78" source="id-BP-01" target="id-BP-01_2" xsi:type="Composition"/>
+    <relationship identifier="id-r-79" source="id-BP-01" target="id-BP-01_3" xsi:type="Composition"/>
+    <relationship identifier="id-r-80" source="id-BP-02" target="id-BP-02_1" xsi:type="Composition"/>
+    <relationship identifier="id-r-81" source="id-BP-02" target="id-BP-02_2" xsi:type="Composition"/>
+    <relationship identifier="id-r-82" source="id-BP-02" target="id-BP-02_3" xsi:type="Composition"/>
+    <relationship identifier="id-r-83" source="id-BP-03" target="id-BP-03_1" xsi:type="Composition"/>
+    <relationship identifier="id-r-84" source="id-BP-03" target="id-BP-03_2" xsi:type="Composition"/>
+    <relationship identifier="id-r-85" source="id-BP-03" target="id-BP-03_3" xsi:type="Composition"/>
+    <relationship identifier="id-r-86" source="id-BP-04" target="id-BP-04_1" xsi:type="Composition"/>
+    <relationship identifier="id-r-87" source="id-BP-04" target="id-BP-04_2" xsi:type="Composition"/>
+    <relationship identifier="id-r-88" source="id-BP-04" target="id-BP-04_3" xsi:type="Composition"/>
+    <relationship identifier="id-r-89" source="id-BP-04" target="id-BP-04_4" xsi:type="Composition"/>
+    <relationship identifier="id-r-90" source="id-BP-05" target="id-BP-05_1" xsi:type="Composition"/>
+    <relationship identifier="id-r-91" source="id-BP-05" target="id-BP-05_2" xsi:type="Composition"/>
+    <relationship identifier="id-r-92" source="id-BP-05" target="id-BP-05_3" xsi:type="Composition"/>
+    <relationship identifier="id-r-93" source="id-BA-BenhNhan" target="id-BR-BenhNhan" xsi:type="Assignment"/>
+    <relationship identifier="id-r-94" source="id-BA-NhaThuocDoiTac" target="id-BR-DuocSi" xsi:type="Assignment"/>
+    <relationship identifier="id-r-95" source="id-BA-NhaThuocNoiBo" target="id-BR-DuocSi" xsi:type="Assignment"/>
+    <relationship identifier="id-r-96" source="id-BA-PhongKham" target="id-BA-NhaThuocNoiBo" xsi:type="Aggregation"/>
+    <relationship identifier="id-r-97" source="id-BC-KhamKeDon" target="id-BR-BacSi" xsi:type="Aggregation"/>
+    <relationship identifier="id-r-98" source="id-BC-KhamKeDon" target="id-BR-DieuDuong" xsi:type="Aggregation"/>
+    <relationship identifier="id-r-99" source="id-BI-01" target="id-BS-01" xsi:type="Assignment"/>
+    <relationship identifier="id-r-100" source="id-BI-01" target="id-BS-06" xsi:type="Assignment"/>
+    <relationship identifier="id-r-101" source="id-BI-02" target="id-BS-01" xsi:type="Assignment"/>
+    <relationship identifier="id-r-102" source="id-BI-03" target="id-BS-02" xsi:type="Assignment"/>
+    <relationship identifier="id-r-103" source="id-BI-04" target="id-BS-05" xsi:type="Assignment"/>
+    <relationship identifier="id-r-104" source="id-BS-01" target="id-BR-BenhNhan" xsi:type="Serving"/>
+    <relationship identifier="id-r-105" source="id-BS-02" target="id-BR-BenhNhan" xsi:type="Serving"/>
+    <relationship identifier="id-r-106" source="id-BS-03" target="id-BR-BenhNhan" xsi:type="Serving"/>
+    <relationship identifier="id-r-107" source="id-BS-04" target="id-BR-BenhNhan" xsi:type="Serving"/>
+    <relationship identifier="id-r-108" source="id-BS-05" target="id-BR-BenhNhan" xsi:type="Serving"/>
+    <relationship identifier="id-r-109" source="id-BS-06" target="id-BR-BenhNhan" xsi:type="Serving"/>
+    <relationship identifier="id-r-110" source="id-BI-01" target="id-BR-BenhNhan" xsi:type="Serving"/>
+    <relationship identifier="id-r-111" source="id-BI-02" target="id-BR-BenhNhan" xsi:type="Serving"/>
+    <relationship identifier="id-r-112" source="id-BI-03" target="id-BR-BenhNhan" xsi:type="Serving"/>
+    <relationship identifier="id-r-113" source="id-BI-04" target="id-BR-DuocSi" xsi:type="Serving"/>
+    <relationship identifier="id-r-114" source="id-BP-01" target="id-BS-01" xsi:type="Realization"/>
+    <relationship identifier="id-r-115" source="id-BP-02" target="id-BS-02" xsi:type="Realization"/>
+    <relationship identifier="id-r-116" source="id-BP-03" target="id-BS-03" xsi:type="Realization"/>
+    <relationship identifier="id-r-117" source="id-BP-04" target="id-BS-04" xsi:type="Realization"/>
+    <relationship identifier="id-r-118" source="id-BP-05" target="id-BS-05" xsi:type="Realization"/>
+    <relationship identifier="id-r-119" source="id-BF-01" target="id-BS-07" xsi:type="Realization"/>
+    <relationship identifier="id-r-120" source="id-BP-01" target="id-BS-06" xsi:type="Realization"/>
+    <relationship identifier="id-r-121" source="id-BP-04" target="id-BS-06" xsi:type="Realization"/>
+    <relationship identifier="id-r-122" source="id-BE-01" target="id-BP-01" xsi:type="Triggering"/>
+    <relationship identifier="id-r-123" source="id-BP-01" target="id-BE-02" xsi:type="Triggering"/>
+    <relationship identifier="id-r-124" source="id-BE-02" target="id-BP-02" xsi:type="Triggering"/>
+    <relationship identifier="id-r-125" source="id-BP-02" target="id-BP-03" xsi:type="Triggering"/>
+    <relationship identifier="id-r-126" source="id-BP-03" target="id-BP-04" xsi:type="Triggering"/>
+    <relationship identifier="id-r-127" source="id-BP-04" target="id-BE-03" xsi:type="Triggering"/>
+    <relationship identifier="id-r-128" source="id-BE-03" target="id-BP-05" xsi:type="Triggering"/>
+    <relationship identifier="id-r-129" source="id-BP-05" target="id-BE-04" xsi:type="Triggering"/>
+    <relationship identifier="id-r-130" source="id-BR-BenhNhan" target="id-BP-01" xsi:type="Assignment"/>
+    <relationship identifier="id-r-131" source="id-BR-LeTan" target="id-BP-02" xsi:type="Assignment"/>
+    <relationship identifier="id-r-132" source="id-BC-KhamKeDon" target="id-BP-03" xsi:type="Assignment"/>
+    <relationship identifier="id-r-133" source="id-BR-BacSi" target="id-BP-04" xsi:type="Assignment"/>
+    <relationship identifier="id-r-134" source="id-BR-DuocSi" target="id-BP-05" xsi:type="Assignment"/>
+    <relationship identifier="id-r-135" source="id-BR-QuanTriBaoMat" target="id-BF-01" xsi:type="Assignment"/>
+    <relationship identifier="id-r-136" source="id-BR-QuanLy" target="id-BF-02" xsi:type="Assignment"/>
+    <relationship identifier="id-r-137" source="id-BS-07" target="id-BP-03" xsi:type="Serving"/>
+    <relationship identifier="id-r-138" source="id-BS-07" target="id-BP-04" xsi:type="Serving"/>
+    <relationship identifier="id-r-139" source="id-BP-01" target="id-BO-LichHen" xsi:type="Access" accessType="Write"/>
+    <relationship identifier="id-r-140" source="id-BP-01" target="id-BO-HoSoBenhNhan" xsi:type="Access" accessType="ReadWrite"/>
+    <relationship identifier="id-r-141" source="id-BP-02" target="id-BO-TheBHYT" xsi:type="Access" accessType="Read"/>
+    <relationship identifier="id-r-142" source="id-BP-02" target="id-BO-LuotKham" xsi:type="Access" accessType="Write"/>
+    <relationship identifier="id-r-143" source="id-BP-03" target="id-BO-BenhAnNgoaiTru" xsi:type="Access" accessType="ReadWrite"/>
+    <relationship identifier="id-r-144" source="id-BP-03" target="id-BO-LuotKham" xsi:type="Access" accessType="ReadWrite"/>
+    <relationship identifier="id-r-145" source="id-BP-04" target="id-BO-DonThuoc" xsi:type="Access" accessType="Write"/>
+    <relationship identifier="id-r-146" source="id-BP-05" target="id-BO-DonThuoc" xsi:type="Access" accessType="Read"/>
+    <relationship identifier="id-r-147" source="id-BP-05" target="id-BO-PhieuCapThuoc" xsi:type="Access" accessType="Write"/>
+    <relationship identifier="id-r-148" source="id-BF-01" target="id-BO-NhatKyTruyCap" xsi:type="Access" accessType="Write"/>
+    <relationship identifier="id-r-149" source="id-BF-01" target="id-BO-ChinhSachTruyCap" xsi:type="Access" accessType="Read"/>
+    <relationship identifier="id-r-150" source="id-RP-01" target="id-BO-DonThuoc" xsi:type="Realization"/>
+    <relationship identifier="id-r-151" source="id-PRD-01" target="id-BS-01" xsi:type="Aggregation"/>
+    <relationship identifier="id-r-152" source="id-PRD-01" target="id-BS-02" xsi:type="Aggregation"/>
+    <relationship identifier="id-r-153" source="id-PRD-01" target="id-BS-03" xsi:type="Aggregation"/>
+    <relationship identifier="id-r-154" source="id-PRD-01" target="id-BS-04" xsi:type="Aggregation"/>
+    <relationship identifier="id-r-155" source="id-PRD-01" target="id-BS-05" xsi:type="Aggregation"/>
+    <relationship identifier="id-r-156" source="id-PRD-01" target="id-BS-06" xsi:type="Aggregation"/>
+    <relationship identifier="id-r-157" source="id-PRD-01" target="id-CT-01" xsi:type="Aggregation"/>
+    <relationship identifier="id-r-158" source="id-CT-02" target="id-BA-NhaThuocDoiTac" xsi:type="Association"/>
+    <relationship identifier="id-r-159" source="id-BP0-01" target="id-BP0-02" xsi:type="Triggering"/>
+    <relationship identifier="id-r-160" source="id-BP0-02" target="id-BP0-03" xsi:type="Triggering"/>
+    <relationship identifier="id-r-161" source="id-BP0-03" target="id-BP0-04" xsi:type="Triggering"/>
+    <relationship identifier="id-r-162" source="id-BP0-04" target="id-BP0-05" xsi:type="Triggering"/>
+    <relationship identifier="id-r-163" source="id-BP0-05" target="id-BP0-06" xsi:type="Triggering"/>
+    <relationship identifier="id-r-164" source="id-BR-LeTan" target="id-BP0-01" xsi:type="Assignment"/>
+    <relationship identifier="id-r-165" source="id-BR-LeTan" target="id-BP0-02" xsi:type="Assignment"/>
+    <relationship identifier="id-r-166" source="id-BR-BacSi" target="id-BP0-03" xsi:type="Assignment"/>
+    <relationship identifier="id-r-167" source="id-BR-BacSi" target="id-BP0-04" xsi:type="Assignment"/>
+    <relationship identifier="id-r-168" source="id-BR-ThuNgan" target="id-BP0-05" xsi:type="Assignment"/>
+    <relationship identifier="id-r-169" source="id-BR-DuocSi" target="id-BP0-06" xsi:type="Assignment"/>
+    <relationship identifier="id-r-170" source="id-BP0-01" target="id-BO0-01" xsi:type="Access" accessType="ReadWrite"/>
+    <relationship identifier="id-r-171" source="id-BP0-02" target="id-BO0-02" xsi:type="Access" accessType="ReadWrite"/>
+    <relationship identifier="id-r-172" source="id-BP0-03" target="id-BO0-03" xsi:type="Access" accessType="ReadWrite"/>
+    <relationship identifier="id-r-173" source="id-BP0-04" target="id-BO0-04" xsi:type="Access" accessType="ReadWrite"/>
+    <relationship identifier="id-r-174" source="id-BP0-06" target="id-BO0-04" xsi:type="Access" accessType="ReadWrite"/>
+    <relationship identifier="id-r-175" source="id-AC-BookingSheet" target="id-BP0-01" xsi:type="Serving"/>
+    <relationship identifier="id-r-176" source="id-AC-HisLite-CS1" target="id-BP0-04" xsi:type="Serving"/>
+    <relationship identifier="id-r-177" source="id-AC-HisLite-CS1" target="id-BP0-05" xsi:type="Serving"/>
+    <relationship identifier="id-r-178" source="id-AC-ClinicSoft-CS2" target="id-BP0-04" xsi:type="Serving"/>
+    <relationship identifier="id-r-179" source="id-AC-ClinicSoft-CS2" target="id-BP0-05" xsi:type="Serving"/>
+    <relationship identifier="id-r-180" source="id-ASM-01" target="id-BP0-01" xsi:type="Association"/>
+    <relationship identifier="id-r-181" source="id-ASM-01" target="id-BP0-02" xsi:type="Association"/>
+    <relationship identifier="id-r-182" source="id-ASM-02" target="id-BP0-04" xsi:type="Association"/>
+    <relationship identifier="id-r-183" source="id-ASM-03" target="id-BP0-04" xsi:type="Association"/>
+    <relationship identifier="id-r-184" source="id-ASM-04" target="id-AC-HisLite-CS1" xsi:type="Association"/>
+    <relationship identifier="id-r-185" source="id-ASM-05" target="id-BP0-06" xsi:type="Association"/>
+    <relationship identifier="id-r-186" source="id-ASM-06" target="id-BP0-03" xsi:type="Association"/>
+  </relationships>
+  <organizations>
+    <item><label xml:lang="vi">Motivation</label>
+      <item identifierRef="id-SH-01"/>
+      <item identifierRef="id-SH-02"/>
+      <item identifierRef="id-SH-03"/>
+      <item identifierRef="id-SH-04"/>
+      <item identifierRef="id-SH-05"/>
+      <item identifierRef="id-SH-06"/>
+      <item identifierRef="id-SH-07"/>
+      <item identifierRef="id-SH-08"/>
+      <item identifierRef="id-SH-09"/>
+      <item identifierRef="id-SH-10"/>
+      <item identifierRef="id-SH-11"/>
+      <item identifierRef="id-DRV-01"/>
+      <item identifierRef="id-DRV-02"/>
+      <item identifierRef="id-DRV-03"/>
+      <item identifierRef="id-DRV-04"/>
+      <item identifierRef="id-DRV-05"/>
+      <item identifierRef="id-DRV-06"/>
+      <item identifierRef="id-ASM-01"/>
+      <item identifierRef="id-ASM-02"/>
+      <item identifierRef="id-ASM-03"/>
+      <item identifierRef="id-ASM-04"/>
+      <item identifierRef="id-ASM-05"/>
+      <item identifierRef="id-ASM-06"/>
+      <item identifierRef="id-G-01"/>
+      <item identifierRef="id-G-02"/>
+      <item identifierRef="id-G-03"/>
+      <item identifierRef="id-G-04"/>
+      <item identifierRef="id-G-05"/>
+      <item identifierRef="id-OC-01"/>
+      <item identifierRef="id-OC-02"/>
+      <item identifierRef="id-OC-03"/>
+      <item identifierRef="id-OC-04"/>
+      <item identifierRef="id-OC-05"/>
+      <item identifierRef="id-PR-01"/>
+      <item identifierRef="id-PR-02"/>
+      <item identifierRef="id-PR-03"/>
+      <item identifierRef="id-PR-04"/>
+      <item identifierRef="id-PR-05"/>
+      <item identifierRef="id-PR-06"/>
+      <item identifierRef="id-PR-07"/>
+      <item identifierRef="id-PR-08"/>
+      <item identifierRef="id-FR-01"/>
+      <item identifierRef="id-FR-02"/>
+      <item identifierRef="id-FR-03"/>
+      <item identifierRef="id-FR-04"/>
+      <item identifierRef="id-FR-05"/>
+      <item identifierRef="id-FR-06"/>
+      <item identifierRef="id-FR-07"/>
+      <item identifierRef="id-FR-08"/>
+      <item identifierRef="id-FR-09"/>
+      <item identifierRef="id-FR-10"/>
+      <item identifierRef="id-FR-11"/>
+      <item identifierRef="id-NFR-PRF-01"/>
+      <item identifierRef="id-NFR-AVL-01"/>
+      <item identifierRef="id-NFR-SEC-01"/>
+      <item identifierRef="id-NFR-SEC-02"/>
+      <item identifierRef="id-NFR-SEC-03"/>
+      <item identifierRef="id-NFR-SEC-04"/>
+      <item identifierRef="id-NFR-SEC-05"/>
+      <item identifierRef="id-NFR-INT-01"/>
+      <item identifierRef="id-NFR-INT-02"/>
+      <item identifierRef="id-NFR-DAT-01"/>
+      <item identifierRef="id-NFR-USB-01"/>
+      <item identifierRef="id-CON-01"/>
+      <item identifierRef="id-CON-02"/>
+      <item identifierRef="id-CON-03"/>
+      <item identifierRef="id-CON-04"/>
+      <item identifierRef="id-CON-05"/>
+      <item identifierRef="id-CON-06"/>
+      <item identifierRef="id-CON-07"/>
+    </item>
+    <item><label xml:lang="vi">Business</label>
+      <item identifierRef="id-BA-BenhNhan"/>
+      <item identifierRef="id-BA-PhongKham"/>
+      <item identifierRef="id-BA-NhaThuocDoiTac"/>
+      <item identifierRef="id-BA-NhaThuocNoiBo"/>
+      <item identifierRef="id-BA-BHXH"/>
+      <item identifierRef="id-BR-BenhNhan"/>
+      <item identifierRef="id-BR-LeTan"/>
+      <item identifierRef="id-BR-DieuDuong"/>
+      <item identifierRef="id-BR-BacSi"/>
+      <item identifierRef="id-BR-DuocSi"/>
+      <item identifierRef="id-BR-QuanLy"/>
+      <item identifierRef="id-BR-QuanTriBaoMat"/>
+      <item identifierRef="id-BR-ThuNgan"/>
+      <item identifierRef="id-BC-KhamKeDon"/>
+      <item identifierRef="id-BI-01"/>
+      <item identifierRef="id-BI-02"/>
+      <item identifierRef="id-BI-03"/>
+      <item identifierRef="id-BI-04"/>
+      <item identifierRef="id-BS-01"/>
+      <item identifierRef="id-BS-02"/>
+      <item identifierRef="id-BS-03"/>
+      <item identifierRef="id-BS-04"/>
+      <item identifierRef="id-BS-05"/>
+      <item identifierRef="id-BS-06"/>
+      <item identifierRef="id-BS-07"/>
+      <item identifierRef="id-BE-01"/>
+      <item identifierRef="id-BE-02"/>
+      <item identifierRef="id-BE-03"/>
+      <item identifierRef="id-BE-04"/>
+      <item identifierRef="id-BP-01"/>
+      <item identifierRef="id-BP-02"/>
+      <item identifierRef="id-BP-03"/>
+      <item identifierRef="id-BP-04"/>
+      <item identifierRef="id-BP-05"/>
+      <item identifierRef="id-BF-01"/>
+      <item identifierRef="id-BF-02"/>
+      <item identifierRef="id-BO-HoSoBenhNhan"/>
+      <item identifierRef="id-BO-LichHen"/>
+      <item identifierRef="id-BO-TheBHYT"/>
+      <item identifierRef="id-BO-LuotKham"/>
+      <item identifierRef="id-BO-BenhAnNgoaiTru"/>
+      <item identifierRef="id-BO-DonThuoc"/>
+      <item identifierRef="id-BO-PhieuCapThuoc"/>
+      <item identifierRef="id-BO-NhatKyTruyCap"/>
+      <item identifierRef="id-BO-ChinhSachTruyCap"/>
+      <item identifierRef="id-RP-01"/>
+      <item identifierRef="id-PRD-01"/>
+      <item identifierRef="id-CT-01"/>
+      <item identifierRef="id-CT-02"/>
+      <item identifierRef="id-BP-01_1"/>
+      <item identifierRef="id-BP-01_2"/>
+      <item identifierRef="id-BP-01_3"/>
+      <item identifierRef="id-BP-02_1"/>
+      <item identifierRef="id-BP-02_2"/>
+      <item identifierRef="id-BP-02_3"/>
+      <item identifierRef="id-BP-03_1"/>
+      <item identifierRef="id-BP-03_2"/>
+      <item identifierRef="id-BP-03_3"/>
+      <item identifierRef="id-BP-04_1"/>
+      <item identifierRef="id-BP-04_2"/>
+      <item identifierRef="id-BP-04_3"/>
+      <item identifierRef="id-BP-04_4"/>
+      <item identifierRef="id-BP-05_1"/>
+      <item identifierRef="id-BP-05_2"/>
+      <item identifierRef="id-BP-05_3"/>
+      <item identifierRef="id-BP0-01"/>
+      <item identifierRef="id-BP0-02"/>
+      <item identifierRef="id-BP0-03"/>
+      <item identifierRef="id-BP0-04"/>
+      <item identifierRef="id-BP0-05"/>
+      <item identifierRef="id-BP0-06"/>
+      <item identifierRef="id-BO0-01"/>
+      <item identifierRef="id-BO0-02"/>
+      <item identifierRef="id-BO0-03"/>
+      <item identifierRef="id-BO0-04"/>
+    </item>
+    <item><label xml:lang="vi">Application</label>
+      <item identifierRef="id-AC-BookingSheet"/>
+      <item identifierRef="id-AC-HisLite-CS1"/>
+      <item identifierRef="id-AC-ClinicSoft-CS2"/>
+    </item>
+    <item><label xml:lang="vi">Relations</label>
+      <item identifierRef="id-r-0"/>
+      <item identifierRef="id-r-1"/>
+      <item identifierRef="id-r-2"/>
+      <item identifierRef="id-r-3"/>
+      <item identifierRef="id-r-4"/>
+      <item identifierRef="id-r-5"/>
+      <item identifierRef="id-r-6"/>
+      <item identifierRef="id-r-7"/>
+      <item identifierRef="id-r-8"/>
+      <item identifierRef="id-r-9"/>
+      <item identifierRef="id-r-10"/>
+      <item identifierRef="id-r-11"/>
+      <item identifierRef="id-r-12"/>
+      <item identifierRef="id-r-13"/>
+      <item identifierRef="id-r-14"/>
+      <item identifierRef="id-r-15"/>
+      <item identifierRef="id-r-16"/>
+      <item identifierRef="id-r-17"/>
+      <item identifierRef="id-r-18"/>
+      <item identifierRef="id-r-19"/>
+      <item identifierRef="id-r-20"/>
+      <item identifierRef="id-r-21"/>
+      <item identifierRef="id-r-22"/>
+      <item identifierRef="id-r-23"/>
+      <item identifierRef="id-r-24"/>
+      <item identifierRef="id-r-25"/>
+      <item identifierRef="id-r-26"/>
+      <item identifierRef="id-r-27"/>
+      <item identifierRef="id-r-28"/>
+      <item identifierRef="id-r-29"/>
+      <item identifierRef="id-r-30"/>
+      <item identifierRef="id-r-31"/>
+      <item identifierRef="id-r-32"/>
+      <item identifierRef="id-r-33"/>
+      <item identifierRef="id-r-34"/>
+      <item identifierRef="id-r-35"/>
+      <item identifierRef="id-r-36"/>
+      <item identifierRef="id-r-37"/>
+      <item identifierRef="id-r-38"/>
+      <item identifierRef="id-r-39"/>
+      <item identifierRef="id-r-40"/>
+      <item identifierRef="id-r-41"/>
+      <item identifierRef="id-r-42"/>
+      <item identifierRef="id-r-43"/>
+      <item identifierRef="id-r-44"/>
+      <item identifierRef="id-r-45"/>
+      <item identifierRef="id-r-46"/>
+      <item identifierRef="id-r-47"/>
+      <item identifierRef="id-r-48"/>
+      <item identifierRef="id-r-49"/>
+      <item identifierRef="id-r-50"/>
+      <item identifierRef="id-r-51"/>
+      <item identifierRef="id-r-52"/>
+      <item identifierRef="id-r-53"/>
+      <item identifierRef="id-r-54"/>
+      <item identifierRef="id-r-55"/>
+      <item identifierRef="id-r-56"/>
+      <item identifierRef="id-r-57"/>
+      <item identifierRef="id-r-58"/>
+      <item identifierRef="id-r-59"/>
+      <item identifierRef="id-r-60"/>
+      <item identifierRef="id-r-61"/>
+      <item identifierRef="id-r-62"/>
+      <item identifierRef="id-r-63"/>
+      <item identifierRef="id-r-64"/>
+      <item identifierRef="id-r-65"/>
+      <item identifierRef="id-r-66"/>
+      <item identifierRef="id-r-67"/>
+      <item identifierRef="id-r-68"/>
+      <item identifierRef="id-r-69"/>
+      <item identifierRef="id-r-70"/>
+      <item identifierRef="id-r-71"/>
+      <item identifierRef="id-r-72"/>
+      <item identifierRef="id-r-73"/>
+      <item identifierRef="id-r-74"/>
+      <item identifierRef="id-r-75"/>
+      <item identifierRef="id-r-76"/>
+      <item identifierRef="id-r-77"/>
+      <item identifierRef="id-r-78"/>
+      <item identifierRef="id-r-79"/>
+      <item identifierRef="id-r-80"/>
+      <item identifierRef="id-r-81"/>
+      <item identifierRef="id-r-82"/>
+      <item identifierRef="id-r-83"/>
+      <item identifierRef="id-r-84"/>
+      <item identifierRef="id-r-85"/>
+      <item identifierRef="id-r-86"/>
+      <item identifierRef="id-r-87"/>
+      <item identifierRef="id-r-88"/>
+      <item identifierRef="id-r-89"/>
+      <item identifierRef="id-r-90"/>
+      <item identifierRef="id-r-91"/>
+      <item identifierRef="id-r-92"/>
+      <item identifierRef="id-r-93"/>
+      <item identifierRef="id-r-94"/>
+      <item identifierRef="id-r-95"/>
+      <item identifierRef="id-r-96"/>
+      <item identifierRef="id-r-97"/>
+      <item identifierRef="id-r-98"/>
+      <item identifierRef="id-r-99"/>
+      <item identifierRef="id-r-100"/>
+      <item identifierRef="id-r-101"/>
+      <item identifierRef="id-r-102"/>
+      <item identifierRef="id-r-103"/>
+      <item identifierRef="id-r-104"/>
+      <item identifierRef="id-r-105"/>
+      <item identifierRef="id-r-106"/>
+      <item identifierRef="id-r-107"/>
+      <item identifierRef="id-r-108"/>
+      <item identifierRef="id-r-109"/>
+      <item identifierRef="id-r-110"/>
+      <item identifierRef="id-r-111"/>
+      <item identifierRef="id-r-112"/>
+      <item identifierRef="id-r-113"/>
+      <item identifierRef="id-r-114"/>
+      <item identifierRef="id-r-115"/>
+      <item identifierRef="id-r-116"/>
+      <item identifierRef="id-r-117"/>
+      <item identifierRef="id-r-118"/>
+      <item identifierRef="id-r-119"/>
+      <item identifierRef="id-r-120"/>
+      <item identifierRef="id-r-121"/>
+      <item identifierRef="id-r-122"/>
+      <item identifierRef="id-r-123"/>
+      <item identifierRef="id-r-124"/>
+      <item identifierRef="id-r-125"/>
+      <item identifierRef="id-r-126"/>
+      <item identifierRef="id-r-127"/>
+      <item identifierRef="id-r-128"/>
+      <item identifierRef="id-r-129"/>
+      <item identifierRef="id-r-130"/>
+      <item identifierRef="id-r-131"/>
+      <item identifierRef="id-r-132"/>
+      <item identifierRef="id-r-133"/>
+      <item identifierRef="id-r-134"/>
+      <item identifierRef="id-r-135"/>
+      <item identifierRef="id-r-136"/>
+      <item identifierRef="id-r-137"/>
+      <item identifierRef="id-r-138"/>
+      <item identifierRef="id-r-139"/>
+      <item identifierRef="id-r-140"/>
+      <item identifierRef="id-r-141"/>
+      <item identifierRef="id-r-142"/>
+      <item identifierRef="id-r-143"/>
+      <item identifierRef="id-r-144"/>
+      <item identifierRef="id-r-145"/>
+      <item identifierRef="id-r-146"/>
+      <item identifierRef="id-r-147"/>
+      <item identifierRef="id-r-148"/>
+      <item identifierRef="id-r-149"/>
+      <item identifierRef="id-r-150"/>
+      <item identifierRef="id-r-151"/>
+      <item identifierRef="id-r-152"/>
+      <item identifierRef="id-r-153"/>
+      <item identifierRef="id-r-154"/>
+      <item identifierRef="id-r-155"/>
+      <item identifierRef="id-r-156"/>
+      <item identifierRef="id-r-157"/>
+      <item identifierRef="id-r-158"/>
+      <item identifierRef="id-r-159"/>
+      <item identifierRef="id-r-160"/>
+      <item identifierRef="id-r-161"/>
+      <item identifierRef="id-r-162"/>
+      <item identifierRef="id-r-163"/>
+      <item identifierRef="id-r-164"/>
+      <item identifierRef="id-r-165"/>
+      <item identifierRef="id-r-166"/>
+      <item identifierRef="id-r-167"/>
+      <item identifierRef="id-r-168"/>
+      <item identifierRef="id-r-169"/>
+      <item identifierRef="id-r-170"/>
+      <item identifierRef="id-r-171"/>
+      <item identifierRef="id-r-172"/>
+      <item identifierRef="id-r-173"/>
+      <item identifierRef="id-r-174"/>
+      <item identifierRef="id-r-175"/>
+      <item identifierRef="id-r-176"/>
+      <item identifierRef="id-r-177"/>
+      <item identifierRef="id-r-178"/>
+      <item identifierRef="id-r-179"/>
+      <item identifierRef="id-r-180"/>
+      <item identifierRef="id-r-181"/>
+      <item identifierRef="id-r-182"/>
+      <item identifierRef="id-r-183"/>
+      <item identifierRef="id-r-184"/>
+      <item identifierRef="id-r-185"/>
+      <item identifierRef="id-r-186"/>
+    </item>
+    <item><label xml:lang="vi">Views</label>
+      <item identifierRef="V-MOT-1"/>
+      <item identifierRef="V-MOT-2"/>
+      <item identifierRef="V-BUS-0"/>
+      <item identifierRef="V-BUS-1"/>
+      <item identifierRef="V-BUS-2"/>
+    </item>
+  </organizations>
+  <views>
+    <diagrams>
+      <view identifier="V-MOT-1" xsi:type="Diagram"><name xml:lang="vi">Motivation 1 – Stakeholder, Driver, Assessment, Goal, Outcome</name>
+        <node identifier="V-MOT-1-id-SH-01" elementRef="id-SH-01" xsi:type="Element" x="20" y="20" w="125" h="58"/>
+        <node identifier="V-MOT-1-id-SH-02" elementRef="id-SH-02" xsi:type="Element" x="155" y="20" w="125" h="58"/>
+        <node identifier="V-MOT-1-id-SH-03" elementRef="id-SH-03" xsi:type="Element" x="290" y="20" w="125" h="58"/>
+        <node identifier="V-MOT-1-id-SH-04" elementRef="id-SH-04" xsi:type="Element" x="425" y="20" w="125" h="58"/>
+        <node identifier="V-MOT-1-id-SH-05" elementRef="id-SH-05" xsi:type="Element" x="560" y="20" w="125" h="58"/>
+        <node identifier="V-MOT-1-id-SH-06" elementRef="id-SH-06" xsi:type="Element" x="695" y="20" w="125" h="58"/>
+        <node identifier="V-MOT-1-id-SH-07" elementRef="id-SH-07" xsi:type="Element" x="830" y="20" w="125" h="58"/>
+        <node identifier="V-MOT-1-id-SH-08" elementRef="id-SH-08" xsi:type="Element" x="965" y="20" w="125" h="58"/>
+        <node identifier="V-MOT-1-id-SH-09" elementRef="id-SH-09" xsi:type="Element" x="1100" y="20" w="125" h="58"/>
+        <node identifier="V-MOT-1-id-SH-10" elementRef="id-SH-10" xsi:type="Element" x="1235" y="20" w="125" h="58"/>
+        <node identifier="V-MOT-1-id-SH-11" elementRef="id-SH-11" xsi:type="Element" x="1370" y="20" w="125" h="58"/>
+        <node identifier="V-MOT-1-id-DRV-01" elementRef="id-DRV-01" xsi:type="Element" x="20" y="200" w="160" h="62"/>
+        <node identifier="V-MOT-1-id-DRV-02" elementRef="id-DRV-02" xsi:type="Element" x="355" y="200" w="160" h="62"/>
+        <node identifier="V-MOT-1-id-DRV-03" elementRef="id-DRV-03" xsi:type="Element" x="690" y="200" w="160" h="62"/>
+        <node identifier="V-MOT-1-id-DRV-04" elementRef="id-DRV-04" xsi:type="Element" x="1025" y="200" w="160" h="62"/>
+        <node identifier="V-MOT-1-id-DRV-05" elementRef="id-DRV-05" xsi:type="Element" x="1360" y="200" w="160" h="62"/>
+        <node identifier="V-MOT-1-id-DRV-06" elementRef="id-DRV-06" xsi:type="Element" x="1695" y="200" w="160" h="62"/>
+        <node identifier="V-MOT-1-id-ASM-01" elementRef="id-ASM-01" xsi:type="Element" x="185" y="200" w="160" h="62"/>
+        <node identifier="V-MOT-1-id-ASM-02" elementRef="id-ASM-02" xsi:type="Element" x="520" y="200" w="160" h="62"/>
+        <node identifier="V-MOT-1-id-ASM-03" elementRef="id-ASM-03" xsi:type="Element" x="855" y="200" w="160" h="62"/>
+        <node identifier="V-MOT-1-id-ASM-04" elementRef="id-ASM-04" xsi:type="Element" x="1190" y="200" w="160" h="62"/>
+        <node identifier="V-MOT-1-id-ASM-05" elementRef="id-ASM-05" xsi:type="Element" x="1525" y="200" w="160" h="62"/>
+        <node identifier="V-MOT-1-id-ASM-06" elementRef="id-ASM-06" xsi:type="Element" x="1860" y="200" w="160" h="62"/>
+        <node identifier="V-MOT-1-id-G-01" elementRef="id-G-01" xsi:type="Element" x="60" y="360" w="170" h="58"/>
+        <node identifier="V-MOT-1-id-G-02" elementRef="id-G-02" xsi:type="Element" x="460" y="360" w="170" h="58"/>
+        <node identifier="V-MOT-1-id-G-03" elementRef="id-G-03" xsi:type="Element" x="860" y="360" w="170" h="58"/>
+        <node identifier="V-MOT-1-id-G-04" elementRef="id-G-04" xsi:type="Element" x="1260" y="360" w="170" h="58"/>
+        <node identifier="V-MOT-1-id-G-05" elementRef="id-G-05" xsi:type="Element" x="1660" y="360" w="170" h="58"/>
+        <node identifier="V-MOT-1-id-OC-01" elementRef="id-OC-01" xsi:type="Element" x="60" y="490" w="170" h="62"/>
+        <node identifier="V-MOT-1-id-OC-02" elementRef="id-OC-02" xsi:type="Element" x="460" y="490" w="170" h="62"/>
+        <node identifier="V-MOT-1-id-OC-03" elementRef="id-OC-03" xsi:type="Element" x="860" y="490" w="170" h="62"/>
+        <node identifier="V-MOT-1-id-OC-04" elementRef="id-OC-04" xsi:type="Element" x="1260" y="490" w="170" h="62"/>
+        <node identifier="V-MOT-1-id-OC-05" elementRef="id-OC-05" xsi:type="Element" x="1660" y="490" w="170" h="62"/>
+        <connection identifier="V-MOT-1-c0" relationshipRef="id-r-0" xsi:type="Relationship" source="V-MOT-1-id-SH-01" target="V-MOT-1-id-DRV-01"/>
+        <connection identifier="V-MOT-1-c1" relationshipRef="id-r-1" xsi:type="Relationship" source="V-MOT-1-id-SH-01" target="V-MOT-1-id-DRV-02"/>
+        <connection identifier="V-MOT-1-c2" relationshipRef="id-r-2" xsi:type="Relationship" source="V-MOT-1-id-SH-01" target="V-MOT-1-id-DRV-04"/>
+        <connection identifier="V-MOT-1-c3" relationshipRef="id-r-3" xsi:type="Relationship" source="V-MOT-1-id-SH-01" target="V-MOT-1-id-DRV-05"/>
+        <connection identifier="V-MOT-1-c4" relationshipRef="id-r-4" xsi:type="Relationship" source="V-MOT-1-id-SH-01" target="V-MOT-1-id-DRV-06"/>
+        <connection identifier="V-MOT-1-c5" relationshipRef="id-r-5" xsi:type="Relationship" source="V-MOT-1-id-SH-02" target="V-MOT-1-id-DRV-01"/>
+        <connection identifier="V-MOT-1-c6" relationshipRef="id-r-6" xsi:type="Relationship" source="V-MOT-1-id-SH-02" target="V-MOT-1-id-DRV-03"/>
+        <connection identifier="V-MOT-1-c7" relationshipRef="id-r-7" xsi:type="Relationship" source="V-MOT-1-id-SH-03" target="V-MOT-1-id-DRV-02"/>
+        <connection identifier="V-MOT-1-c8" relationshipRef="id-r-8" xsi:type="Relationship" source="V-MOT-1-id-SH-03" target="V-MOT-1-id-DRV-06"/>
+        <connection identifier="V-MOT-1-c9" relationshipRef="id-r-9" xsi:type="Relationship" source="V-MOT-1-id-SH-04" target="V-MOT-1-id-DRV-01"/>
+        <connection identifier="V-MOT-1-c10" relationshipRef="id-r-10" xsi:type="Relationship" source="V-MOT-1-id-SH-05" target="V-MOT-1-id-DRV-01"/>
+        <connection identifier="V-MOT-1-c11" relationshipRef="id-r-11" xsi:type="Relationship" source="V-MOT-1-id-SH-06" target="V-MOT-1-id-DRV-02"/>
+        <connection identifier="V-MOT-1-c12" relationshipRef="id-r-12" xsi:type="Relationship" source="V-MOT-1-id-SH-06" target="V-MOT-1-id-DRV-05"/>
+        <connection identifier="V-MOT-1-c13" relationshipRef="id-r-13" xsi:type="Relationship" source="V-MOT-1-id-SH-07" target="V-MOT-1-id-DRV-04"/>
+        <connection identifier="V-MOT-1-c14" relationshipRef="id-r-14" xsi:type="Relationship" source="V-MOT-1-id-SH-08" target="V-MOT-1-id-DRV-04"/>
+        <connection identifier="V-MOT-1-c15" relationshipRef="id-r-15" xsi:type="Relationship" source="V-MOT-1-id-SH-09" target="V-MOT-1-id-DRV-03"/>
+        <connection identifier="V-MOT-1-c16" relationshipRef="id-r-16" xsi:type="Relationship" source="V-MOT-1-id-SH-10" target="V-MOT-1-id-DRV-03"/>
+        <connection identifier="V-MOT-1-c17" relationshipRef="id-r-17" xsi:type="Relationship" source="V-MOT-1-id-SH-11" target="V-MOT-1-id-DRV-06"/>
+        <connection identifier="V-MOT-1-c18" relationshipRef="id-r-18" xsi:type="Relationship" source="V-MOT-1-id-ASM-01" target="V-MOT-1-id-DRV-01"/>
+        <connection identifier="V-MOT-1-c19" relationshipRef="id-r-19" xsi:type="Relationship" source="V-MOT-1-id-ASM-02" target="V-MOT-1-id-DRV-02"/>
+        <connection identifier="V-MOT-1-c20" relationshipRef="id-r-20" xsi:type="Relationship" source="V-MOT-1-id-ASM-03" target="V-MOT-1-id-DRV-03"/>
+        <connection identifier="V-MOT-1-c21" relationshipRef="id-r-21" xsi:type="Relationship" source="V-MOT-1-id-ASM-04" target="V-MOT-1-id-DRV-04"/>
+        <connection identifier="V-MOT-1-c22" relationshipRef="id-r-22" xsi:type="Relationship" source="V-MOT-1-id-ASM-05" target="V-MOT-1-id-DRV-05"/>
+        <connection identifier="V-MOT-1-c23" relationshipRef="id-r-23" xsi:type="Relationship" source="V-MOT-1-id-ASM-06" target="V-MOT-1-id-DRV-06"/>
+        <connection identifier="V-MOT-1-c24" relationshipRef="id-r-24" xsi:type="Relationship" source="V-MOT-1-id-DRV-01" target="V-MOT-1-id-G-01"/>
+        <connection identifier="V-MOT-1-c25" relationshipRef="id-r-25" xsi:type="Relationship" source="V-MOT-1-id-DRV-02" target="V-MOT-1-id-G-02"/>
+        <connection identifier="V-MOT-1-c26" relationshipRef="id-r-26" xsi:type="Relationship" source="V-MOT-1-id-DRV-03" target="V-MOT-1-id-G-02"/>
+        <connection identifier="V-MOT-1-c27" relationshipRef="id-r-27" xsi:type="Relationship" source="V-MOT-1-id-DRV-03" target="V-MOT-1-id-G-04"/>
+        <connection identifier="V-MOT-1-c28" relationshipRef="id-r-28" xsi:type="Relationship" source="V-MOT-1-id-DRV-04" target="V-MOT-1-id-G-03"/>
+        <connection identifier="V-MOT-1-c29" relationshipRef="id-r-29" xsi:type="Relationship" source="V-MOT-1-id-DRV-05" target="V-MOT-1-id-G-04"/>
+        <connection identifier="V-MOT-1-c30" relationshipRef="id-r-30" xsi:type="Relationship" source="V-MOT-1-id-DRV-06" target="V-MOT-1-id-G-05"/>
+        <connection identifier="V-MOT-1-c31" relationshipRef="id-r-31" xsi:type="Relationship" source="V-MOT-1-id-OC-01" target="V-MOT-1-id-G-01"/>
+        <connection identifier="V-MOT-1-c32" relationshipRef="id-r-32" xsi:type="Relationship" source="V-MOT-1-id-OC-02" target="V-MOT-1-id-G-02"/>
+        <connection identifier="V-MOT-1-c33" relationshipRef="id-r-33" xsi:type="Relationship" source="V-MOT-1-id-OC-03" target="V-MOT-1-id-G-03"/>
+        <connection identifier="V-MOT-1-c34" relationshipRef="id-r-34" xsi:type="Relationship" source="V-MOT-1-id-OC-04" target="V-MOT-1-id-G-04"/>
+        <connection identifier="V-MOT-1-c35" relationshipRef="id-r-35" xsi:type="Relationship" source="V-MOT-1-id-OC-05" target="V-MOT-1-id-G-05"/>
+      </view>
+      <view identifier="V-MOT-2" xsi:type="Diagram"><name xml:lang="vi">Motivation 2 – Principle, Constraint, Requirement hiện thực Goal/Outcome</name>
+        <node identifier="V-MOT-2-id-PR-07" elementRef="id-PR-07" xsi:type="Element" x="20" y="20" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-CON-05" elementRef="id-CON-05" xsi:type="Element" x="210" y="20" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-CON-07" elementRef="id-CON-07" xsi:type="Element" x="20" y="100" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-G-01" elementRef="id-G-01" xsi:type="Element" x="115" y="320" w="180" h="58"/>
+        <node identifier="V-MOT-2-id-OC-01" elementRef="id-OC-01" xsi:type="Element" x="115" y="430" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-FR-01" elementRef="id-FR-01" xsi:type="Element" x="20" y="580" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-FR-02" elementRef="id-FR-02" xsi:type="Element" x="210" y="580" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-FR-03" elementRef="id-FR-03" xsi:type="Element" x="20" y="660" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-FR-10" elementRef="id-FR-10" xsi:type="Element" x="210" y="660" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-FR-11" elementRef="id-FR-11" xsi:type="Element" x="20" y="740" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-NFR-PRF-01" elementRef="id-NFR-PRF-01" xsi:type="Element" x="210" y="740" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-NFR-USB-01" elementRef="id-NFR-USB-01" xsi:type="Element" x="20" y="820" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-PR-01" elementRef="id-PR-01" xsi:type="Element" x="420" y="20" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-PR-05" elementRef="id-PR-05" xsi:type="Element" x="610" y="20" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-CON-01" elementRef="id-CON-01" xsi:type="Element" x="420" y="100" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-CON-03" elementRef="id-CON-03" xsi:type="Element" x="610" y="100" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-CON-04" elementRef="id-CON-04" xsi:type="Element" x="420" y="180" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-G-02" elementRef="id-G-02" xsi:type="Element" x="515" y="320" w="180" h="58"/>
+        <node identifier="V-MOT-2-id-OC-02" elementRef="id-OC-02" xsi:type="Element" x="515" y="430" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-FR-05" elementRef="id-FR-05" xsi:type="Element" x="420" y="580" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-NFR-DAT-01" elementRef="id-NFR-DAT-01" xsi:type="Element" x="610" y="580" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-PR-03" elementRef="id-PR-03" xsi:type="Element" x="820" y="20" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-PR-04" elementRef="id-PR-04" xsi:type="Element" x="1010" y="20" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-CON-02" elementRef="id-CON-02" xsi:type="Element" x="820" y="100" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-G-03" elementRef="id-G-03" xsi:type="Element" x="915" y="320" w="180" h="58"/>
+        <node identifier="V-MOT-2-id-OC-03" elementRef="id-OC-03" xsi:type="Element" x="915" y="430" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-FR-08" elementRef="id-FR-08" xsi:type="Element" x="820" y="580" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-FR-09" elementRef="id-FR-09" xsi:type="Element" x="1010" y="580" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-NFR-SEC-01" elementRef="id-NFR-SEC-01" xsi:type="Element" x="820" y="660" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-NFR-SEC-02" elementRef="id-NFR-SEC-02" xsi:type="Element" x="1010" y="660" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-NFR-SEC-03" elementRef="id-NFR-SEC-03" xsi:type="Element" x="820" y="740" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-NFR-SEC-04" elementRef="id-NFR-SEC-04" xsi:type="Element" x="1010" y="740" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-NFR-SEC-05" elementRef="id-NFR-SEC-05" xsi:type="Element" x="820" y="820" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-PR-06" elementRef="id-PR-06" xsi:type="Element" x="1220" y="20" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-PR-08" elementRef="id-PR-08" xsi:type="Element" x="1410" y="20" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-CON-06" elementRef="id-CON-06" xsi:type="Element" x="1220" y="100" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-G-04" elementRef="id-G-04" xsi:type="Element" x="1315" y="320" w="180" h="58"/>
+        <node identifier="V-MOT-2-id-OC-04" elementRef="id-OC-04" xsi:type="Element" x="1315" y="430" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-FR-06" elementRef="id-FR-06" xsi:type="Element" x="1220" y="580" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-FR-07" elementRef="id-FR-07" xsi:type="Element" x="1410" y="580" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-NFR-AVL-01" elementRef="id-NFR-AVL-01" xsi:type="Element" x="1220" y="660" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-NFR-INT-01" elementRef="id-NFR-INT-01" xsi:type="Element" x="1410" y="660" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-NFR-INT-02" elementRef="id-NFR-INT-02" xsi:type="Element" x="1220" y="740" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-PR-02" elementRef="id-PR-02" xsi:type="Element" x="1620" y="20" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-G-05" elementRef="id-G-05" xsi:type="Element" x="1715" y="320" w="180" h="58"/>
+        <node identifier="V-MOT-2-id-OC-05" elementRef="id-OC-05" xsi:type="Element" x="1715" y="430" w="180" h="62"/>
+        <node identifier="V-MOT-2-id-FR-04" elementRef="id-FR-04" xsi:type="Element" x="1620" y="580" w="180" h="62"/>
+        <connection identifier="V-MOT-2-c0" relationshipRef="id-r-31" xsi:type="Relationship" source="V-MOT-2-id-OC-01" target="V-MOT-2-id-G-01"/>
+        <connection identifier="V-MOT-2-c1" relationshipRef="id-r-32" xsi:type="Relationship" source="V-MOT-2-id-OC-02" target="V-MOT-2-id-G-02"/>
+        <connection identifier="V-MOT-2-c2" relationshipRef="id-r-33" xsi:type="Relationship" source="V-MOT-2-id-OC-03" target="V-MOT-2-id-G-03"/>
+        <connection identifier="V-MOT-2-c3" relationshipRef="id-r-34" xsi:type="Relationship" source="V-MOT-2-id-OC-04" target="V-MOT-2-id-G-04"/>
+        <connection identifier="V-MOT-2-c4" relationshipRef="id-r-35" xsi:type="Relationship" source="V-MOT-2-id-OC-05" target="V-MOT-2-id-G-05"/>
+        <connection identifier="V-MOT-2-c5" relationshipRef="id-r-36" xsi:type="Relationship" source="V-MOT-2-id-PR-01" target="V-MOT-2-id-G-02"/>
+        <connection identifier="V-MOT-2-c6" relationshipRef="id-r-37" xsi:type="Relationship" source="V-MOT-2-id-PR-02" target="V-MOT-2-id-G-05"/>
+        <connection identifier="V-MOT-2-c7" relationshipRef="id-r-38" xsi:type="Relationship" source="V-MOT-2-id-PR-03" target="V-MOT-2-id-G-03"/>
+        <connection identifier="V-MOT-2-c8" relationshipRef="id-r-39" xsi:type="Relationship" source="V-MOT-2-id-PR-04" target="V-MOT-2-id-G-03"/>
+        <connection identifier="V-MOT-2-c9" relationshipRef="id-r-40" xsi:type="Relationship" source="V-MOT-2-id-PR-05" target="V-MOT-2-id-G-02"/>
+        <connection identifier="V-MOT-2-c10" relationshipRef="id-r-41" xsi:type="Relationship" source="V-MOT-2-id-PR-06" target="V-MOT-2-id-G-04"/>
+        <connection identifier="V-MOT-2-c11" relationshipRef="id-r-42" xsi:type="Relationship" source="V-MOT-2-id-PR-07" target="V-MOT-2-id-G-01"/>
+        <connection identifier="V-MOT-2-c12" relationshipRef="id-r-43" xsi:type="Relationship" source="V-MOT-2-id-PR-08" target="V-MOT-2-id-G-04"/>
+        <connection identifier="V-MOT-2-c13" relationshipRef="id-r-44" xsi:type="Relationship" source="V-MOT-2-id-FR-01" target="V-MOT-2-id-OC-01"/>
+        <connection identifier="V-MOT-2-c14" relationshipRef="id-r-45" xsi:type="Relationship" source="V-MOT-2-id-FR-02" target="V-MOT-2-id-OC-01"/>
+        <connection identifier="V-MOT-2-c15" relationshipRef="id-r-46" xsi:type="Relationship" source="V-MOT-2-id-FR-03" target="V-MOT-2-id-OC-01"/>
+        <connection identifier="V-MOT-2-c16" relationshipRef="id-r-47" xsi:type="Relationship" source="V-MOT-2-id-FR-04" target="V-MOT-2-id-OC-05"/>
+        <connection identifier="V-MOT-2-c17" relationshipRef="id-r-48" xsi:type="Relationship" source="V-MOT-2-id-FR-05" target="V-MOT-2-id-OC-02"/>
+        <connection identifier="V-MOT-2-c18" relationshipRef="id-r-49" xsi:type="Relationship" source="V-MOT-2-id-FR-06" target="V-MOT-2-id-OC-04"/>
+        <connection identifier="V-MOT-2-c19" relationshipRef="id-r-50" xsi:type="Relationship" source="V-MOT-2-id-FR-07" target="V-MOT-2-id-OC-04"/>
+        <connection identifier="V-MOT-2-c20" relationshipRef="id-r-51" xsi:type="Relationship" source="V-MOT-2-id-FR-08" target="V-MOT-2-id-OC-03"/>
+        <connection identifier="V-MOT-2-c21" relationshipRef="id-r-52" xsi:type="Relationship" source="V-MOT-2-id-FR-09" target="V-MOT-2-id-OC-03"/>
+        <connection identifier="V-MOT-2-c22" relationshipRef="id-r-53" xsi:type="Relationship" source="V-MOT-2-id-FR-10" target="V-MOT-2-id-OC-01"/>
+        <connection identifier="V-MOT-2-c23" relationshipRef="id-r-54" xsi:type="Relationship" source="V-MOT-2-id-FR-11" target="V-MOT-2-id-OC-01"/>
+        <connection identifier="V-MOT-2-c24" relationshipRef="id-r-55" xsi:type="Relationship" source="V-MOT-2-id-NFR-PRF-01" target="V-MOT-2-id-OC-01"/>
+        <connection identifier="V-MOT-2-c25" relationshipRef="id-r-56" xsi:type="Relationship" source="V-MOT-2-id-NFR-AVL-01" target="V-MOT-2-id-OC-04"/>
+        <connection identifier="V-MOT-2-c26" relationshipRef="id-r-57" xsi:type="Relationship" source="V-MOT-2-id-NFR-SEC-01" target="V-MOT-2-id-OC-03"/>
+        <connection identifier="V-MOT-2-c27" relationshipRef="id-r-58" xsi:type="Relationship" source="V-MOT-2-id-NFR-SEC-02" target="V-MOT-2-id-OC-03"/>
+        <connection identifier="V-MOT-2-c28" relationshipRef="id-r-59" xsi:type="Relationship" source="V-MOT-2-id-NFR-SEC-03" target="V-MOT-2-id-OC-03"/>
+        <connection identifier="V-MOT-2-c29" relationshipRef="id-r-60" xsi:type="Relationship" source="V-MOT-2-id-NFR-SEC-04" target="V-MOT-2-id-OC-03"/>
+        <connection identifier="V-MOT-2-c30" relationshipRef="id-r-61" xsi:type="Relationship" source="V-MOT-2-id-NFR-SEC-05" target="V-MOT-2-id-OC-03"/>
+        <connection identifier="V-MOT-2-c31" relationshipRef="id-r-62" xsi:type="Relationship" source="V-MOT-2-id-NFR-INT-01" target="V-MOT-2-id-OC-04"/>
+        <connection identifier="V-MOT-2-c32" relationshipRef="id-r-63" xsi:type="Relationship" source="V-MOT-2-id-NFR-INT-02" target="V-MOT-2-id-OC-04"/>
+        <connection identifier="V-MOT-2-c33" relationshipRef="id-r-64" xsi:type="Relationship" source="V-MOT-2-id-NFR-DAT-01" target="V-MOT-2-id-OC-02"/>
+        <connection identifier="V-MOT-2-c34" relationshipRef="id-r-65" xsi:type="Relationship" source="V-MOT-2-id-NFR-USB-01" target="V-MOT-2-id-OC-01"/>
+        <connection identifier="V-MOT-2-c35" relationshipRef="id-r-66" xsi:type="Relationship" source="V-MOT-2-id-CON-01" target="V-MOT-2-id-G-02"/>
+        <connection identifier="V-MOT-2-c36" relationshipRef="id-r-67" xsi:type="Relationship" source="V-MOT-2-id-CON-02" target="V-MOT-2-id-G-03"/>
+        <connection identifier="V-MOT-2-c37" relationshipRef="id-r-68" xsi:type="Relationship" source="V-MOT-2-id-CON-03" target="V-MOT-2-id-G-02"/>
+        <connection identifier="V-MOT-2-c38" relationshipRef="id-r-69" xsi:type="Relationship" source="V-MOT-2-id-CON-04" target="V-MOT-2-id-G-02"/>
+        <connection identifier="V-MOT-2-c39" relationshipRef="id-r-70" xsi:type="Relationship" source="V-MOT-2-id-CON-05" target="V-MOT-2-id-G-01"/>
+        <connection identifier="V-MOT-2-c40" relationshipRef="id-r-71" xsi:type="Relationship" source="V-MOT-2-id-CON-06" target="V-MOT-2-id-G-04"/>
+        <connection identifier="V-MOT-2-c41" relationshipRef="id-r-72" xsi:type="Relationship" source="V-MOT-2-id-CON-07" target="V-MOT-2-id-G-01"/>
+      </view>
+      <view identifier="V-BUS-0" xsi:type="Diagram"><name xml:lang="vi">Business Baseline (As-Is)</name>
+        <node identifier="V-BUS-0-id-ASM-01" elementRef="id-ASM-01" xsi:type="Element" x="110" y="20" w="180" h="62"/>
+        <node identifier="V-BUS-0-id-ASM-06" elementRef="id-ASM-06" xsi:type="Element" x="360" y="20" w="180" h="62"/>
+        <node identifier="V-BUS-0-id-ASM-02" elementRef="id-ASM-02" xsi:type="Element" x="610" y="20" w="180" h="62"/>
+        <node identifier="V-BUS-0-id-ASM-03" elementRef="id-ASM-03" xsi:type="Element" x="860" y="20" w="180" h="62"/>
+        <node identifier="V-BUS-0-id-ASM-05" elementRef="id-ASM-05" xsi:type="Element" x="1110" y="20" w="180" h="62"/>
+        <node identifier="V-BUS-0-id-BA-BenhNhan" elementRef="id-BA-BenhNhan" xsi:type="Element" x="20" y="150" w="150" h="58"/>
+        <node identifier="V-BUS-0-id-BR-BenhNhan" elementRef="id-BR-BenhNhan" xsi:type="Element" x="190" y="150" w="150" h="58"/>
+        <node identifier="V-BUS-0-id-BR-LeTan" elementRef="id-BR-LeTan" xsi:type="Element" x="430" y="150" w="150" h="58"/>
+        <node identifier="V-BUS-0-id-BR-BacSi" elementRef="id-BR-BacSi" xsi:type="Element" x="630" y="150" w="150" h="58"/>
+        <node identifier="V-BUS-0-id-BR-ThuNgan" elementRef="id-BR-ThuNgan" xsi:type="Element" x="830" y="150" w="150" h="58"/>
+        <node identifier="V-BUS-0-id-BR-DuocSi" elementRef="id-BR-DuocSi" xsi:type="Element" x="1030" y="150" w="150" h="58"/>
+        <node identifier="V-BUS-0-id-BA-NhaThuocDoiTac" elementRef="id-BA-NhaThuocDoiTac" xsi:type="Element" x="1230" y="150" w="150" h="58"/>
+        <node identifier="V-BUS-0-id-BP0-01" elementRef="id-BP0-01" xsi:type="Element" x="20" y="290" w="180" h="66"/>
+        <node identifier="V-BUS-0-id-BP0-02" elementRef="id-BP0-02" xsi:type="Element" x="235" y="290" w="180" h="66"/>
+        <node identifier="V-BUS-0-id-BP0-03" elementRef="id-BP0-03" xsi:type="Element" x="450" y="290" w="180" h="66"/>
+        <node identifier="V-BUS-0-id-BP0-04" elementRef="id-BP0-04" xsi:type="Element" x="665" y="290" w="180" h="66"/>
+        <node identifier="V-BUS-0-id-BP0-05" elementRef="id-BP0-05" xsi:type="Element" x="880" y="290" w="180" h="66"/>
+        <node identifier="V-BUS-0-id-BP0-06" elementRef="id-BP0-06" xsi:type="Element" x="1095" y="290" w="180" h="66"/>
+        <node identifier="V-BUS-0-id-BO0-01" elementRef="id-BO0-01" xsi:type="Element" x="20" y="430" w="180" h="58"/>
+        <node identifier="V-BUS-0-id-BO0-02" elementRef="id-BO0-02" xsi:type="Element" x="235" y="430" w="180" h="58"/>
+        <node identifier="V-BUS-0-id-BO0-03" elementRef="id-BO0-03" xsi:type="Element" x="450" y="430" w="180" h="58"/>
+        <node identifier="V-BUS-0-id-BO0-04" elementRef="id-BO0-04" xsi:type="Element" x="665" y="430" w="180" h="58"/>
+        <node identifier="V-BUS-0-id-AC-BookingSheet" elementRef="id-AC-BookingSheet" xsi:type="Element" x="20" y="540" w="180" h="58"/>
+        <node identifier="V-BUS-0-id-AC-HisLite-CS1" elementRef="id-AC-HisLite-CS1" xsi:type="Element" x="450" y="540" w="180" h="58"/>
+        <node identifier="V-BUS-0-id-AC-ClinicSoft-CS2" elementRef="id-AC-ClinicSoft-CS2" xsi:type="Element" x="880" y="540" w="180" h="58"/>
+        <node identifier="V-BUS-0-id-ASM-04" elementRef="id-ASM-04" xsi:type="Element" x="1100" y="430" w="180" h="62"/>
+        <connection identifier="V-BUS-0-c0" relationshipRef="id-r-93" xsi:type="Relationship" source="V-BUS-0-id-BA-BenhNhan" target="V-BUS-0-id-BR-BenhNhan"/>
+        <connection identifier="V-BUS-0-c1" relationshipRef="id-r-94" xsi:type="Relationship" source="V-BUS-0-id-BA-NhaThuocDoiTac" target="V-BUS-0-id-BR-DuocSi"/>
+        <connection identifier="V-BUS-0-c2" relationshipRef="id-r-159" xsi:type="Relationship" source="V-BUS-0-id-BP0-01" target="V-BUS-0-id-BP0-02"/>
+        <connection identifier="V-BUS-0-c3" relationshipRef="id-r-160" xsi:type="Relationship" source="V-BUS-0-id-BP0-02" target="V-BUS-0-id-BP0-03"/>
+        <connection identifier="V-BUS-0-c4" relationshipRef="id-r-161" xsi:type="Relationship" source="V-BUS-0-id-BP0-03" target="V-BUS-0-id-BP0-04"/>
+        <connection identifier="V-BUS-0-c5" relationshipRef="id-r-162" xsi:type="Relationship" source="V-BUS-0-id-BP0-04" target="V-BUS-0-id-BP0-05"/>
+        <connection identifier="V-BUS-0-c6" relationshipRef="id-r-163" xsi:type="Relationship" source="V-BUS-0-id-BP0-05" target="V-BUS-0-id-BP0-06"/>
+        <connection identifier="V-BUS-0-c7" relationshipRef="id-r-164" xsi:type="Relationship" source="V-BUS-0-id-BR-LeTan" target="V-BUS-0-id-BP0-01"/>
+        <connection identifier="V-BUS-0-c8" relationshipRef="id-r-165" xsi:type="Relationship" source="V-BUS-0-id-BR-LeTan" target="V-BUS-0-id-BP0-02"/>
+        <connection identifier="V-BUS-0-c9" relationshipRef="id-r-166" xsi:type="Relationship" source="V-BUS-0-id-BR-BacSi" target="V-BUS-0-id-BP0-03"/>
+        <connection identifier="V-BUS-0-c10" relationshipRef="id-r-167" xsi:type="Relationship" source="V-BUS-0-id-BR-BacSi" target="V-BUS-0-id-BP0-04"/>
+        <connection identifier="V-BUS-0-c11" relationshipRef="id-r-168" xsi:type="Relationship" source="V-BUS-0-id-BR-ThuNgan" target="V-BUS-0-id-BP0-05"/>
+        <connection identifier="V-BUS-0-c12" relationshipRef="id-r-169" xsi:type="Relationship" source="V-BUS-0-id-BR-DuocSi" target="V-BUS-0-id-BP0-06"/>
+        <connection identifier="V-BUS-0-c13" relationshipRef="id-r-170" xsi:type="Relationship" source="V-BUS-0-id-BP0-01" target="V-BUS-0-id-BO0-01"/>
+        <connection identifier="V-BUS-0-c14" relationshipRef="id-r-171" xsi:type="Relationship" source="V-BUS-0-id-BP0-02" target="V-BUS-0-id-BO0-02"/>
+        <connection identifier="V-BUS-0-c15" relationshipRef="id-r-172" xsi:type="Relationship" source="V-BUS-0-id-BP0-03" target="V-BUS-0-id-BO0-03"/>
+        <connection identifier="V-BUS-0-c16" relationshipRef="id-r-173" xsi:type="Relationship" source="V-BUS-0-id-BP0-04" target="V-BUS-0-id-BO0-04"/>
+        <connection identifier="V-BUS-0-c17" relationshipRef="id-r-174" xsi:type="Relationship" source="V-BUS-0-id-BP0-06" target="V-BUS-0-id-BO0-04"/>
+        <connection identifier="V-BUS-0-c18" relationshipRef="id-r-175" xsi:type="Relationship" source="V-BUS-0-id-AC-BookingSheet" target="V-BUS-0-id-BP0-01"/>
+        <connection identifier="V-BUS-0-c19" relationshipRef="id-r-176" xsi:type="Relationship" source="V-BUS-0-id-AC-HisLite-CS1" target="V-BUS-0-id-BP0-04"/>
+        <connection identifier="V-BUS-0-c20" relationshipRef="id-r-177" xsi:type="Relationship" source="V-BUS-0-id-AC-HisLite-CS1" target="V-BUS-0-id-BP0-05"/>
+        <connection identifier="V-BUS-0-c21" relationshipRef="id-r-178" xsi:type="Relationship" source="V-BUS-0-id-AC-ClinicSoft-CS2" target="V-BUS-0-id-BP0-04"/>
+        <connection identifier="V-BUS-0-c22" relationshipRef="id-r-179" xsi:type="Relationship" source="V-BUS-0-id-AC-ClinicSoft-CS2" target="V-BUS-0-id-BP0-05"/>
+        <connection identifier="V-BUS-0-c23" relationshipRef="id-r-180" xsi:type="Relationship" source="V-BUS-0-id-ASM-01" target="V-BUS-0-id-BP0-01"/>
+        <connection identifier="V-BUS-0-c24" relationshipRef="id-r-181" xsi:type="Relationship" source="V-BUS-0-id-ASM-01" target="V-BUS-0-id-BP0-02"/>
+        <connection identifier="V-BUS-0-c25" relationshipRef="id-r-182" xsi:type="Relationship" source="V-BUS-0-id-ASM-02" target="V-BUS-0-id-BP0-04"/>
+        <connection identifier="V-BUS-0-c26" relationshipRef="id-r-183" xsi:type="Relationship" source="V-BUS-0-id-ASM-03" target="V-BUS-0-id-BP0-04"/>
+        <connection identifier="V-BUS-0-c27" relationshipRef="id-r-184" xsi:type="Relationship" source="V-BUS-0-id-ASM-04" target="V-BUS-0-id-AC-HisLite-CS1"/>
+        <connection identifier="V-BUS-0-c28" relationshipRef="id-r-185" xsi:type="Relationship" source="V-BUS-0-id-ASM-05" target="V-BUS-0-id-BP0-06"/>
+        <connection identifier="V-BUS-0-c29" relationshipRef="id-r-186" xsi:type="Relationship" source="V-BUS-0-id-ASM-06" target="V-BUS-0-id-BP0-03"/>
+      </view>
+      <view identifier="V-BUS-1" xsi:type="Diagram"><name xml:lang="vi">Business Target (To-Be) – dịch vụ, quy trình, vai trò, đối tượng</name>
+        <node identifier="V-BUS-1-id-BA-BenhNhan" elementRef="id-BA-BenhNhan" xsi:type="Element" x="20" y="20" w="150" h="58"/>
+        <node identifier="V-BUS-1-id-BR-BenhNhan" elementRef="id-BR-BenhNhan" xsi:type="Element" x="190" y="20" w="150" h="58"/>
+        <node identifier="V-BUS-1-id-BI-01" elementRef="id-BI-01" xsi:type="Element" x="110" y="130" w="150" h="58"/>
+        <node identifier="V-BUS-1-id-BI-02" elementRef="id-BI-02" xsi:type="Element" x="410" y="130" w="150" h="58"/>
+        <node identifier="V-BUS-1-id-BI-03" elementRef="id-BI-03" xsi:type="Element" x="710" y="130" w="150" h="58"/>
+        <node identifier="V-BUS-1-id-BI-04" elementRef="id-BI-04" xsi:type="Element" x="1010" y="130" w="150" h="58"/>
+        <node identifier="V-BUS-1-id-BS-01" elementRef="id-BS-01" xsi:type="Element" x="20" y="240" w="165" h="58"/>
+        <node identifier="V-BUS-1-id-BS-02" elementRef="id-BS-02" xsi:type="Element" x="205" y="240" w="165" h="58"/>
+        <node identifier="V-BUS-1-id-BS-03" elementRef="id-BS-03" xsi:type="Element" x="390" y="240" w="165" h="58"/>
+        <node identifier="V-BUS-1-id-BS-04" elementRef="id-BS-04" xsi:type="Element" x="575" y="240" w="165" h="58"/>
+        <node identifier="V-BUS-1-id-BS-05" elementRef="id-BS-05" xsi:type="Element" x="760" y="240" w="165" h="58"/>
+        <node identifier="V-BUS-1-id-BS-06" elementRef="id-BS-06" xsi:type="Element" x="945" y="240" w="165" h="58"/>
+        <node identifier="V-BUS-1-id-BS-07" elementRef="id-BS-07" xsi:type="Element" x="1130" y="240" w="165" h="58"/>
+        <node identifier="V-BUS-1-id-BE-01" elementRef="id-BE-01" xsi:type="Element" x="20" y="370" w="110" h="58"/>
+        <node identifier="V-BUS-1-id-BP-01" elementRef="id-BP-01" xsi:type="Element" x="150" y="370" w="140" h="58"/>
+        <node identifier="V-BUS-1-id-BE-02" elementRef="id-BE-02" xsi:type="Element" x="310" y="370" w="110" h="58"/>
+        <node identifier="V-BUS-1-id-BP-02" elementRef="id-BP-02" xsi:type="Element" x="440" y="370" w="140" h="58"/>
+        <node identifier="V-BUS-1-id-BP-03" elementRef="id-BP-03" xsi:type="Element" x="600" y="370" w="140" h="58"/>
+        <node identifier="V-BUS-1-id-BP-04" elementRef="id-BP-04" xsi:type="Element" x="760" y="370" w="140" h="58"/>
+        <node identifier="V-BUS-1-id-BE-03" elementRef="id-BE-03" xsi:type="Element" x="920" y="370" w="120" h="58"/>
+        <node identifier="V-BUS-1-id-BP-05" elementRef="id-BP-05" xsi:type="Element" x="1060" y="370" w="140" h="58"/>
+        <node identifier="V-BUS-1-id-BE-04" elementRef="id-BE-04" xsi:type="Element" x="1220" y="370" w="110" h="58"/>
+        <node identifier="V-BUS-1-id-BR-LeTan" elementRef="id-BR-LeTan" xsi:type="Element" x="440" y="490" w="170" h="58"/>
+        <node identifier="V-BUS-1-id-BC-KhamKeDon" elementRef="id-BC-KhamKeDon" xsi:type="Element" x="640" y="490" w="170" h="58"/>
+        <node identifier="V-BUS-1-id-BR-BacSi" elementRef="id-BR-BacSi" xsi:type="Element" x="840" y="490" w="170" h="58"/>
+        <node identifier="V-BUS-1-id-BR-DuocSi" elementRef="id-BR-DuocSi" xsi:type="Element" x="1040" y="490" w="170" h="58"/>
+        <node identifier="V-BUS-1-id-BR-DieuDuong" elementRef="id-BR-DieuDuong" xsi:type="Element" x="440" y="590" w="150" h="58"/>
+        <node identifier="V-BUS-1-id-BA-NhaThuocDoiTac" elementRef="id-BA-NhaThuocDoiTac" xsi:type="Element" x="880" y="590" w="150" h="58"/>
+        <node identifier="V-BUS-1-id-BA-NhaThuocNoiBo" elementRef="id-BA-NhaThuocNoiBo" xsi:type="Element" x="1050" y="590" w="150" h="58"/>
+        <node identifier="V-BUS-1-id-BF-01" elementRef="id-BF-01" xsi:type="Element" x="1230" y="490" w="165" h="58"/>
+        <node identifier="V-BUS-1-id-BR-QuanTriBaoMat" elementRef="id-BR-QuanTriBaoMat" xsi:type="Element" x="1230" y="590" w="165" h="58"/>
+        <node identifier="V-BUS-1-id-BF-02" elementRef="id-BF-02" xsi:type="Element" x="20" y="490" w="165" h="58"/>
+        <node identifier="V-BUS-1-id-BR-QuanLy" elementRef="id-BR-QuanLy" xsi:type="Element" x="20" y="590" w="165" h="58"/>
+        <node identifier="V-BUS-1-id-BO-LichHen" elementRef="id-BO-LichHen" xsi:type="Element" x="20" y="700" w="158" h="58"/>
+        <node identifier="V-BUS-1-id-BO-HoSoBenhNhan" elementRef="id-BO-HoSoBenhNhan" xsi:type="Element" x="192" y="700" w="158" h="58"/>
+        <node identifier="V-BUS-1-id-BO-TheBHYT" elementRef="id-BO-TheBHYT" xsi:type="Element" x="364" y="700" w="158" h="58"/>
+        <node identifier="V-BUS-1-id-BO-LuotKham" elementRef="id-BO-LuotKham" xsi:type="Element" x="536" y="700" w="158" h="58"/>
+        <node identifier="V-BUS-1-id-BO-BenhAnNgoaiTru" elementRef="id-BO-BenhAnNgoaiTru" xsi:type="Element" x="708" y="700" w="158" h="58"/>
+        <node identifier="V-BUS-1-id-BO-DonThuoc" elementRef="id-BO-DonThuoc" xsi:type="Element" x="880" y="700" w="158" h="58"/>
+        <node identifier="V-BUS-1-id-BO-PhieuCapThuoc" elementRef="id-BO-PhieuCapThuoc" xsi:type="Element" x="1052" y="700" w="158" h="58"/>
+        <node identifier="V-BUS-1-id-BO-NhatKyTruyCap" elementRef="id-BO-NhatKyTruyCap" xsi:type="Element" x="1224" y="700" w="158" h="58"/>
+        <node identifier="V-BUS-1-id-RP-01" elementRef="id-RP-01" xsi:type="Element" x="1050" y="800" w="160" h="58"/>
+        <node identifier="V-BUS-1-id-BO-ChinhSachTruyCap" elementRef="id-BO-ChinhSachTruyCap" xsi:type="Element" x="1230" y="800" w="165" h="58"/>
+        <connection identifier="V-BUS-1-c0" relationshipRef="id-r-93" xsi:type="Relationship" source="V-BUS-1-id-BA-BenhNhan" target="V-BUS-1-id-BR-BenhNhan"/>
+        <connection identifier="V-BUS-1-c1" relationshipRef="id-r-94" xsi:type="Relationship" source="V-BUS-1-id-BA-NhaThuocDoiTac" target="V-BUS-1-id-BR-DuocSi"/>
+        <connection identifier="V-BUS-1-c2" relationshipRef="id-r-95" xsi:type="Relationship" source="V-BUS-1-id-BA-NhaThuocNoiBo" target="V-BUS-1-id-BR-DuocSi"/>
+        <connection identifier="V-BUS-1-c3" relationshipRef="id-r-97" xsi:type="Relationship" source="V-BUS-1-id-BC-KhamKeDon" target="V-BUS-1-id-BR-BacSi"/>
+        <connection identifier="V-BUS-1-c4" relationshipRef="id-r-98" xsi:type="Relationship" source="V-BUS-1-id-BC-KhamKeDon" target="V-BUS-1-id-BR-DieuDuong"/>
+        <connection identifier="V-BUS-1-c5" relationshipRef="id-r-99" xsi:type="Relationship" source="V-BUS-1-id-BI-01" target="V-BUS-1-id-BS-01"/>
+        <connection identifier="V-BUS-1-c6" relationshipRef="id-r-100" xsi:type="Relationship" source="V-BUS-1-id-BI-01" target="V-BUS-1-id-BS-06"/>
+        <connection identifier="V-BUS-1-c7" relationshipRef="id-r-101" xsi:type="Relationship" source="V-BUS-1-id-BI-02" target="V-BUS-1-id-BS-01"/>
+        <connection identifier="V-BUS-1-c8" relationshipRef="id-r-102" xsi:type="Relationship" source="V-BUS-1-id-BI-03" target="V-BUS-1-id-BS-02"/>
+        <connection identifier="V-BUS-1-c9" relationshipRef="id-r-103" xsi:type="Relationship" source="V-BUS-1-id-BI-04" target="V-BUS-1-id-BS-05"/>
+        <connection identifier="V-BUS-1-c10" relationshipRef="id-r-110" xsi:type="Relationship" source="V-BUS-1-id-BI-01" target="V-BUS-1-id-BR-BenhNhan"/>
+        <connection identifier="V-BUS-1-c11" relationshipRef="id-r-111" xsi:type="Relationship" source="V-BUS-1-id-BI-02" target="V-BUS-1-id-BR-BenhNhan"/>
+        <connection identifier="V-BUS-1-c12" relationshipRef="id-r-112" xsi:type="Relationship" source="V-BUS-1-id-BI-03" target="V-BUS-1-id-BR-BenhNhan"/>
+        <connection identifier="V-BUS-1-c13" relationshipRef="id-r-113" xsi:type="Relationship" source="V-BUS-1-id-BI-04" target="V-BUS-1-id-BR-DuocSi"/>
+        <connection identifier="V-BUS-1-c14" relationshipRef="id-r-114" xsi:type="Relationship" source="V-BUS-1-id-BP-01" target="V-BUS-1-id-BS-01"/>
+        <connection identifier="V-BUS-1-c15" relationshipRef="id-r-115" xsi:type="Relationship" source="V-BUS-1-id-BP-02" target="V-BUS-1-id-BS-02"/>
+        <connection identifier="V-BUS-1-c16" relationshipRef="id-r-116" xsi:type="Relationship" source="V-BUS-1-id-BP-03" target="V-BUS-1-id-BS-03"/>
+        <connection identifier="V-BUS-1-c17" relationshipRef="id-r-117" xsi:type="Relationship" source="V-BUS-1-id-BP-04" target="V-BUS-1-id-BS-04"/>
+        <connection identifier="V-BUS-1-c18" relationshipRef="id-r-118" xsi:type="Relationship" source="V-BUS-1-id-BP-05" target="V-BUS-1-id-BS-05"/>
+        <connection identifier="V-BUS-1-c19" relationshipRef="id-r-119" xsi:type="Relationship" source="V-BUS-1-id-BF-01" target="V-BUS-1-id-BS-07"/>
+        <connection identifier="V-BUS-1-c20" relationshipRef="id-r-120" xsi:type="Relationship" source="V-BUS-1-id-BP-01" target="V-BUS-1-id-BS-06"/>
+        <connection identifier="V-BUS-1-c21" relationshipRef="id-r-121" xsi:type="Relationship" source="V-BUS-1-id-BP-04" target="V-BUS-1-id-BS-06"/>
+        <connection identifier="V-BUS-1-c22" relationshipRef="id-r-122" xsi:type="Relationship" source="V-BUS-1-id-BE-01" target="V-BUS-1-id-BP-01"/>
+        <connection identifier="V-BUS-1-c23" relationshipRef="id-r-123" xsi:type="Relationship" source="V-BUS-1-id-BP-01" target="V-BUS-1-id-BE-02"/>
+        <connection identifier="V-BUS-1-c24" relationshipRef="id-r-124" xsi:type="Relationship" source="V-BUS-1-id-BE-02" target="V-BUS-1-id-BP-02"/>
+        <connection identifier="V-BUS-1-c25" relationshipRef="id-r-125" xsi:type="Relationship" source="V-BUS-1-id-BP-02" target="V-BUS-1-id-BP-03"/>
+        <connection identifier="V-BUS-1-c26" relationshipRef="id-r-126" xsi:type="Relationship" source="V-BUS-1-id-BP-03" target="V-BUS-1-id-BP-04"/>
+        <connection identifier="V-BUS-1-c27" relationshipRef="id-r-127" xsi:type="Relationship" source="V-BUS-1-id-BP-04" target="V-BUS-1-id-BE-03"/>
+        <connection identifier="V-BUS-1-c28" relationshipRef="id-r-128" xsi:type="Relationship" source="V-BUS-1-id-BE-03" target="V-BUS-1-id-BP-05"/>
+        <connection identifier="V-BUS-1-c29" relationshipRef="id-r-129" xsi:type="Relationship" source="V-BUS-1-id-BP-05" target="V-BUS-1-id-BE-04"/>
+        <connection identifier="V-BUS-1-c30" relationshipRef="id-r-130" xsi:type="Relationship" source="V-BUS-1-id-BR-BenhNhan" target="V-BUS-1-id-BP-01"/>
+        <connection identifier="V-BUS-1-c31" relationshipRef="id-r-131" xsi:type="Relationship" source="V-BUS-1-id-BR-LeTan" target="V-BUS-1-id-BP-02"/>
+        <connection identifier="V-BUS-1-c32" relationshipRef="id-r-132" xsi:type="Relationship" source="V-BUS-1-id-BC-KhamKeDon" target="V-BUS-1-id-BP-03"/>
+        <connection identifier="V-BUS-1-c33" relationshipRef="id-r-133" xsi:type="Relationship" source="V-BUS-1-id-BR-BacSi" target="V-BUS-1-id-BP-04"/>
+        <connection identifier="V-BUS-1-c34" relationshipRef="id-r-134" xsi:type="Relationship" source="V-BUS-1-id-BR-DuocSi" target="V-BUS-1-id-BP-05"/>
+        <connection identifier="V-BUS-1-c35" relationshipRef="id-r-135" xsi:type="Relationship" source="V-BUS-1-id-BR-QuanTriBaoMat" target="V-BUS-1-id-BF-01"/>
+        <connection identifier="V-BUS-1-c36" relationshipRef="id-r-136" xsi:type="Relationship" source="V-BUS-1-id-BR-QuanLy" target="V-BUS-1-id-BF-02"/>
+        <connection identifier="V-BUS-1-c37" relationshipRef="id-r-137" xsi:type="Relationship" source="V-BUS-1-id-BS-07" target="V-BUS-1-id-BP-03"/>
+        <connection identifier="V-BUS-1-c38" relationshipRef="id-r-138" xsi:type="Relationship" source="V-BUS-1-id-BS-07" target="V-BUS-1-id-BP-04"/>
+        <connection identifier="V-BUS-1-c39" relationshipRef="id-r-139" xsi:type="Relationship" source="V-BUS-1-id-BP-01" target="V-BUS-1-id-BO-LichHen"/>
+        <connection identifier="V-BUS-1-c40" relationshipRef="id-r-140" xsi:type="Relationship" source="V-BUS-1-id-BP-01" target="V-BUS-1-id-BO-HoSoBenhNhan"/>
+        <connection identifier="V-BUS-1-c41" relationshipRef="id-r-141" xsi:type="Relationship" source="V-BUS-1-id-BP-02" target="V-BUS-1-id-BO-TheBHYT"/>
+        <connection identifier="V-BUS-1-c42" relationshipRef="id-r-142" xsi:type="Relationship" source="V-BUS-1-id-BP-02" target="V-BUS-1-id-BO-LuotKham"/>
+        <connection identifier="V-BUS-1-c43" relationshipRef="id-r-143" xsi:type="Relationship" source="V-BUS-1-id-BP-03" target="V-BUS-1-id-BO-BenhAnNgoaiTru"/>
+        <connection identifier="V-BUS-1-c44" relationshipRef="id-r-144" xsi:type="Relationship" source="V-BUS-1-id-BP-03" target="V-BUS-1-id-BO-LuotKham"/>
+        <connection identifier="V-BUS-1-c45" relationshipRef="id-r-145" xsi:type="Relationship" source="V-BUS-1-id-BP-04" target="V-BUS-1-id-BO-DonThuoc"/>
+        <connection identifier="V-BUS-1-c46" relationshipRef="id-r-146" xsi:type="Relationship" source="V-BUS-1-id-BP-05" target="V-BUS-1-id-BO-DonThuoc"/>
+        <connection identifier="V-BUS-1-c47" relationshipRef="id-r-147" xsi:type="Relationship" source="V-BUS-1-id-BP-05" target="V-BUS-1-id-BO-PhieuCapThuoc"/>
+        <connection identifier="V-BUS-1-c48" relationshipRef="id-r-148" xsi:type="Relationship" source="V-BUS-1-id-BF-01" target="V-BUS-1-id-BO-NhatKyTruyCap"/>
+        <connection identifier="V-BUS-1-c49" relationshipRef="id-r-149" xsi:type="Relationship" source="V-BUS-1-id-BF-01" target="V-BUS-1-id-BO-ChinhSachTruyCap"/>
+        <connection identifier="V-BUS-1-c50" relationshipRef="id-r-150" xsi:type="Relationship" source="V-BUS-1-id-RP-01" target="V-BUS-1-id-BO-DonThuoc"/>
+      </view>
+      <view identifier="V-BUS-2" xsi:type="Diagram"><name xml:lang="vi">Business Product – Gói khám ngoại trú và đối tác</name>
+        <node identifier="V-BUS-2-id-PRD-01" elementRef="id-PRD-01" xsi:type="Element" x="420" y="20" w="170" h="58"/>
+        <node identifier="V-BUS-2-id-CT-01" elementRef="id-CT-01" xsi:type="Element" x="700" y="20" w="190" h="58"/>
+        <node identifier="V-BUS-2-id-BR-BenhNhan" elementRef="id-BR-BenhNhan" xsi:type="Element" x="420" y="300" w="170" h="58"/>
+        <node identifier="V-BUS-2-id-BA-BenhNhan" elementRef="id-BA-BenhNhan" xsi:type="Element" x="150" y="300" w="150" h="58"/>
+        <node identifier="V-BUS-2-id-BA-PhongKham" elementRef="id-BA-PhongKham" xsi:type="Element" x="950" y="20" w="170" h="58"/>
+        <node identifier="V-BUS-2-id-BA-NhaThuocNoiBo" elementRef="id-BA-NhaThuocNoiBo" xsi:type="Element" x="950" y="300" w="170" h="58"/>
+        <node identifier="V-BUS-2-id-CT-02" elementRef="id-CT-02" xsi:type="Element" x="1150" y="180" w="170" h="58"/>
+        <node identifier="V-BUS-2-id-BA-NhaThuocDoiTac" elementRef="id-BA-NhaThuocDoiTac" xsi:type="Element" x="1150" y="300" w="170" h="58"/>
+        <node identifier="V-BUS-2-id-BS-01" elementRef="id-BS-01" xsi:type="Element" x="20" y="160" w="165" h="58"/>
+        <node identifier="V-BUS-2-id-BS-02" elementRef="id-BS-02" xsi:type="Element" x="200" y="160" w="165" h="58"/>
+        <node identifier="V-BUS-2-id-BS-03" elementRef="id-BS-03" xsi:type="Element" x="380" y="160" w="165" h="58"/>
+        <node identifier="V-BUS-2-id-BS-04" elementRef="id-BS-04" xsi:type="Element" x="560" y="160" w="165" h="58"/>
+        <node identifier="V-BUS-2-id-BS-05" elementRef="id-BS-05" xsi:type="Element" x="740" y="160" w="165" h="58"/>
+        <node identifier="V-BUS-2-id-BS-06" elementRef="id-BS-06" xsi:type="Element" x="920" y="160" w="165" h="58"/>
+        <connection identifier="V-BUS-2-c0" relationshipRef="id-r-93" xsi:type="Relationship" source="V-BUS-2-id-BA-BenhNhan" target="V-BUS-2-id-BR-BenhNhan"/>
+        <connection identifier="V-BUS-2-c1" relationshipRef="id-r-96" xsi:type="Relationship" source="V-BUS-2-id-BA-PhongKham" target="V-BUS-2-id-BA-NhaThuocNoiBo"/>
+        <connection identifier="V-BUS-2-c2" relationshipRef="id-r-104" xsi:type="Relationship" source="V-BUS-2-id-BS-01" target="V-BUS-2-id-BR-BenhNhan"/>
+        <connection identifier="V-BUS-2-c3" relationshipRef="id-r-105" xsi:type="Relationship" source="V-BUS-2-id-BS-02" target="V-BUS-2-id-BR-BenhNhan"/>
+        <connection identifier="V-BUS-2-c4" relationshipRef="id-r-106" xsi:type="Relationship" source="V-BUS-2-id-BS-03" target="V-BUS-2-id-BR-BenhNhan"/>
+        <connection identifier="V-BUS-2-c5" relationshipRef="id-r-107" xsi:type="Relationship" source="V-BUS-2-id-BS-04" target="V-BUS-2-id-BR-BenhNhan"/>
+        <connection identifier="V-BUS-2-c6" relationshipRef="id-r-108" xsi:type="Relationship" source="V-BUS-2-id-BS-05" target="V-BUS-2-id-BR-BenhNhan"/>
+        <connection identifier="V-BUS-2-c7" relationshipRef="id-r-109" xsi:type="Relationship" source="V-BUS-2-id-BS-06" target="V-BUS-2-id-BR-BenhNhan"/>
+        <connection identifier="V-BUS-2-c8" relationshipRef="id-r-151" xsi:type="Relationship" source="V-BUS-2-id-PRD-01" target="V-BUS-2-id-BS-01"/>
+        <connection identifier="V-BUS-2-c9" relationshipRef="id-r-152" xsi:type="Relationship" source="V-BUS-2-id-PRD-01" target="V-BUS-2-id-BS-02"/>
+        <connection identifier="V-BUS-2-c10" relationshipRef="id-r-153" xsi:type="Relationship" source="V-BUS-2-id-PRD-01" target="V-BUS-2-id-BS-03"/>
+        <connection identifier="V-BUS-2-c11" relationshipRef="id-r-154" xsi:type="Relationship" source="V-BUS-2-id-PRD-01" target="V-BUS-2-id-BS-04"/>
+        <connection identifier="V-BUS-2-c12" relationshipRef="id-r-155" xsi:type="Relationship" source="V-BUS-2-id-PRD-01" target="V-BUS-2-id-BS-05"/>
+        <connection identifier="V-BUS-2-c13" relationshipRef="id-r-156" xsi:type="Relationship" source="V-BUS-2-id-PRD-01" target="V-BUS-2-id-BS-06"/>
+        <connection identifier="V-BUS-2-c14" relationshipRef="id-r-157" xsi:type="Relationship" source="V-BUS-2-id-PRD-01" target="V-BUS-2-id-CT-01"/>
+        <connection identifier="V-BUS-2-c15" relationshipRef="id-r-158" xsi:type="Relationship" source="V-BUS-2-id-CT-02" target="V-BUS-2-id-BA-NhaThuocDoiTac"/>
+      </view>
+    </diagrams>
+  </views>
+</model>

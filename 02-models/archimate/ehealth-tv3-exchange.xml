@@ -1,0 +1,710 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://www.opengroup.org/xsd/archimate/3.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" identifier="id-ehealth-tv3">
+  <name xml:lang="vi">E-Health ngoại trú — Công nghệ &amp; Dịch chuyển (TV3)</name>
+  <documentation xml:lang="vi">Sinh tự động từ tech-catalog.md v0.1. Nhập vào Archi: File &gt; Import &gt; Open Exchange XML Model. Mã AC-* thuộc TV2, chỉ tham chiếu.</documentation>
+  <elements>
+    <element identifier="id-ND-B-ServerCS1" xsi:type="Node"><name xml:lang="vi">ND-B-ServerCS1 Máy chủ CS1 (Win 2012 R2 + SQL Express)</name><documentation xml:lang="vi">Hết hỗ trợ bảo mật; điểm lỗi đơn (T1)</documentation></element>
+    <element identifier="id-ND-B-ServerCS2" xsi:type="Node"><name xml:lang="vi">ND-B-ServerCS2 Máy chủ CS2 (PC Win10)</name><documentation xml:lang="vi">T1</documentation></element>
+    <element identifier="id-ND-B-SaaS" xsi:type="Node"><name xml:lang="vi">ND-B-SaaS SaaS bên ngoài (Google Sheets, Zalo OA)</name><documentation xml:lang="vi">Tài khoản chung, dữ liệu sức khỏe (T6)</documentation></element>
+    <element identifier="id-DV-B-Workstation" xsi:type="Device"><name xml:lang="vi">DV-B-Workstation Máy trạm dùng chung tài khoản</name><documentation xml:lang="vi">T2</documentation></element>
+    <element identifier="id-NW-B-LAN" xsi:type="CommunicationNetwork"><name xml:lang="vi">NW-B-LAN LAN phẳng + Wi-Fi khách chung</name><documentation xml:lang="vi">T4</documentation></element>
+    <element identifier="id-NW-B-Internet" xsi:type="CommunicationNetwork"><name xml:lang="vi">NW-B-Internet Internet 1 đường</name></element>
+    <element identifier="id-TS-B-Backup" xsi:type="TechnologyService"><name xml:lang="vi">TS-B-Backup Sao lưu thủ công hàng tuần</name><documentation xml:lang="vi">T7</documentation></element>
+    <element identifier="id-APP-B-HisLite" xsi:type="ApplicationComponent"><name xml:lang="vi">APP-B-HisLite HIS-Lite (CS1)</name><documentation xml:lang="vi">Thu ngân, BHYT, in đơn</documentation></element>
+    <element identifier="id-APP-B-ClinicSoft" xsi:type="ApplicationComponent"><name xml:lang="vi">APP-B-ClinicSoft ClinicSoft (CS2)</name></element>
+    <element identifier="id-APP-B-Sheet" xsi:type="ApplicationComponent"><name xml:lang="vi">APP-B-Sheet Google Sheet lịch hẹn</name></element>
+    <element identifier="id-ART-B-hislite" xsi:type="Artifact"><name xml:lang="vi">ART-B-hislite bộ cài HIS-Lite</name></element>
+    <element identifier="id-ART-B-clinicsoft" xsi:type="Artifact"><name xml:lang="vi">ART-B-clinicsoft bộ cài ClinicSoft</name></element>
+    <element identifier="id-ART-B-sheet" xsi:type="Artifact"><name xml:lang="vi">ART-B-sheet file Google Sheet</name></element>
+    <element identifier="id-ND-EdgeGateway" xsi:type="Node"><name xml:lang="vi">ND-EdgeGateway Cụm biên (WAF + LB + API Gateway)</name></element>
+    <element identifier="id-ND-AppCluster" xsi:type="Node"><name xml:lang="vi">ND-AppCluster Cụm máy chủ ứng dụng (3 VM)</name></element>
+    <element identifier="id-ND-DataCluster" xsi:type="Node"><name xml:lang="vi">ND-DataCluster Cụm CSDL (chính + dự phòng)</name></element>
+    <element identifier="id-ND-MessageBroker" xsi:type="Node"><name xml:lang="vi">ND-MessageBroker Máy chủ hàng đợi thông điệp</name></element>
+    <element identifier="id-ND-ObjectStore" xsi:type="Node"><name xml:lang="vi">ND-ObjectStore Kho lưu trữ đối tượng (WORM)</name></element>
+    <element identifier="id-ND-SecurityPlatform" xsi:type="Node"><name xml:lang="vi">ND-SecurityPlatform Nền tảng định danh &amp; chính sách</name></element>
+    <element identifier="id-ND-AuditStore" xsi:type="Node"><name xml:lang="vi">ND-AuditStore Kho lưu vết append-only</name></element>
+    <element identifier="id-ND-KeyVault" xsi:type="Node"><name xml:lang="vi">ND-KeyVault Quản lý khóa &amp; ký số (KMS/HSM)</name></element>
+    <element identifier="id-ND-SecOps" xsi:type="Node"><name xml:lang="vi">ND-SecOps Giám sát &amp; SIEM</name></element>
+    <element identifier="id-ND-BackupDR" xsi:type="Node"><name xml:lang="vi">ND-BackupDR Sao lưu &amp; DR (vùng 2)</name></element>
+    <element identifier="id-ND-SiteCS1" xsi:type="Node"><name xml:lang="vi">ND-SiteCS1 Hạ tầng cơ sở 1</name></element>
+    <element identifier="id-ND-SiteCS2" xsi:type="Node"><name xml:lang="vi">ND-SiteCS2 Hạ tầng cơ sở 2</name></element>
+    <element identifier="id-ND-SiteServerCS1" xsi:type="Node"><name xml:lang="vi">ND-SiteServerCS1 Máy chủ tại CS1 (hệ thống Retain)</name></element>
+    <element identifier="id-ND-SiteServerCS2" xsi:type="Node"><name xml:lang="vi">ND-SiteServerCS2 Máy chủ tại CS2 (hệ thống Retain)</name></element>
+    <element identifier="id-ND-PartnerPharmacy" xsi:type="Node"><name xml:lang="vi">ND-PartnerPharmacy Hạ tầng nhà thuốc đối tác</name></element>
+    <element identifier="id-DV-Workstation" xsi:type="Device"><name xml:lang="vi">DV-Workstation Máy trạm nhân viên</name></element>
+    <element identifier="id-DV-Kiosk" xsi:type="Device"><name xml:lang="vi">DV-Kiosk Kiosk check-in</name></element>
+    <element identifier="id-DV-IdCardReader" xsi:type="Device"><name xml:lang="vi">DV-IdCardReader Đầu đọc CCCD gắn chip</name></element>
+    <element identifier="id-DV-PatientMobile" xsi:type="Device"><name xml:lang="vi">DV-PatientMobile Điện thoại bệnh nhân</name></element>
+    <element identifier="id-SW-K8sRuntime" xsi:type="SystemSoftware"><name xml:lang="vi">SW-K8sRuntime Nền tảng container</name></element>
+    <element identifier="id-SW-PostgreSQL" xsi:type="SystemSoftware"><name xml:lang="vi">SW-PostgreSQL PostgreSQL</name></element>
+    <element identifier="id-SW-RabbitMQ" xsi:type="SystemSoftware"><name xml:lang="vi">SW-RabbitMQ RabbitMQ</name></element>
+    <element identifier="id-SW-Keycloak" xsi:type="SystemSoftware"><name xml:lang="vi">SW-Keycloak Keycloak (OIDC, MFA)</name></element>
+    <element identifier="id-SW-OPA" xsi:type="SystemSoftware"><name xml:lang="vi">SW-OPA Open Policy Agent</name></element>
+    <element identifier="id-SW-Wazuh" xsi:type="SystemSoftware"><name xml:lang="vi">SW-Wazuh SIEM</name></element>
+    <element identifier="id-NW-Internet" xsi:type="CommunicationNetwork"><name xml:lang="vi">NW-Internet Internet (2 nhà mạng)</name></element>
+    <element identifier="id-NW-SiteVPN" xsi:type="Path"><name xml:lang="vi">NW-SiteVPN VPN IPsec cơ sở ↔ DC</name></element>
+    <element identifier="id-NW-PartnerChannel" xsi:type="Path"><name xml:lang="vi">NW-PartnerChannel Kênh đối tác mTLS</name></element>
+    <element identifier="id-NW-DCInternal" xsi:type="CommunicationNetwork"><name xml:lang="vi">NW-DCInternal Mạng nội bộ DC phân vùng</name></element>
+    <element identifier="id-TS-ApiGateway" xsi:type="TechnologyService"><name xml:lang="vi">TS-ApiGateway Cổng API (PEP)</name></element>
+    <element identifier="id-TS-SecureChannel" xsi:type="TechnologyService"><name xml:lang="vi">TS-SecureChannel Kênh truyền an toàn</name></element>
+    <element identifier="id-TS-Identity" xsi:type="TechnologyService"><name xml:lang="vi">TS-Identity Xác thực &amp; SSO (MFA)</name></element>
+    <element identifier="id-TS-PolicyDecision" xsi:type="TechnologyService"><name xml:lang="vi">TS-PolicyDecision Quyết định quyền RBAC+ABAC</name></element>
+    <element identifier="id-TS-Audit" xsi:type="TechnologyService"><name xml:lang="vi">TS-Audit Lưu vết bất biến</name></element>
+    <element identifier="id-TS-Database" xsi:type="TechnologyService"><name xml:lang="vi">TS-Database CSDL quan hệ có sao chép</name></element>
+    <element identifier="id-TS-Messaging" xsi:type="TechnologyService"><name xml:lang="vi">TS-Messaging Hàng đợi/sự kiện bền</name></element>
+    <element identifier="id-TS-ObjectStorage" xsi:type="TechnologyService"><name xml:lang="vi">TS-ObjectStorage Lưu trữ đối tượng WORM</name></element>
+    <element identifier="id-TS-KeyManagement" xsi:type="TechnologyService"><name xml:lang="vi">TS-KeyManagement Quản lý khóa mã hóa</name></element>
+    <element identifier="id-TS-Signing" xsi:type="TechnologyService"><name xml:lang="vi">TS-Signing Ký số</name></element>
+    <element identifier="id-TS-Monitoring" xsi:type="TechnologyService"><name xml:lang="vi">TS-Monitoring Giám sát, cảnh báo</name></element>
+    <element identifier="id-TS-SIEM" xsi:type="TechnologyService"><name xml:lang="vi">TS-SIEM Phát hiện bất thường an ninh</name></element>
+    <element identifier="id-TS-Backup" xsi:type="TechnologyService"><name xml:lang="vi">TS-Backup Sao lưu, khôi phục, DR</name></element>
+    <element identifier="id-AC-PatientPortal" xsi:type="ApplicationComponent"><name xml:lang="vi">AC-PatientPortal Cổng bệnh nhân</name><documentation xml:lang="vi">Thuộc catalog TV2 — chỉ tham chiếu</documentation></element>
+    <element identifier="id-AC-Booking" xsi:type="ApplicationComponent"><name xml:lang="vi">AC-Booking Quản lý lịch hẹn</name><documentation xml:lang="vi">Thuộc catalog TV2 — chỉ tham chiếu</documentation></element>
+    <element identifier="id-AC-Reception" xsi:type="ApplicationComponent"><name xml:lang="vi">AC-Reception Tiếp đón</name><documentation xml:lang="vi">Thuộc catalog TV2 — chỉ tham chiếu</documentation></element>
+    <element identifier="id-AC-EMR" xsi:type="ApplicationComponent"><name xml:lang="vi">AC-EMR Hồ sơ bệnh án điện tử</name><documentation xml:lang="vi">Thuộc catalog TV2 — chỉ tham chiếu</documentation></element>
+    <element identifier="id-AC-ePrescription" xsi:type="ApplicationComponent"><name xml:lang="vi">AC-ePrescription Kê đơn điện tử</name><documentation xml:lang="vi">Thuộc catalog TV2 — chỉ tham chiếu</documentation></element>
+    <element identifier="id-AC-PharmacyGateway" xsi:type="ApplicationComponent"><name xml:lang="vi">AC-PharmacyGateway Cổng kết nối nhà thuốc</name><documentation xml:lang="vi">Thuộc catalog TV2 — chỉ tham chiếu</documentation></element>
+    <element identifier="id-AC-Notification" xsi:type="ApplicationComponent"><name xml:lang="vi">AC-Notification Thông báo</name><documentation xml:lang="vi">Thuộc catalog TV2 — chỉ tham chiếu</documentation></element>
+    <element identifier="id-AC-IAM" xsi:type="ApplicationComponent"><name xml:lang="vi">AC-IAM Định danh &amp; phân quyền</name><documentation xml:lang="vi">Thuộc catalog TV2 — chỉ tham chiếu</documentation></element>
+    <element identifier="id-AC-Audit" xsi:type="ApplicationComponent"><name xml:lang="vi">AC-Audit Lưu vết</name><documentation xml:lang="vi">Thuộc catalog TV2 — chỉ tham chiếu</documentation></element>
+    <element identifier="id-AC-MasterData" xsi:type="ApplicationComponent"><name xml:lang="vi">AC-MasterData Danh mục dùng chung</name><documentation xml:lang="vi">Thuộc catalog TV2 — chỉ tham chiếu</documentation></element>
+    <element identifier="id-AC-Reporting" xsi:type="ApplicationComponent"><name xml:lang="vi">AC-Reporting Báo cáo vận hành</name><documentation xml:lang="vi">Thuộc catalog TV2 — chỉ tham chiếu</documentation></element>
+    <element identifier="id-AC-HisLite-CS1" xsi:type="ApplicationComponent"><name xml:lang="vi">AC-HisLite-CS1 HIS-Lite (thu ngân/BHYT, Retain)</name><documentation xml:lang="vi">Thuộc catalog TV2 — chỉ tham chiếu</documentation></element>
+    <element identifier="id-AC-ClinicSoft-CS2" xsi:type="ApplicationComponent"><name xml:lang="vi">AC-ClinicSoft-CS2 ClinicSoft (thu ngân/BHYT, Retain)</name><documentation xml:lang="vi">Thuộc catalog TV2 — chỉ tham chiếu</documentation></element>
+    <element identifier="id-EXT-PharmacySystem" xsi:type="ApplicationComponent"><name xml:lang="vi">EXT-PharmacySystem Phần mềm nhà thuốc đối tác</name><documentation xml:lang="vi">Thuộc catalog TV2 — chỉ tham chiếu</documentation></element>
+    <element identifier="id-ART-booking-svc" xsi:type="Artifact"><name xml:lang="vi">ART-booking-svc image container</name></element>
+    <element identifier="id-ART-reception-svc" xsi:type="Artifact"><name xml:lang="vi">ART-reception-svc image container</name></element>
+    <element identifier="id-ART-emr-svc" xsi:type="Artifact"><name xml:lang="vi">ART-emr-svc image container</name></element>
+    <element identifier="id-ART-erx-svc" xsi:type="Artifact"><name xml:lang="vi">ART-erx-svc image container</name></element>
+    <element identifier="id-ART-pharmacy-gw" xsi:type="Artifact"><name xml:lang="vi">ART-pharmacy-gw image container</name></element>
+    <element identifier="id-ART-notify-svc" xsi:type="Artifact"><name xml:lang="vi">ART-notify-svc image container</name></element>
+    <element identifier="id-ART-portal-web" xsi:type="Artifact"><name xml:lang="vi">ART-portal-web image container</name></element>
+    <element identifier="id-ART-reporting-svc" xsi:type="Artifact"><name xml:lang="vi">ART-reporting-svc image container</name></element>
+    <element identifier="id-ART-masterdata-svc" xsi:type="Artifact"><name xml:lang="vi">ART-masterdata-svc image container</name></element>
+    <element identifier="id-ART-iam-realm" xsi:type="Artifact"><name xml:lang="vi">ART-iam-realm cấu hình IdP</name></element>
+    <element identifier="id-ART-abac-policy" xsi:type="Artifact"><name xml:lang="vi">ART-abac-policy gói chính sách ABAC</name></element>
+    <element identifier="id-ART-audit-svc" xsi:type="Artifact"><name xml:lang="vi">ART-audit-svc image audit-svc</name></element>
+    <element identifier="id-ART-audit-log" xsi:type="Artifact"><name xml:lang="vi">ART-audit-log bảng audit_event + phân đoạn niêm phong</name></element>
+    <element identifier="id-ART-emr-db" xsi:type="Artifact"><name xml:lang="vi">ART-emr-db schema emr</name></element>
+    <element identifier="id-ART-erx-db" xsi:type="Artifact"><name xml:lang="vi">ART-erx-db schema erx</name></element>
+    <element identifier="id-ART-hislite" xsi:type="Artifact"><name xml:lang="vi">ART-hislite bộ cài HIS-Lite</name></element>
+    <element identifier="id-ART-clinicsoft" xsi:type="Artifact"><name xml:lang="vi">ART-clinicsoft bộ cài ClinicSoft</name></element>
+    <element identifier="id-ART-pharmacy-sw" xsi:type="Artifact"><name xml:lang="vi">ART-pharmacy-sw phần mềm nhà thuốc</name></element>
+    <element identifier="id-PLT-0" xsi:type="Plateau"><name xml:lang="vi">PLT-0 Hiện trạng</name></element>
+    <element identifier="id-PLT-1" xsi:type="Plateau"><name xml:lang="vi">PLT-1 Nền tảng an toàn &amp; Kê đơn điện tử liên thông</name></element>
+    <element identifier="id-PLT-2" xsi:type="Plateau"><name xml:lang="vi">PLT-2 Đặt lịch, tiếp đón số &amp; hồ sơ thống nhất</name></element>
+    <element identifier="id-PLT-3" xsi:type="Plateau"><name xml:lang="vi">PLT-3 Liên thông nhà thuốc &amp; biến thể (Target)</name></element>
+    <element identifier="id-GAP-01" xsi:type="Gap"><name xml:lang="vi">GAP-01 Thiếu hạ tầng tập trung, IAM, audit, ký số, kê đơn điện tử</name></element>
+    <element identifier="id-GAP-02" xsi:type="Gap"><name xml:lang="vi">GAP-02 Thiếu đặt lịch/tiếp đón số, dữ liệu BN phân tán</name></element>
+    <element identifier="id-GAP-03" xsi:type="Gap"><name xml:lang="vi">GAP-03 Thiếu kênh điện tử với nhà thuốc, năng lực biến thể, hệ thống cũ chưa thu hồi</name></element>
+    <element identifier="id-WP-01" xsi:type="WorkPackage"><name xml:lang="vi">WP-01 Hạ tầng nền &amp; mạng</name></element>
+    <element identifier="id-DLV-01" xsi:type="Deliverable"><name xml:lang="vi">DLV-01 Hạ tầng DC vận hành</name></element>
+    <element identifier="id-DLV-02" xsi:type="Deliverable"><name xml:lang="vi">DLV-02 Mạng cơ sở phân vùng</name></element>
+    <element identifier="id-DLV-03" xsi:type="Deliverable"><name xml:lang="vi">DLV-03 Biên bản diễn tập DR</name></element>
+    <element identifier="id-WP-02" xsi:type="WorkPackage"><name xml:lang="vi">WP-02 Định danh, phân quyền &amp; lưu vết</name></element>
+    <element identifier="id-DLV-04" xsi:type="Deliverable"><name xml:lang="vi">DLV-04 IAM vận hành</name></element>
+    <element identifier="id-DLV-05" xsi:type="Deliverable"><name xml:lang="vi">DLV-05 Audit service + verify</name></element>
+    <element identifier="id-DLV-06" xsi:type="Deliverable"><name xml:lang="vi">DLV-06 Bộ chính sách ABAC v1</name></element>
+    <element identifier="id-WP-03" xsi:type="WorkPackage"><name xml:lang="vi">WP-03 Bệnh án lõi &amp; Kê đơn điện tử</name></element>
+    <element identifier="id-DLV-07" xsi:type="Deliverable"><name xml:lang="vi">DLV-07 Kê đơn điện tử ký số tại 2 cơ sở</name></element>
+    <element identifier="id-DLV-08" xsi:type="Deliverable"><name xml:lang="vi">DLV-08 Kết nối Hệ thống đơn thuốc quốc gia</name></element>
+    <element identifier="id-WP-04" xsi:type="WorkPackage"><name xml:lang="vi">WP-04 Đặt lịch &amp; tiếp đón số</name></element>
+    <element identifier="id-DLV-09" xsi:type="Deliverable"><name xml:lang="vi">DLV-09 Cổng đặt lịch</name></element>
+    <element identifier="id-DLV-10" xsi:type="Deliverable"><name xml:lang="vi">DLV-10 Tiếp đón QR/CCCD</name></element>
+    <element identifier="id-DLV-11" xsi:type="Deliverable"><name xml:lang="vi">DLV-11 Báo cáo thời gian chờ</name></element>
+    <element identifier="id-WP-05" xsi:type="WorkPackage"><name xml:lang="vi">WP-05 Kết nối nhà thuốc</name></element>
+    <element identifier="id-DLV-12" xsi:type="Deliverable"><name xml:lang="vi">DLV-12 API nhà thuốc + webhook</name></element>
+    <element identifier="id-DLV-13" xsi:type="Deliverable"><name xml:lang="vi">DLV-13 6 nhà thuốc đối tác kết nối</name></element>
+    <element identifier="id-WP-06" xsi:type="WorkPackage"><name xml:lang="vi">WP-06 Năng lực theo biến thể</name></element>
+    <element identifier="id-DLV-14" xsi:type="Deliverable"><name xml:lang="vi">DLV-14 Năng lực biến thể + BPMN ngoại lệ</name></element>
+    <element identifier="id-WP-07" xsi:type="WorkPackage"><name xml:lang="vi">WP-07 Chuyển đổi dữ liệu &amp; ngừng hệ thống cũ</name></element>
+    <element identifier="id-DLV-15" xsi:type="Deliverable"><name xml:lang="vi">DLV-15 Dữ liệu BN đã gộp</name></element>
+    <element identifier="id-DLV-16" xsi:type="Deliverable"><name xml:lang="vi">DLV-16 Biên bản ngừng hệ thống cũ</name></element>
+    <element identifier="id-WP-08" xsi:type="WorkPackage"><name xml:lang="vi">WP-08 Quản lý thay đổi, đào tạo &amp; tuân thủ</name></element>
+    <element identifier="id-DLV-17" xsi:type="Deliverable"><name xml:lang="vi">DLV-17 Hồ sơ đánh giá tác động DLCN</name></element>
+    <element identifier="id-DLV-18" xsi:type="Deliverable"><name xml:lang="vi">DLV-18 Tài liệu đào tạo &amp; SOP</name></element>
+    <element identifier="id-EV-01" xsi:type="ImplementationEvent"><name xml:lang="vi">EV-01 Pilot kê đơn điện tử hoàn tất</name></element>
+  </elements>
+  <relationships>
+    <relationship identifier="id-r1" source="id-ND-B-ServerCS1" target="id-ART-B-hislite" xsi:type="Assignment" />
+    <relationship identifier="id-r2" source="id-ART-B-hislite" target="id-APP-B-HisLite" xsi:type="Realization" />
+    <relationship identifier="id-r3" source="id-ND-B-ServerCS2" target="id-ART-B-clinicsoft" xsi:type="Assignment" />
+    <relationship identifier="id-r4" source="id-ART-B-clinicsoft" target="id-APP-B-ClinicSoft" xsi:type="Realization" />
+    <relationship identifier="id-r5" source="id-ND-B-SaaS" target="id-ART-B-sheet" xsi:type="Assignment" />
+    <relationship identifier="id-r6" source="id-ART-B-sheet" target="id-APP-B-Sheet" xsi:type="Realization" />
+    <relationship identifier="id-r7" source="id-DV-B-Workstation" target="id-NW-B-LAN" xsi:type="Association" />
+    <relationship identifier="id-r8" source="id-ND-B-ServerCS1" target="id-NW-B-LAN" xsi:type="Association" />
+    <relationship identifier="id-r9" source="id-ND-B-ServerCS2" target="id-NW-B-LAN" xsi:type="Association" />
+    <relationship identifier="id-r10" source="id-NW-B-LAN" target="id-NW-B-Internet" xsi:type="Association" />
+    <relationship identifier="id-r11" source="id-ND-B-SaaS" target="id-NW-B-Internet" xsi:type="Association" />
+    <relationship identifier="id-r12" source="id-TS-B-Backup" target="id-ND-B-ServerCS1" xsi:type="Serving" />
+    <relationship identifier="id-r13" source="id-ND-EdgeGateway" target="id-TS-ApiGateway" xsi:type="Realization" />
+    <relationship identifier="id-r14" source="id-ND-EdgeGateway" target="id-TS-SecureChannel" xsi:type="Realization" />
+    <relationship identifier="id-r15" source="id-ND-SecurityPlatform" target="id-TS-Identity" xsi:type="Realization" />
+    <relationship identifier="id-r16" source="id-ND-SecurityPlatform" target="id-TS-PolicyDecision" xsi:type="Realization" />
+    <relationship identifier="id-r17" source="id-ND-AuditStore" target="id-TS-Audit" xsi:type="Realization" />
+    <relationship identifier="id-r18" source="id-ND-DataCluster" target="id-TS-Database" xsi:type="Realization" />
+    <relationship identifier="id-r19" source="id-ND-MessageBroker" target="id-TS-Messaging" xsi:type="Realization" />
+    <relationship identifier="id-r20" source="id-ND-ObjectStore" target="id-TS-ObjectStorage" xsi:type="Realization" />
+    <relationship identifier="id-r21" source="id-ND-KeyVault" target="id-TS-KeyManagement" xsi:type="Realization" />
+    <relationship identifier="id-r22" source="id-ND-KeyVault" target="id-TS-Signing" xsi:type="Realization" />
+    <relationship identifier="id-r23" source="id-ND-SecOps" target="id-TS-Monitoring" xsi:type="Realization" />
+    <relationship identifier="id-r24" source="id-ND-SecOps" target="id-TS-SIEM" xsi:type="Realization" />
+    <relationship identifier="id-r25" source="id-ND-BackupDR" target="id-TS-Backup" xsi:type="Realization" />
+    <relationship identifier="id-r26" source="id-ND-AppCluster" target="id-SW-K8sRuntime" xsi:type="Composition" />
+    <relationship identifier="id-r27" source="id-ND-DataCluster" target="id-SW-PostgreSQL" xsi:type="Composition" />
+    <relationship identifier="id-r28" source="id-ND-AuditStore" target="id-SW-PostgreSQL" xsi:type="Assignment" />
+    <relationship identifier="id-r29" source="id-ND-MessageBroker" target="id-SW-RabbitMQ" xsi:type="Composition" />
+    <relationship identifier="id-r30" source="id-ND-SecurityPlatform" target="id-SW-Keycloak" xsi:type="Composition" />
+    <relationship identifier="id-r31" source="id-ND-SecurityPlatform" target="id-SW-OPA" xsi:type="Composition" />
+    <relationship identifier="id-r32" source="id-ND-SecOps" target="id-SW-Wazuh" xsi:type="Composition" />
+    <relationship identifier="id-r33" source="id-ND-SiteCS1" target="id-DV-Workstation" xsi:type="Aggregation" />
+    <relationship identifier="id-r34" source="id-ND-SiteCS1" target="id-DV-Kiosk" xsi:type="Aggregation" />
+    <relationship identifier="id-r35" source="id-ND-SiteCS1" target="id-DV-IdCardReader" xsi:type="Aggregation" />
+    <relationship identifier="id-r36" source="id-ND-SiteCS1" target="id-ND-SiteServerCS1" xsi:type="Aggregation" />
+    <relationship identifier="id-r37" source="id-ND-SiteCS2" target="id-ND-SiteServerCS2" xsi:type="Aggregation" />
+    <relationship identifier="id-r38" source="id-NW-Internet" target="id-NW-SiteVPN" xsi:type="Realization" />
+    <relationship identifier="id-r39" source="id-NW-Internet" target="id-NW-PartnerChannel" xsi:type="Realization" />
+    <relationship identifier="id-r40" source="id-NW-SiteVPN" target="id-ND-SiteCS1" xsi:type="Association" />
+    <relationship identifier="id-r41" source="id-NW-SiteVPN" target="id-ND-SiteCS2" xsi:type="Association" />
+    <relationship identifier="id-r42" source="id-NW-SiteVPN" target="id-ND-EdgeGateway" xsi:type="Association" />
+    <relationship identifier="id-r43" source="id-NW-PartnerChannel" target="id-ND-PartnerPharmacy" xsi:type="Association" />
+    <relationship identifier="id-r44" source="id-NW-PartnerChannel" target="id-ND-EdgeGateway" xsi:type="Association" />
+    <relationship identifier="id-r45" source="id-DV-PatientMobile" target="id-NW-Internet" xsi:type="Association" />
+    <relationship identifier="id-r46" source="id-NW-DCInternal" target="id-ND-EdgeGateway" xsi:type="Association" />
+    <relationship identifier="id-r47" source="id-NW-DCInternal" target="id-ND-AppCluster" xsi:type="Association" />
+    <relationship identifier="id-r48" source="id-NW-DCInternal" target="id-ND-DataCluster" xsi:type="Association" />
+    <relationship identifier="id-r49" source="id-NW-DCInternal" target="id-ND-MessageBroker" xsi:type="Association" />
+    <relationship identifier="id-r50" source="id-NW-DCInternal" target="id-ND-ObjectStore" xsi:type="Association" />
+    <relationship identifier="id-r51" source="id-NW-DCInternal" target="id-ND-SecurityPlatform" xsi:type="Association" />
+    <relationship identifier="id-r52" source="id-NW-DCInternal" target="id-ND-AuditStore" xsi:type="Association" />
+    <relationship identifier="id-r53" source="id-NW-DCInternal" target="id-ND-KeyVault" xsi:type="Association" />
+    <relationship identifier="id-r54" source="id-NW-DCInternal" target="id-ND-SecOps" xsi:type="Association" />
+    <relationship identifier="id-r55" source="id-TS-ObjectStorage" target="id-ND-AuditStore" xsi:type="Serving" />
+    <relationship identifier="id-r56" source="id-TS-Signing" target="id-ND-AuditStore" xsi:type="Serving" />
+    <relationship identifier="id-r57" source="id-TS-Backup" target="id-ND-DataCluster" xsi:type="Serving" />
+    <relationship identifier="id-r58" source="id-TS-Backup" target="id-ND-AuditStore" xsi:type="Serving" />
+    <relationship identifier="id-r59" source="id-TS-ApiGateway" target="id-AC-PatientPortal" xsi:type="Serving" />
+    <relationship identifier="id-r60" source="id-TS-SecureChannel" target="id-AC-PatientPortal" xsi:type="Serving" />
+    <relationship identifier="id-r61" source="id-TS-Identity" target="id-AC-PatientPortal" xsi:type="Serving" />
+    <relationship identifier="id-r62" source="id-TS-Database" target="id-AC-Booking" xsi:type="Serving" />
+    <relationship identifier="id-r63" source="id-TS-Messaging" target="id-AC-Booking" xsi:type="Serving" />
+    <relationship identifier="id-r64" source="id-TS-Database" target="id-AC-Reception" xsi:type="Serving" />
+    <relationship identifier="id-r65" source="id-TS-ApiGateway" target="id-AC-Reception" xsi:type="Serving" />
+    <relationship identifier="id-r66" source="id-TS-Database" target="id-AC-EMR" xsi:type="Serving" />
+    <relationship identifier="id-r67" source="id-TS-ObjectStorage" target="id-AC-EMR" xsi:type="Serving" />
+    <relationship identifier="id-r68" source="id-TS-PolicyDecision" target="id-AC-EMR" xsi:type="Serving" />
+    <relationship identifier="id-r69" source="id-TS-Database" target="id-AC-ePrescription" xsi:type="Serving" />
+    <relationship identifier="id-r70" source="id-TS-Signing" target="id-AC-ePrescription" xsi:type="Serving" />
+    <relationship identifier="id-r71" source="id-TS-Messaging" target="id-AC-ePrescription" xsi:type="Serving" />
+    <relationship identifier="id-r72" source="id-TS-PolicyDecision" target="id-AC-ePrescription" xsi:type="Serving" />
+    <relationship identifier="id-r73" source="id-TS-ApiGateway" target="id-AC-PharmacyGateway" xsi:type="Serving" />
+    <relationship identifier="id-r74" source="id-TS-SecureChannel" target="id-AC-PharmacyGateway" xsi:type="Serving" />
+    <relationship identifier="id-r75" source="id-TS-Messaging" target="id-AC-PharmacyGateway" xsi:type="Serving" />
+    <relationship identifier="id-r76" source="id-TS-Database" target="id-AC-PharmacyGateway" xsi:type="Serving" />
+    <relationship identifier="id-r77" source="id-TS-Messaging" target="id-AC-Notification" xsi:type="Serving" />
+    <relationship identifier="id-r78" source="id-TS-Identity" target="id-AC-IAM" xsi:type="Serving" />
+    <relationship identifier="id-r79" source="id-TS-PolicyDecision" target="id-AC-IAM" xsi:type="Serving" />
+    <relationship identifier="id-r80" source="id-TS-Audit" target="id-AC-Audit" xsi:type="Serving" />
+    <relationship identifier="id-r81" source="id-TS-ObjectStorage" target="id-AC-Audit" xsi:type="Serving" />
+    <relationship identifier="id-r82" source="id-TS-Signing" target="id-AC-Audit" xsi:type="Serving" />
+    <relationship identifier="id-r83" source="id-TS-SIEM" target="id-AC-Audit" xsi:type="Serving" />
+    <relationship identifier="id-r84" source="id-TS-Database" target="id-AC-MasterData" xsi:type="Serving" />
+    <relationship identifier="id-r85" source="id-TS-Database" target="id-AC-Reporting" xsi:type="Serving" />
+    <relationship identifier="id-r86" source="id-ART-booking-svc" target="id-AC-Booking" xsi:type="Realization" />
+    <relationship identifier="id-r87" source="id-ND-AppCluster" target="id-ART-booking-svc" xsi:type="Assignment" />
+    <relationship identifier="id-r88" source="id-ART-reception-svc" target="id-AC-Reception" xsi:type="Realization" />
+    <relationship identifier="id-r89" source="id-ND-AppCluster" target="id-ART-reception-svc" xsi:type="Assignment" />
+    <relationship identifier="id-r90" source="id-ART-emr-svc" target="id-AC-EMR" xsi:type="Realization" />
+    <relationship identifier="id-r91" source="id-ND-AppCluster" target="id-ART-emr-svc" xsi:type="Assignment" />
+    <relationship identifier="id-r92" source="id-ART-erx-svc" target="id-AC-ePrescription" xsi:type="Realization" />
+    <relationship identifier="id-r93" source="id-ND-AppCluster" target="id-ART-erx-svc" xsi:type="Assignment" />
+    <relationship identifier="id-r94" source="id-ART-pharmacy-gw" target="id-AC-PharmacyGateway" xsi:type="Realization" />
+    <relationship identifier="id-r95" source="id-ND-AppCluster" target="id-ART-pharmacy-gw" xsi:type="Assignment" />
+    <relationship identifier="id-r96" source="id-ART-notify-svc" target="id-AC-Notification" xsi:type="Realization" />
+    <relationship identifier="id-r97" source="id-ND-AppCluster" target="id-ART-notify-svc" xsi:type="Assignment" />
+    <relationship identifier="id-r98" source="id-ART-portal-web" target="id-AC-PatientPortal" xsi:type="Realization" />
+    <relationship identifier="id-r99" source="id-ND-AppCluster" target="id-ART-portal-web" xsi:type="Assignment" />
+    <relationship identifier="id-r100" source="id-ART-reporting-svc" target="id-AC-Reporting" xsi:type="Realization" />
+    <relationship identifier="id-r101" source="id-ND-AppCluster" target="id-ART-reporting-svc" xsi:type="Assignment" />
+    <relationship identifier="id-r102" source="id-ART-masterdata-svc" target="id-AC-MasterData" xsi:type="Realization" />
+    <relationship identifier="id-r103" source="id-ND-AppCluster" target="id-ART-masterdata-svc" xsi:type="Assignment" />
+    <relationship identifier="id-r104" source="id-ART-iam-realm" target="id-AC-IAM" xsi:type="Realization" />
+    <relationship identifier="id-r105" source="id-ND-SecurityPlatform" target="id-ART-iam-realm" xsi:type="Assignment" />
+    <relationship identifier="id-r106" source="id-ND-SecurityPlatform" target="id-ART-abac-policy" xsi:type="Assignment" />
+    <relationship identifier="id-r107" source="id-ART-audit-svc" target="id-AC-Audit" xsi:type="Realization" />
+    <relationship identifier="id-r108" source="id-ND-AppCluster" target="id-ART-audit-svc" xsi:type="Assignment" />
+    <relationship identifier="id-r109" source="id-ND-AuditStore" target="id-ART-audit-log" xsi:type="Assignment" />
+    <relationship identifier="id-r110" source="id-ND-DataCluster" target="id-ART-emr-db" xsi:type="Assignment" />
+    <relationship identifier="id-r111" source="id-ND-DataCluster" target="id-ART-erx-db" xsi:type="Assignment" />
+    <relationship identifier="id-r112" source="id-ND-SiteServerCS1" target="id-ART-hislite" xsi:type="Assignment" />
+    <relationship identifier="id-r113" source="id-ART-hislite" target="id-AC-HisLite-CS1" xsi:type="Realization" />
+    <relationship identifier="id-r114" source="id-ND-SiteServerCS2" target="id-ART-clinicsoft" xsi:type="Assignment" />
+    <relationship identifier="id-r115" source="id-ART-clinicsoft" target="id-AC-ClinicSoft-CS2" xsi:type="Realization" />
+    <relationship identifier="id-r116" source="id-ND-PartnerPharmacy" target="id-ART-pharmacy-sw" xsi:type="Assignment" />
+    <relationship identifier="id-r117" source="id-ART-pharmacy-sw" target="id-EXT-PharmacySystem" xsi:type="Realization" />
+    <relationship identifier="id-r118" source="id-PLT-0" target="id-PLT-1" xsi:type="Triggering" />
+    <relationship identifier="id-r119" source="id-PLT-1" target="id-PLT-2" xsi:type="Triggering" />
+    <relationship identifier="id-r120" source="id-PLT-2" target="id-PLT-3" xsi:type="Triggering" />
+    <relationship identifier="id-r121" source="id-GAP-01" target="id-PLT-0" xsi:type="Association" />
+    <relationship identifier="id-r122" source="id-GAP-01" target="id-PLT-1" xsi:type="Association" />
+    <relationship identifier="id-r123" source="id-GAP-02" target="id-PLT-1" xsi:type="Association" />
+    <relationship identifier="id-r124" source="id-GAP-02" target="id-PLT-2" xsi:type="Association" />
+    <relationship identifier="id-r125" source="id-GAP-03" target="id-PLT-2" xsi:type="Association" />
+    <relationship identifier="id-r126" source="id-GAP-03" target="id-PLT-3" xsi:type="Association" />
+    <relationship identifier="id-r127" source="id-PLT-0" target="id-ND-B-ServerCS1" xsi:type="Aggregation" />
+    <relationship identifier="id-r128" source="id-PLT-0" target="id-ND-B-ServerCS2" xsi:type="Aggregation" />
+    <relationship identifier="id-r129" source="id-PLT-0" target="id-ND-B-SaaS" xsi:type="Aggregation" />
+    <relationship identifier="id-r130" source="id-PLT-0" target="id-NW-B-LAN" xsi:type="Aggregation" />
+    <relationship identifier="id-r131" source="id-PLT-0" target="id-APP-B-HisLite" xsi:type="Aggregation" />
+    <relationship identifier="id-r132" source="id-PLT-0" target="id-APP-B-ClinicSoft" xsi:type="Aggregation" />
+    <relationship identifier="id-r133" source="id-PLT-0" target="id-APP-B-Sheet" xsi:type="Aggregation" />
+    <relationship identifier="id-r134" source="id-PLT-1" target="id-ND-EdgeGateway" xsi:type="Aggregation" />
+    <relationship identifier="id-r135" source="id-PLT-1" target="id-ND-AppCluster" xsi:type="Aggregation" />
+    <relationship identifier="id-r136" source="id-PLT-1" target="id-ND-DataCluster" xsi:type="Aggregation" />
+    <relationship identifier="id-r137" source="id-PLT-1" target="id-ND-SecurityPlatform" xsi:type="Aggregation" />
+    <relationship identifier="id-r138" source="id-PLT-1" target="id-ND-AuditStore" xsi:type="Aggregation" />
+    <relationship identifier="id-r139" source="id-PLT-1" target="id-ND-KeyVault" xsi:type="Aggregation" />
+    <relationship identifier="id-r140" source="id-PLT-1" target="id-AC-IAM" xsi:type="Aggregation" />
+    <relationship identifier="id-r141" source="id-PLT-1" target="id-AC-Audit" xsi:type="Aggregation" />
+    <relationship identifier="id-r142" source="id-PLT-1" target="id-AC-EMR" xsi:type="Aggregation" />
+    <relationship identifier="id-r143" source="id-PLT-1" target="id-AC-ePrescription" xsi:type="Aggregation" />
+    <relationship identifier="id-r144" source="id-PLT-1" target="id-AC-MasterData" xsi:type="Aggregation" />
+    <relationship identifier="id-r145" source="id-PLT-2" target="id-AC-Booking" xsi:type="Aggregation" />
+    <relationship identifier="id-r146" source="id-PLT-2" target="id-AC-PatientPortal" xsi:type="Aggregation" />
+    <relationship identifier="id-r147" source="id-PLT-2" target="id-AC-Reception" xsi:type="Aggregation" />
+    <relationship identifier="id-r148" source="id-PLT-2" target="id-AC-Notification" xsi:type="Aggregation" />
+    <relationship identifier="id-r149" source="id-PLT-2" target="id-AC-Reporting" xsi:type="Aggregation" />
+    <relationship identifier="id-r150" source="id-PLT-2" target="id-DV-Kiosk" xsi:type="Aggregation" />
+    <relationship identifier="id-r151" source="id-PLT-2" target="id-DV-IdCardReader" xsi:type="Aggregation" />
+    <relationship identifier="id-r152" source="id-PLT-3" target="id-AC-PharmacyGateway" xsi:type="Aggregation" />
+    <relationship identifier="id-r153" source="id-PLT-3" target="id-NW-PartnerChannel" xsi:type="Aggregation" />
+    <relationship identifier="id-r154" source="id-PLT-3" target="id-ND-PartnerPharmacy" xsi:type="Aggregation" />
+    <relationship identifier="id-r155" source="id-WP-01" target="id-DLV-01" xsi:type="Realization" />
+    <relationship identifier="id-r156" source="id-DLV-01" target="id-ND-EdgeGateway" xsi:type="Realization" />
+    <relationship identifier="id-r157" source="id-DLV-01" target="id-ND-AppCluster" xsi:type="Realization" />
+    <relationship identifier="id-r158" source="id-DLV-01" target="id-ND-DataCluster" xsi:type="Realization" />
+    <relationship identifier="id-r159" source="id-WP-01" target="id-DLV-02" xsi:type="Realization" />
+    <relationship identifier="id-r160" source="id-DLV-02" target="id-ND-SiteCS1" xsi:type="Realization" />
+    <relationship identifier="id-r161" source="id-DLV-02" target="id-ND-SiteCS2" xsi:type="Realization" />
+    <relationship identifier="id-r162" source="id-WP-01" target="id-DLV-03" xsi:type="Realization" />
+    <relationship identifier="id-r163" source="id-DLV-03" target="id-ND-BackupDR" xsi:type="Realization" />
+    <relationship identifier="id-r164" source="id-WP-02" target="id-DLV-04" xsi:type="Realization" />
+    <relationship identifier="id-r165" source="id-DLV-04" target="id-AC-IAM" xsi:type="Realization" />
+    <relationship identifier="id-r166" source="id-DLV-04" target="id-ND-SecurityPlatform" xsi:type="Realization" />
+    <relationship identifier="id-r167" source="id-WP-02" target="id-DLV-05" xsi:type="Realization" />
+    <relationship identifier="id-r168" source="id-DLV-05" target="id-AC-Audit" xsi:type="Realization" />
+    <relationship identifier="id-r169" source="id-DLV-05" target="id-ND-AuditStore" xsi:type="Realization" />
+    <relationship identifier="id-r170" source="id-WP-02" target="id-DLV-06" xsi:type="Realization" />
+    <relationship identifier="id-r171" source="id-DLV-06" target="id-ART-abac-policy" xsi:type="Realization" />
+    <relationship identifier="id-r172" source="id-WP-03" target="id-DLV-07" xsi:type="Realization" />
+    <relationship identifier="id-r173" source="id-DLV-07" target="id-AC-ePrescription" xsi:type="Realization" />
+    <relationship identifier="id-r174" source="id-DLV-07" target="id-AC-EMR" xsi:type="Realization" />
+    <relationship identifier="id-r175" source="id-WP-03" target="id-DLV-08" xsi:type="Realization" />
+    <relationship identifier="id-r176" source="id-DLV-08" target="id-AC-ePrescription" xsi:type="Realization" />
+    <relationship identifier="id-r177" source="id-WP-04" target="id-DLV-09" xsi:type="Realization" />
+    <relationship identifier="id-r178" source="id-DLV-09" target="id-AC-Booking" xsi:type="Realization" />
+    <relationship identifier="id-r179" source="id-DLV-09" target="id-AC-PatientPortal" xsi:type="Realization" />
+    <relationship identifier="id-r180" source="id-WP-04" target="id-DLV-10" xsi:type="Realization" />
+    <relationship identifier="id-r181" source="id-DLV-10" target="id-AC-Reception" xsi:type="Realization" />
+    <relationship identifier="id-r182" source="id-DLV-10" target="id-DV-Kiosk" xsi:type="Realization" />
+    <relationship identifier="id-r183" source="id-WP-04" target="id-DLV-11" xsi:type="Realization" />
+    <relationship identifier="id-r184" source="id-DLV-11" target="id-AC-Reporting" xsi:type="Realization" />
+    <relationship identifier="id-r185" source="id-WP-05" target="id-DLV-12" xsi:type="Realization" />
+    <relationship identifier="id-r186" source="id-DLV-12" target="id-AC-PharmacyGateway" xsi:type="Realization" />
+    <relationship identifier="id-r187" source="id-WP-05" target="id-DLV-13" xsi:type="Realization" />
+    <relationship identifier="id-r188" source="id-DLV-13" target="id-NW-PartnerChannel" xsi:type="Realization" />
+    <relationship identifier="id-r189" source="id-WP-06" target="id-DLV-14" xsi:type="Realization" />
+    <relationship identifier="id-r190" source="id-WP-07" target="id-DLV-15" xsi:type="Realization" />
+    <relationship identifier="id-r191" source="id-WP-07" target="id-DLV-16" xsi:type="Realization" />
+    <relationship identifier="id-r192" source="id-WP-08" target="id-DLV-17" xsi:type="Realization" />
+    <relationship identifier="id-r193" source="id-WP-08" target="id-DLV-18" xsi:type="Realization" />
+    <relationship identifier="id-r194" source="id-WP-01" target="id-WP-02" xsi:type="Triggering" />
+    <relationship identifier="id-r195" source="id-WP-02" target="id-WP-03" xsi:type="Triggering" />
+    <relationship identifier="id-r196" source="id-WP-03" target="id-WP-04" xsi:type="Triggering" />
+    <relationship identifier="id-r197" source="id-WP-03" target="id-WP-05" xsi:type="Triggering" />
+    <relationship identifier="id-r198" source="id-WP-04" target="id-WP-07" xsi:type="Triggering" />
+    <relationship identifier="id-r199" source="id-WP-05" target="id-WP-06" xsi:type="Triggering" />
+    <relationship identifier="id-r200" source="id-WP-01" target="id-GAP-01" xsi:type="Association" />
+    <relationship identifier="id-r201" source="id-WP-02" target="id-GAP-01" xsi:type="Association" />
+    <relationship identifier="id-r202" source="id-WP-03" target="id-GAP-01" xsi:type="Association" />
+    <relationship identifier="id-r203" source="id-WP-04" target="id-GAP-02" xsi:type="Association" />
+    <relationship identifier="id-r204" source="id-WP-07" target="id-GAP-02" xsi:type="Association" />
+    <relationship identifier="id-r205" source="id-WP-05" target="id-GAP-03" xsi:type="Association" />
+    <relationship identifier="id-r206" source="id-WP-06" target="id-GAP-03" xsi:type="Association" />
+    <relationship identifier="id-r207" source="id-WP-07" target="id-GAP-03" xsi:type="Association" />
+    <relationship identifier="id-r208" source="id-WP-03" target="id-EV-01" xsi:type="Triggering" />
+    <relationship identifier="id-r209" source="id-EV-01" target="id-WP-04" xsi:type="Triggering" />
+  </relationships>
+  <views>
+    <diagrams>
+      <view identifier="id-v1" xsi:type="Diagram"><name xml:lang="vi">TV3-01 Hạ tầng cơ sở (Baseline, PLT-0)</name>
+        <node identifier="id-v1-n1" elementRef="id-DV-B-Workstation" xsi:type="Element" x="20" y="20" w="170" h="55" />
+        <node identifier="id-v1-n2" elementRef="id-NW-B-LAN" xsi:type="Element" x="210" y="20" w="170" h="55" />
+        <node identifier="id-v1-n3" elementRef="id-NW-B-Internet" xsi:type="Element" x="400" y="20" w="170" h="55" />
+        <node identifier="id-v1-n4" elementRef="id-TS-B-Backup" xsi:type="Element" x="590" y="20" w="170" h="55" />
+        <node identifier="id-v1-n5" elementRef="id-ND-B-ServerCS1" xsi:type="Element" x="20" y="95" w="170" h="55" />
+        <node identifier="id-v1-n6" elementRef="id-ND-B-ServerCS2" xsi:type="Element" x="210" y="95" w="170" h="55" />
+        <node identifier="id-v1-n7" elementRef="id-ND-B-SaaS" xsi:type="Element" x="400" y="95" w="170" h="55" />
+        <node identifier="id-v1-n8" elementRef="id-ART-B-hislite" xsi:type="Element" x="210" y="200" w="170" h="55" />
+        <node identifier="id-v1-n9" elementRef="id-ART-B-clinicsoft" xsi:type="Element" x="400" y="200" w="170" h="55" />
+        <node identifier="id-v1-n10" elementRef="id-ART-B-sheet" xsi:type="Element" x="590" y="200" w="170" h="55" />
+        <node identifier="id-v1-n11" elementRef="id-APP-B-HisLite" xsi:type="Element" x="210" y="300" w="170" h="55" />
+        <node identifier="id-v1-n12" elementRef="id-APP-B-ClinicSoft" xsi:type="Element" x="400" y="300" w="170" h="55" />
+        <node identifier="id-v1-n13" elementRef="id-APP-B-Sheet" xsi:type="Element" x="590" y="300" w="170" h="55" />
+        <connection identifier="id-v1-r1" relationshipRef="id-r1" xsi:type="Relationship" source="id-v1-n5" target="id-v1-n8" />
+        <connection identifier="id-v1-r2" relationshipRef="id-r2" xsi:type="Relationship" source="id-v1-n8" target="id-v1-n11" />
+        <connection identifier="id-v1-r3" relationshipRef="id-r3" xsi:type="Relationship" source="id-v1-n6" target="id-v1-n9" />
+        <connection identifier="id-v1-r4" relationshipRef="id-r4" xsi:type="Relationship" source="id-v1-n9" target="id-v1-n12" />
+        <connection identifier="id-v1-r5" relationshipRef="id-r5" xsi:type="Relationship" source="id-v1-n7" target="id-v1-n10" />
+        <connection identifier="id-v1-r6" relationshipRef="id-r6" xsi:type="Relationship" source="id-v1-n10" target="id-v1-n13" />
+        <connection identifier="id-v1-r7" relationshipRef="id-r7" xsi:type="Relationship" source="id-v1-n1" target="id-v1-n2" />
+        <connection identifier="id-v1-r8" relationshipRef="id-r8" xsi:type="Relationship" source="id-v1-n5" target="id-v1-n2" />
+        <connection identifier="id-v1-r9" relationshipRef="id-r9" xsi:type="Relationship" source="id-v1-n6" target="id-v1-n2" />
+        <connection identifier="id-v1-r10" relationshipRef="id-r10" xsi:type="Relationship" source="id-v1-n2" target="id-v1-n3" />
+        <connection identifier="id-v1-r11" relationshipRef="id-r11" xsi:type="Relationship" source="id-v1-n7" target="id-v1-n3" />
+        <connection identifier="id-v1-r12" relationshipRef="id-r12" xsi:type="Relationship" source="id-v1-n4" target="id-v1-n5" />
+      </view>
+      <view identifier="id-v2" xsi:type="Diagram"><name xml:lang="vi">TV3-02 Hạ tầng cơ sở (Target, PLT-3)</name>
+        <node identifier="id-v2-g0" xsi:type="Container" x="20" y="20" w="390" h="345"><label xml:lang="vi">Cơ sở CS1/CS2</label>
+          <node identifier="id-v2-n14" elementRef="id-ND-SiteCS1" xsi:type="Element" x="35" y="55" w="170" h="55" />
+          <node identifier="id-v2-n15" elementRef="id-ND-SiteCS2" xsi:type="Element" x="225" y="55" w="170" h="55" />
+          <node identifier="id-v2-n16" elementRef="id-DV-Workstation" xsi:type="Element" x="35" y="130" w="170" h="55" />
+          <node identifier="id-v2-n17" elementRef="id-DV-Kiosk" xsi:type="Element" x="225" y="130" w="170" h="55" />
+          <node identifier="id-v2-n18" elementRef="id-DV-IdCardReader" xsi:type="Element" x="35" y="205" w="170" h="55" />
+          <node identifier="id-v2-n19" elementRef="id-ND-SiteServerCS1" xsi:type="Element" x="225" y="205" w="170" h="55" />
+          <node identifier="id-v2-n20" elementRef="id-ND-SiteServerCS2" xsi:type="Element" x="35" y="280" w="170" h="55" />
+        </node>
+        <node identifier="id-v2-g1" xsi:type="Container" x="20" y="340" w="390" h="270"><label xml:lang="vi">Internet &amp; đối tác</label>
+          <node identifier="id-v2-n21" elementRef="id-DV-PatientMobile" xsi:type="Element" x="35" y="375" w="170" h="55" />
+          <node identifier="id-v2-n22" elementRef="id-NW-Internet" xsi:type="Element" x="225" y="375" w="170" h="55" />
+          <node identifier="id-v2-n23" elementRef="id-ND-PartnerPharmacy" xsi:type="Element" x="35" y="450" w="170" h="55" />
+          <node identifier="id-v2-n24" elementRef="id-NW-SiteVPN" xsi:type="Element" x="225" y="450" w="170" h="55" />
+          <node identifier="id-v2-n25" elementRef="id-NW-PartnerChannel" xsi:type="Element" x="35" y="525" w="170" h="55" />
+        </node>
+        <node identifier="id-v2-g2" xsi:type="Container" x="440" y="20" w="200" h="270"><label xml:lang="vi">DMZ</label>
+          <node identifier="id-v2-n26" elementRef="id-ND-EdgeGateway" xsi:type="Element" x="455" y="55" w="170" h="55" />
+          <node identifier="id-v2-n27" elementRef="id-TS-ApiGateway" xsi:type="Element" x="455" y="130" w="170" h="55" />
+          <node identifier="id-v2-n28" elementRef="id-TS-SecureChannel" xsi:type="Element" x="455" y="205" w="170" h="55" />
+        </node>
+        <node identifier="id-v2-g3" xsi:type="Container" x="440" y="270" w="200" h="195"><label xml:lang="vi">Vùng App</label>
+          <node identifier="id-v2-n29" elementRef="id-ND-AppCluster" xsi:type="Element" x="455" y="305" w="170" h="55" />
+          <node identifier="id-v2-n30" elementRef="id-SW-K8sRuntime" xsi:type="Element" x="455" y="380" w="170" h="55" />
+        </node>
+        <node identifier="id-v2-g4" xsi:type="Container" x="660" y="20" w="390" h="345"><label xml:lang="vi">Vùng Data</label>
+          <node identifier="id-v2-n31" elementRef="id-ND-DataCluster" xsi:type="Element" x="675" y="55" w="170" h="55" />
+          <node identifier="id-v2-n32" elementRef="id-SW-PostgreSQL" xsi:type="Element" x="865" y="55" w="170" h="55" />
+          <node identifier="id-v2-n33" elementRef="id-TS-Database" xsi:type="Element" x="675" y="130" w="170" h="55" />
+          <node identifier="id-v2-n34" elementRef="id-ND-MessageBroker" xsi:type="Element" x="865" y="130" w="170" h="55" />
+          <node identifier="id-v2-n35" elementRef="id-SW-RabbitMQ" xsi:type="Element" x="675" y="205" w="170" h="55" />
+          <node identifier="id-v2-n36" elementRef="id-TS-Messaging" xsi:type="Element" x="865" y="205" w="170" h="55" />
+          <node identifier="id-v2-n37" elementRef="id-ND-ObjectStore" xsi:type="Element" x="675" y="280" w="170" h="55" />
+          <node identifier="id-v2-n38" elementRef="id-TS-ObjectStorage" xsi:type="Element" x="865" y="280" w="170" h="55" />
+        </node>
+        <node identifier="id-v2-g5" xsi:type="Container" x="1060" y="20" w="390" h="420"><label xml:lang="vi">Vùng Security</label>
+          <node identifier="id-v2-n39" elementRef="id-ND-SecurityPlatform" xsi:type="Element" x="1075" y="55" w="170" h="55" />
+          <node identifier="id-v2-n40" elementRef="id-SW-Keycloak" xsi:type="Element" x="1265" y="55" w="170" h="55" />
+          <node identifier="id-v2-n41" elementRef="id-SW-OPA" xsi:type="Element" x="1075" y="130" w="170" h="55" />
+          <node identifier="id-v2-n42" elementRef="id-TS-Identity" xsi:type="Element" x="1265" y="130" w="170" h="55" />
+          <node identifier="id-v2-n43" elementRef="id-TS-PolicyDecision" xsi:type="Element" x="1075" y="205" w="170" h="55" />
+          <node identifier="id-v2-n44" elementRef="id-ND-AuditStore" xsi:type="Element" x="1265" y="205" w="170" h="55" />
+          <node identifier="id-v2-n45" elementRef="id-TS-Audit" xsi:type="Element" x="1075" y="280" w="170" h="55" />
+          <node identifier="id-v2-n46" elementRef="id-ND-KeyVault" xsi:type="Element" x="1265" y="280" w="170" h="55" />
+          <node identifier="id-v2-n47" elementRef="id-TS-KeyManagement" xsi:type="Element" x="1075" y="355" w="170" h="55" />
+          <node identifier="id-v2-n48" elementRef="id-TS-Signing" xsi:type="Element" x="1265" y="355" w="170" h="55" />
+        </node>
+        <node identifier="id-v2-g6" xsi:type="Container" x="660" y="380" w="390" h="345"><label xml:lang="vi">Mgmt &amp; DR</label>
+          <node identifier="id-v2-n49" elementRef="id-ND-SecOps" xsi:type="Element" x="675" y="415" w="170" h="55" />
+          <node identifier="id-v2-n50" elementRef="id-SW-Wazuh" xsi:type="Element" x="865" y="415" w="170" h="55" />
+          <node identifier="id-v2-n51" elementRef="id-TS-Monitoring" xsi:type="Element" x="675" y="490" w="170" h="55" />
+          <node identifier="id-v2-n52" elementRef="id-TS-SIEM" xsi:type="Element" x="865" y="490" w="170" h="55" />
+          <node identifier="id-v2-n53" elementRef="id-ND-BackupDR" xsi:type="Element" x="675" y="565" w="170" h="55" />
+          <node identifier="id-v2-n54" elementRef="id-TS-Backup" xsi:type="Element" x="865" y="565" w="170" h="55" />
+          <node identifier="id-v2-n55" elementRef="id-NW-DCInternal" xsi:type="Element" x="675" y="640" w="170" h="55" />
+        </node>
+        <connection identifier="id-v2-r13" relationshipRef="id-r13" xsi:type="Relationship" source="id-v2-n26" target="id-v2-n27" />
+        <connection identifier="id-v2-r14" relationshipRef="id-r14" xsi:type="Relationship" source="id-v2-n26" target="id-v2-n28" />
+        <connection identifier="id-v2-r15" relationshipRef="id-r15" xsi:type="Relationship" source="id-v2-n39" target="id-v2-n42" />
+        <connection identifier="id-v2-r16" relationshipRef="id-r16" xsi:type="Relationship" source="id-v2-n39" target="id-v2-n43" />
+        <connection identifier="id-v2-r17" relationshipRef="id-r17" xsi:type="Relationship" source="id-v2-n44" target="id-v2-n45" />
+        <connection identifier="id-v2-r18" relationshipRef="id-r18" xsi:type="Relationship" source="id-v2-n31" target="id-v2-n33" />
+        <connection identifier="id-v2-r19" relationshipRef="id-r19" xsi:type="Relationship" source="id-v2-n34" target="id-v2-n36" />
+        <connection identifier="id-v2-r20" relationshipRef="id-r20" xsi:type="Relationship" source="id-v2-n37" target="id-v2-n38" />
+        <connection identifier="id-v2-r21" relationshipRef="id-r21" xsi:type="Relationship" source="id-v2-n46" target="id-v2-n47" />
+        <connection identifier="id-v2-r22" relationshipRef="id-r22" xsi:type="Relationship" source="id-v2-n46" target="id-v2-n48" />
+        <connection identifier="id-v2-r23" relationshipRef="id-r23" xsi:type="Relationship" source="id-v2-n49" target="id-v2-n51" />
+        <connection identifier="id-v2-r24" relationshipRef="id-r24" xsi:type="Relationship" source="id-v2-n49" target="id-v2-n52" />
+        <connection identifier="id-v2-r25" relationshipRef="id-r25" xsi:type="Relationship" source="id-v2-n53" target="id-v2-n54" />
+        <connection identifier="id-v2-r26" relationshipRef="id-r26" xsi:type="Relationship" source="id-v2-n29" target="id-v2-n30" />
+        <connection identifier="id-v2-r27" relationshipRef="id-r27" xsi:type="Relationship" source="id-v2-n31" target="id-v2-n32" />
+        <connection identifier="id-v2-r28" relationshipRef="id-r28" xsi:type="Relationship" source="id-v2-n44" target="id-v2-n32" />
+        <connection identifier="id-v2-r29" relationshipRef="id-r29" xsi:type="Relationship" source="id-v2-n34" target="id-v2-n35" />
+        <connection identifier="id-v2-r30" relationshipRef="id-r30" xsi:type="Relationship" source="id-v2-n39" target="id-v2-n40" />
+        <connection identifier="id-v2-r31" relationshipRef="id-r31" xsi:type="Relationship" source="id-v2-n39" target="id-v2-n41" />
+        <connection identifier="id-v2-r32" relationshipRef="id-r32" xsi:type="Relationship" source="id-v2-n49" target="id-v2-n50" />
+        <connection identifier="id-v2-r33" relationshipRef="id-r33" xsi:type="Relationship" source="id-v2-n14" target="id-v2-n16" />
+        <connection identifier="id-v2-r34" relationshipRef="id-r34" xsi:type="Relationship" source="id-v2-n14" target="id-v2-n17" />
+        <connection identifier="id-v2-r35" relationshipRef="id-r35" xsi:type="Relationship" source="id-v2-n14" target="id-v2-n18" />
+        <connection identifier="id-v2-r36" relationshipRef="id-r36" xsi:type="Relationship" source="id-v2-n14" target="id-v2-n19" />
+        <connection identifier="id-v2-r37" relationshipRef="id-r37" xsi:type="Relationship" source="id-v2-n15" target="id-v2-n20" />
+        <connection identifier="id-v2-r38" relationshipRef="id-r38" xsi:type="Relationship" source="id-v2-n22" target="id-v2-n24" />
+        <connection identifier="id-v2-r39" relationshipRef="id-r39" xsi:type="Relationship" source="id-v2-n22" target="id-v2-n25" />
+        <connection identifier="id-v2-r40" relationshipRef="id-r40" xsi:type="Relationship" source="id-v2-n24" target="id-v2-n14" />
+        <connection identifier="id-v2-r41" relationshipRef="id-r41" xsi:type="Relationship" source="id-v2-n24" target="id-v2-n15" />
+        <connection identifier="id-v2-r42" relationshipRef="id-r42" xsi:type="Relationship" source="id-v2-n24" target="id-v2-n26" />
+        <connection identifier="id-v2-r43" relationshipRef="id-r43" xsi:type="Relationship" source="id-v2-n25" target="id-v2-n23" />
+        <connection identifier="id-v2-r44" relationshipRef="id-r44" xsi:type="Relationship" source="id-v2-n25" target="id-v2-n26" />
+        <connection identifier="id-v2-r45" relationshipRef="id-r45" xsi:type="Relationship" source="id-v2-n21" target="id-v2-n22" />
+        <connection identifier="id-v2-r46" relationshipRef="id-r46" xsi:type="Relationship" source="id-v2-n55" target="id-v2-n26" />
+        <connection identifier="id-v2-r47" relationshipRef="id-r47" xsi:type="Relationship" source="id-v2-n55" target="id-v2-n29" />
+        <connection identifier="id-v2-r48" relationshipRef="id-r48" xsi:type="Relationship" source="id-v2-n55" target="id-v2-n31" />
+        <connection identifier="id-v2-r49" relationshipRef="id-r49" xsi:type="Relationship" source="id-v2-n55" target="id-v2-n34" />
+        <connection identifier="id-v2-r50" relationshipRef="id-r50" xsi:type="Relationship" source="id-v2-n55" target="id-v2-n37" />
+        <connection identifier="id-v2-r51" relationshipRef="id-r51" xsi:type="Relationship" source="id-v2-n55" target="id-v2-n39" />
+        <connection identifier="id-v2-r52" relationshipRef="id-r52" xsi:type="Relationship" source="id-v2-n55" target="id-v2-n44" />
+        <connection identifier="id-v2-r53" relationshipRef="id-r53" xsi:type="Relationship" source="id-v2-n55" target="id-v2-n46" />
+        <connection identifier="id-v2-r54" relationshipRef="id-r54" xsi:type="Relationship" source="id-v2-n55" target="id-v2-n49" />
+        <connection identifier="id-v2-r55" relationshipRef="id-r55" xsi:type="Relationship" source="id-v2-n38" target="id-v2-n44" />
+        <connection identifier="id-v2-r56" relationshipRef="id-r56" xsi:type="Relationship" source="id-v2-n48" target="id-v2-n44" />
+        <connection identifier="id-v2-r57" relationshipRef="id-r57" xsi:type="Relationship" source="id-v2-n54" target="id-v2-n31" />
+        <connection identifier="id-v2-r58" relationshipRef="id-r58" xsi:type="Relationship" source="id-v2-n54" target="id-v2-n44" />
+      </view>
+      <view identifier="id-v3" xsi:type="Diagram"><name xml:lang="vi">TV3-03 Sử dụng hạ tầng (Infrastructure Usage)</name>
+        <node identifier="id-v3-n56" elementRef="id-TS-ApiGateway" xsi:type="Element" x="20" y="20" w="170" h="55" />
+        <node identifier="id-v3-n57" elementRef="id-TS-SecureChannel" xsi:type="Element" x="210" y="20" w="170" h="55" />
+        <node identifier="id-v3-n58" elementRef="id-TS-Identity" xsi:type="Element" x="400" y="20" w="170" h="55" />
+        <node identifier="id-v3-n59" elementRef="id-TS-PolicyDecision" xsi:type="Element" x="590" y="20" w="170" h="55" />
+        <node identifier="id-v3-n60" elementRef="id-TS-Audit" xsi:type="Element" x="780" y="20" w="170" h="55" />
+        <node identifier="id-v3-n61" elementRef="id-TS-Database" xsi:type="Element" x="970" y="20" w="170" h="55" />
+        <node identifier="id-v3-n62" elementRef="id-TS-Messaging" xsi:type="Element" x="1160" y="20" w="170" h="55" />
+        <node identifier="id-v3-n63" elementRef="id-TS-ObjectStorage" xsi:type="Element" x="20" y="95" w="170" h="55" />
+        <node identifier="id-v3-n64" elementRef="id-TS-KeyManagement" xsi:type="Element" x="210" y="95" w="170" h="55" />
+        <node identifier="id-v3-n65" elementRef="id-TS-Signing" xsi:type="Element" x="400" y="95" w="170" h="55" />
+        <node identifier="id-v3-n66" elementRef="id-TS-Monitoring" xsi:type="Element" x="590" y="95" w="170" h="55" />
+        <node identifier="id-v3-n67" elementRef="id-TS-SIEM" xsi:type="Element" x="780" y="95" w="170" h="55" />
+        <node identifier="id-v3-n68" elementRef="id-TS-Backup" xsi:type="Element" x="970" y="95" w="170" h="55" />
+        <node identifier="id-v3-n69" elementRef="id-AC-PatientPortal" xsi:type="Element" x="20" y="220" w="170" h="55" />
+        <node identifier="id-v3-n70" elementRef="id-AC-Booking" xsi:type="Element" x="210" y="220" w="170" h="55" />
+        <node identifier="id-v3-n71" elementRef="id-AC-Reception" xsi:type="Element" x="400" y="220" w="170" h="55" />
+        <node identifier="id-v3-n72" elementRef="id-AC-EMR" xsi:type="Element" x="590" y="220" w="170" h="55" />
+        <node identifier="id-v3-n73" elementRef="id-AC-ePrescription" xsi:type="Element" x="780" y="220" w="170" h="55" />
+        <node identifier="id-v3-n74" elementRef="id-AC-PharmacyGateway" xsi:type="Element" x="970" y="220" w="170" h="55" />
+        <node identifier="id-v3-n75" elementRef="id-AC-Notification" xsi:type="Element" x="20" y="295" w="170" h="55" />
+        <node identifier="id-v3-n76" elementRef="id-AC-IAM" xsi:type="Element" x="210" y="295" w="170" h="55" />
+        <node identifier="id-v3-n77" elementRef="id-AC-Audit" xsi:type="Element" x="400" y="295" w="170" h="55" />
+        <node identifier="id-v3-n78" elementRef="id-AC-MasterData" xsi:type="Element" x="590" y="295" w="170" h="55" />
+        <node identifier="id-v3-n79" elementRef="id-AC-Reporting" xsi:type="Element" x="780" y="295" w="170" h="55" />
+        <connection identifier="id-v3-r59" relationshipRef="id-r59" xsi:type="Relationship" source="id-v3-n56" target="id-v3-n69" />
+        <connection identifier="id-v3-r60" relationshipRef="id-r60" xsi:type="Relationship" source="id-v3-n57" target="id-v3-n69" />
+        <connection identifier="id-v3-r61" relationshipRef="id-r61" xsi:type="Relationship" source="id-v3-n58" target="id-v3-n69" />
+        <connection identifier="id-v3-r62" relationshipRef="id-r62" xsi:type="Relationship" source="id-v3-n61" target="id-v3-n70" />
+        <connection identifier="id-v3-r63" relationshipRef="id-r63" xsi:type="Relationship" source="id-v3-n62" target="id-v3-n70" />
+        <connection identifier="id-v3-r64" relationshipRef="id-r64" xsi:type="Relationship" source="id-v3-n61" target="id-v3-n71" />
+        <connection identifier="id-v3-r65" relationshipRef="id-r65" xsi:type="Relationship" source="id-v3-n56" target="id-v3-n71" />
+        <connection identifier="id-v3-r66" relationshipRef="id-r66" xsi:type="Relationship" source="id-v3-n61" target="id-v3-n72" />
+        <connection identifier="id-v3-r67" relationshipRef="id-r67" xsi:type="Relationship" source="id-v3-n63" target="id-v3-n72" />
+        <connection identifier="id-v3-r68" relationshipRef="id-r68" xsi:type="Relationship" source="id-v3-n59" target="id-v3-n72" />
+        <connection identifier="id-v3-r69" relationshipRef="id-r69" xsi:type="Relationship" source="id-v3-n61" target="id-v3-n73" />
+        <connection identifier="id-v3-r70" relationshipRef="id-r70" xsi:type="Relationship" source="id-v3-n65" target="id-v3-n73" />
+        <connection identifier="id-v3-r71" relationshipRef="id-r71" xsi:type="Relationship" source="id-v3-n62" target="id-v3-n73" />
+        <connection identifier="id-v3-r72" relationshipRef="id-r72" xsi:type="Relationship" source="id-v3-n59" target="id-v3-n73" />
+        <connection identifier="id-v3-r73" relationshipRef="id-r73" xsi:type="Relationship" source="id-v3-n56" target="id-v3-n74" />
+        <connection identifier="id-v3-r74" relationshipRef="id-r74" xsi:type="Relationship" source="id-v3-n57" target="id-v3-n74" />
+        <connection identifier="id-v3-r75" relationshipRef="id-r75" xsi:type="Relationship" source="id-v3-n62" target="id-v3-n74" />
+        <connection identifier="id-v3-r76" relationshipRef="id-r76" xsi:type="Relationship" source="id-v3-n61" target="id-v3-n74" />
+        <connection identifier="id-v3-r77" relationshipRef="id-r77" xsi:type="Relationship" source="id-v3-n62" target="id-v3-n75" />
+        <connection identifier="id-v3-r78" relationshipRef="id-r78" xsi:type="Relationship" source="id-v3-n58" target="id-v3-n76" />
+        <connection identifier="id-v3-r79" relationshipRef="id-r79" xsi:type="Relationship" source="id-v3-n59" target="id-v3-n76" />
+        <connection identifier="id-v3-r80" relationshipRef="id-r80" xsi:type="Relationship" source="id-v3-n60" target="id-v3-n77" />
+        <connection identifier="id-v3-r81" relationshipRef="id-r81" xsi:type="Relationship" source="id-v3-n63" target="id-v3-n77" />
+        <connection identifier="id-v3-r82" relationshipRef="id-r82" xsi:type="Relationship" source="id-v3-n65" target="id-v3-n77" />
+        <connection identifier="id-v3-r83" relationshipRef="id-r83" xsi:type="Relationship" source="id-v3-n67" target="id-v3-n77" />
+        <connection identifier="id-v3-r84" relationshipRef="id-r84" xsi:type="Relationship" source="id-v3-n61" target="id-v3-n78" />
+        <connection identifier="id-v3-r85" relationshipRef="id-r85" xsi:type="Relationship" source="id-v3-n61" target="id-v3-n79" />
+      </view>
+      <view identifier="id-v4" xsi:type="Diagram"><name xml:lang="vi">TV3-04 Thực hiện và triển khai (Implementation &amp; Deployment)</name>
+        <node identifier="id-v4-n80" elementRef="id-ND-AppCluster" xsi:type="Element" x="20" y="20" w="170" h="55" />
+        <node identifier="id-v4-n81" elementRef="id-ND-DataCluster" xsi:type="Element" x="280" y="20" w="170" h="55" />
+        <node identifier="id-v4-n82" elementRef="id-ND-AuditStore" xsi:type="Element" x="540" y="20" w="170" h="55" />
+        <node identifier="id-v4-n83" elementRef="id-ND-SecurityPlatform" xsi:type="Element" x="800" y="20" w="170" h="55" />
+        <node identifier="id-v4-n84" elementRef="id-ART-booking-svc" xsi:type="Element" x="20" y="140" w="170" h="55" />
+        <node identifier="id-v4-n85" elementRef="id-ART-reception-svc" xsi:type="Element" x="210" y="140" w="170" h="55" />
+        <node identifier="id-v4-n86" elementRef="id-ART-emr-svc" xsi:type="Element" x="400" y="140" w="170" h="55" />
+        <node identifier="id-v4-n87" elementRef="id-ART-erx-svc" xsi:type="Element" x="590" y="140" w="170" h="55" />
+        <node identifier="id-v4-n88" elementRef="id-ART-pharmacy-gw" xsi:type="Element" x="780" y="140" w="170" h="55" />
+        <node identifier="id-v4-n89" elementRef="id-ART-notify-svc" xsi:type="Element" x="20" y="215" w="170" h="55" />
+        <node identifier="id-v4-n90" elementRef="id-ART-portal-web" xsi:type="Element" x="210" y="215" w="170" h="55" />
+        <node identifier="id-v4-n91" elementRef="id-ART-reporting-svc" xsi:type="Element" x="400" y="215" w="170" h="55" />
+        <node identifier="id-v4-n92" elementRef="id-ART-masterdata-svc" xsi:type="Element" x="590" y="215" w="170" h="55" />
+        <node identifier="id-v4-n93" elementRef="id-ART-audit-svc" xsi:type="Element" x="780" y="215" w="170" h="55" />
+        <node identifier="id-v4-n94" elementRef="id-ART-emr-db" xsi:type="Element" x="20" y="320" w="170" h="55" />
+        <node identifier="id-v4-n95" elementRef="id-ART-erx-db" xsi:type="Element" x="210" y="320" w="170" h="55" />
+        <node identifier="id-v4-n96" elementRef="id-ART-audit-log" xsi:type="Element" x="400" y="320" w="170" h="55" />
+        <node identifier="id-v4-n97" elementRef="id-ART-iam-realm" xsi:type="Element" x="590" y="320" w="170" h="55" />
+        <node identifier="id-v4-n98" elementRef="id-ART-abac-policy" xsi:type="Element" x="780" y="320" w="170" h="55" />
+        <node identifier="id-v4-n99" elementRef="id-AC-Booking" xsi:type="Element" x="20" y="420" w="170" h="55" />
+        <node identifier="id-v4-n100" elementRef="id-AC-Reception" xsi:type="Element" x="210" y="420" w="170" h="55" />
+        <node identifier="id-v4-n101" elementRef="id-AC-EMR" xsi:type="Element" x="400" y="420" w="170" h="55" />
+        <node identifier="id-v4-n102" elementRef="id-AC-ePrescription" xsi:type="Element" x="590" y="420" w="170" h="55" />
+        <node identifier="id-v4-n103" elementRef="id-AC-PharmacyGateway" xsi:type="Element" x="780" y="420" w="170" h="55" />
+        <node identifier="id-v4-n104" elementRef="id-AC-Notification" xsi:type="Element" x="970" y="420" w="170" h="55" />
+        <node identifier="id-v4-n105" elementRef="id-AC-PatientPortal" xsi:type="Element" x="20" y="495" w="170" h="55" />
+        <node identifier="id-v4-n106" elementRef="id-AC-Reporting" xsi:type="Element" x="210" y="495" w="170" h="55" />
+        <node identifier="id-v4-n107" elementRef="id-AC-MasterData" xsi:type="Element" x="400" y="495" w="170" h="55" />
+        <node identifier="id-v4-n108" elementRef="id-AC-Audit" xsi:type="Element" x="590" y="495" w="170" h="55" />
+        <node identifier="id-v4-n109" elementRef="id-AC-IAM" xsi:type="Element" x="780" y="495" w="170" h="55" />
+        <node identifier="id-v4-n110" elementRef="id-ND-SiteServerCS1" xsi:type="Element" x="20" y="620" w="170" h="55" />
+        <node identifier="id-v4-n111" elementRef="id-ND-SiteServerCS2" xsi:type="Element" x="210" y="620" w="170" h="55" />
+        <node identifier="id-v4-n112" elementRef="id-ND-PartnerPharmacy" xsi:type="Element" x="400" y="620" w="170" h="55" />
+        <node identifier="id-v4-n113" elementRef="id-ART-hislite" xsi:type="Element" x="20" y="695" w="170" h="55" />
+        <node identifier="id-v4-n114" elementRef="id-ART-clinicsoft" xsi:type="Element" x="210" y="695" w="170" h="55" />
+        <node identifier="id-v4-n115" elementRef="id-ART-pharmacy-sw" xsi:type="Element" x="400" y="695" w="170" h="55" />
+        <node identifier="id-v4-n116" elementRef="id-AC-HisLite-CS1" xsi:type="Element" x="20" y="770" w="170" h="55" />
+        <node identifier="id-v4-n117" elementRef="id-AC-ClinicSoft-CS2" xsi:type="Element" x="210" y="770" w="170" h="55" />
+        <node identifier="id-v4-n118" elementRef="id-EXT-PharmacySystem" xsi:type="Element" x="400" y="770" w="170" h="55" />
+        <connection identifier="id-v4-r86" relationshipRef="id-r86" xsi:type="Relationship" source="id-v4-n84" target="id-v4-n99" />
+        <connection identifier="id-v4-r87" relationshipRef="id-r87" xsi:type="Relationship" source="id-v4-n80" target="id-v4-n84" />
+        <connection identifier="id-v4-r88" relationshipRef="id-r88" xsi:type="Relationship" source="id-v4-n85" target="id-v4-n100" />
+        <connection identifier="id-v4-r89" relationshipRef="id-r89" xsi:type="Relationship" source="id-v4-n80" target="id-v4-n85" />
+        <connection identifier="id-v4-r90" relationshipRef="id-r90" xsi:type="Relationship" source="id-v4-n86" target="id-v4-n101" />
+        <connection identifier="id-v4-r91" relationshipRef="id-r91" xsi:type="Relationship" source="id-v4-n80" target="id-v4-n86" />
+        <connection identifier="id-v4-r92" relationshipRef="id-r92" xsi:type="Relationship" source="id-v4-n87" target="id-v4-n102" />
+        <connection identifier="id-v4-r93" relationshipRef="id-r93" xsi:type="Relationship" source="id-v4-n80" target="id-v4-n87" />
+        <connection identifier="id-v4-r94" relationshipRef="id-r94" xsi:type="Relationship" source="id-v4-n88" target="id-v4-n103" />
+        <connection identifier="id-v4-r95" relationshipRef="id-r95" xsi:type="Relationship" source="id-v4-n80" target="id-v4-n88" />
+        <connection identifier="id-v4-r96" relationshipRef="id-r96" xsi:type="Relationship" source="id-v4-n89" target="id-v4-n104" />
+        <connection identifier="id-v4-r97" relationshipRef="id-r97" xsi:type="Relationship" source="id-v4-n80" target="id-v4-n89" />
+        <connection identifier="id-v4-r98" relationshipRef="id-r98" xsi:type="Relationship" source="id-v4-n90" target="id-v4-n105" />
+        <connection identifier="id-v4-r99" relationshipRef="id-r99" xsi:type="Relationship" source="id-v4-n80" target="id-v4-n90" />
+        <connection identifier="id-v4-r100" relationshipRef="id-r100" xsi:type="Relationship" source="id-v4-n91" target="id-v4-n106" />
+        <connection identifier="id-v4-r101" relationshipRef="id-r101" xsi:type="Relationship" source="id-v4-n80" target="id-v4-n91" />
+        <connection identifier="id-v4-r102" relationshipRef="id-r102" xsi:type="Relationship" source="id-v4-n92" target="id-v4-n107" />
+        <connection identifier="id-v4-r103" relationshipRef="id-r103" xsi:type="Relationship" source="id-v4-n80" target="id-v4-n92" />
+        <connection identifier="id-v4-r104" relationshipRef="id-r104" xsi:type="Relationship" source="id-v4-n97" target="id-v4-n109" />
+        <connection identifier="id-v4-r105" relationshipRef="id-r105" xsi:type="Relationship" source="id-v4-n83" target="id-v4-n97" />
+        <connection identifier="id-v4-r106" relationshipRef="id-r106" xsi:type="Relationship" source="id-v4-n83" target="id-v4-n98" />
+        <connection identifier="id-v4-r107" relationshipRef="id-r107" xsi:type="Relationship" source="id-v4-n93" target="id-v4-n108" />
+        <connection identifier="id-v4-r108" relationshipRef="id-r108" xsi:type="Relationship" source="id-v4-n80" target="id-v4-n93" />
+        <connection identifier="id-v4-r109" relationshipRef="id-r109" xsi:type="Relationship" source="id-v4-n82" target="id-v4-n96" />
+        <connection identifier="id-v4-r110" relationshipRef="id-r110" xsi:type="Relationship" source="id-v4-n81" target="id-v4-n94" />
+        <connection identifier="id-v4-r111" relationshipRef="id-r111" xsi:type="Relationship" source="id-v4-n81" target="id-v4-n95" />
+        <connection identifier="id-v4-r112" relationshipRef="id-r112" xsi:type="Relationship" source="id-v4-n110" target="id-v4-n113" />
+        <connection identifier="id-v4-r113" relationshipRef="id-r113" xsi:type="Relationship" source="id-v4-n113" target="id-v4-n116" />
+        <connection identifier="id-v4-r114" relationshipRef="id-r114" xsi:type="Relationship" source="id-v4-n111" target="id-v4-n114" />
+        <connection identifier="id-v4-r115" relationshipRef="id-r115" xsi:type="Relationship" source="id-v4-n114" target="id-v4-n117" />
+        <connection identifier="id-v4-r116" relationshipRef="id-r116" xsi:type="Relationship" source="id-v4-n112" target="id-v4-n115" />
+        <connection identifier="id-v4-r117" relationshipRef="id-r117" xsi:type="Relationship" source="id-v4-n115" target="id-v4-n118" />
+      </view>
+      <view identifier="id-v5" xsi:type="Diagram"><name xml:lang="vi">TV3-05 Kế hoạch dịch chuyển (Migration)</name>
+        <node identifier="id-v5-n119" elementRef="id-PLT-0" xsi:type="Element" x="20" y="40" w="200" h="60" />
+        <node identifier="id-v5-n120" elementRef="id-PLT-1" xsi:type="Element" x="280" y="40" w="200" h="60" />
+        <node identifier="id-v5-n121" elementRef="id-PLT-2" xsi:type="Element" x="540" y="40" w="200" h="60" />
+        <node identifier="id-v5-n122" elementRef="id-PLT-3" xsi:type="Element" x="800" y="40" w="200" h="60" />
+        <node identifier="id-v5-n123" elementRef="id-GAP-01" xsi:type="Element" x="150" y="170" w="200" h="60" />
+        <node identifier="id-v5-n124" elementRef="id-GAP-02" xsi:type="Element" x="410" y="170" w="200" h="60" />
+        <node identifier="id-v5-n125" elementRef="id-GAP-03" xsi:type="Element" x="670" y="170" w="200" h="60" />
+        <connection identifier="id-v5-r118" relationshipRef="id-r118" xsi:type="Relationship" source="id-v5-n119" target="id-v5-n120" />
+        <connection identifier="id-v5-r119" relationshipRef="id-r119" xsi:type="Relationship" source="id-v5-n120" target="id-v5-n121" />
+        <connection identifier="id-v5-r120" relationshipRef="id-r120" xsi:type="Relationship" source="id-v5-n121" target="id-v5-n122" />
+        <connection identifier="id-v5-r121" relationshipRef="id-r121" xsi:type="Relationship" source="id-v5-n123" target="id-v5-n119" />
+        <connection identifier="id-v5-r122" relationshipRef="id-r122" xsi:type="Relationship" source="id-v5-n123" target="id-v5-n120" />
+        <connection identifier="id-v5-r123" relationshipRef="id-r123" xsi:type="Relationship" source="id-v5-n124" target="id-v5-n120" />
+        <connection identifier="id-v5-r124" relationshipRef="id-r124" xsi:type="Relationship" source="id-v5-n124" target="id-v5-n121" />
+        <connection identifier="id-v5-r125" relationshipRef="id-r125" xsi:type="Relationship" source="id-v5-n125" target="id-v5-n121" />
+        <connection identifier="id-v5-r126" relationshipRef="id-r126" xsi:type="Relationship" source="id-v5-n125" target="id-v5-n122" />
+      </view>
+      <view identifier="id-v6" xsi:type="Diagram"><name xml:lang="vi">TV3-06 Dự án (Project)</name>
+        <node identifier="id-v6-n126" elementRef="id-WP-01" xsi:type="Element" x="20" y="20" w="170" h="55" />
+        <node identifier="id-v6-n127" elementRef="id-WP-02" xsi:type="Element" x="210" y="20" w="170" h="55" />
+        <node identifier="id-v6-n128" elementRef="id-WP-03" xsi:type="Element" x="400" y="20" w="170" h="55" />
+        <node identifier="id-v6-n129" elementRef="id-WP-04" xsi:type="Element" x="590" y="20" w="170" h="55" />
+        <node identifier="id-v6-n130" elementRef="id-WP-05" xsi:type="Element" x="20" y="95" w="170" h="55" />
+        <node identifier="id-v6-n131" elementRef="id-WP-06" xsi:type="Element" x="210" y="95" w="170" h="55" />
+        <node identifier="id-v6-n132" elementRef="id-WP-07" xsi:type="Element" x="400" y="95" w="170" h="55" />
+        <node identifier="id-v6-n133" elementRef="id-WP-08" xsi:type="Element" x="590" y="95" w="170" h="55" />
+        <node identifier="id-v6-n134" elementRef="id-DLV-01" xsi:type="Element" x="20" y="200" w="170" h="55" />
+        <node identifier="id-v6-n135" elementRef="id-DLV-02" xsi:type="Element" x="210" y="200" w="170" h="55" />
+        <node identifier="id-v6-n136" elementRef="id-DLV-03" xsi:type="Element" x="400" y="200" w="170" h="55" />
+        <node identifier="id-v6-n137" elementRef="id-DLV-04" xsi:type="Element" x="590" y="200" w="170" h="55" />
+        <node identifier="id-v6-n138" elementRef="id-DLV-05" xsi:type="Element" x="780" y="200" w="170" h="55" />
+        <node identifier="id-v6-n139" elementRef="id-DLV-06" xsi:type="Element" x="970" y="200" w="170" h="55" />
+        <node identifier="id-v6-n140" elementRef="id-DLV-07" xsi:type="Element" x="20" y="275" w="170" h="55" />
+        <node identifier="id-v6-n141" elementRef="id-DLV-08" xsi:type="Element" x="210" y="275" w="170" h="55" />
+        <node identifier="id-v6-n142" elementRef="id-DLV-09" xsi:type="Element" x="400" y="275" w="170" h="55" />
+        <node identifier="id-v6-n143" elementRef="id-DLV-10" xsi:type="Element" x="590" y="275" w="170" h="55" />
+        <node identifier="id-v6-n144" elementRef="id-DLV-11" xsi:type="Element" x="780" y="275" w="170" h="55" />
+        <node identifier="id-v6-n145" elementRef="id-DLV-12" xsi:type="Element" x="970" y="275" w="170" h="55" />
+        <node identifier="id-v6-n146" elementRef="id-DLV-13" xsi:type="Element" x="20" y="350" w="170" h="55" />
+        <node identifier="id-v6-n147" elementRef="id-DLV-14" xsi:type="Element" x="210" y="350" w="170" h="55" />
+        <node identifier="id-v6-n148" elementRef="id-DLV-15" xsi:type="Element" x="400" y="350" w="170" h="55" />
+        <node identifier="id-v6-n149" elementRef="id-DLV-16" xsi:type="Element" x="590" y="350" w="170" h="55" />
+        <node identifier="id-v6-n150" elementRef="id-DLV-17" xsi:type="Element" x="780" y="350" w="170" h="55" />
+        <node identifier="id-v6-n151" elementRef="id-DLV-18" xsi:type="Element" x="970" y="350" w="170" h="55" />
+        <node identifier="id-v6-n152" elementRef="id-EV-01" xsi:type="Element" x="20" y="480" w="170" h="55" />
+        <connection identifier="id-v6-r155" relationshipRef="id-r155" xsi:type="Relationship" source="id-v6-n126" target="id-v6-n134" />
+        <connection identifier="id-v6-r159" relationshipRef="id-r159" xsi:type="Relationship" source="id-v6-n126" target="id-v6-n135" />
+        <connection identifier="id-v6-r162" relationshipRef="id-r162" xsi:type="Relationship" source="id-v6-n126" target="id-v6-n136" />
+        <connection identifier="id-v6-r164" relationshipRef="id-r164" xsi:type="Relationship" source="id-v6-n127" target="id-v6-n137" />
+        <connection identifier="id-v6-r167" relationshipRef="id-r167" xsi:type="Relationship" source="id-v6-n127" target="id-v6-n138" />
+        <connection identifier="id-v6-r170" relationshipRef="id-r170" xsi:type="Relationship" source="id-v6-n127" target="id-v6-n139" />
+        <connection identifier="id-v6-r172" relationshipRef="id-r172" xsi:type="Relationship" source="id-v6-n128" target="id-v6-n140" />
+        <connection identifier="id-v6-r175" relationshipRef="id-r175" xsi:type="Relationship" source="id-v6-n128" target="id-v6-n141" />
+        <connection identifier="id-v6-r177" relationshipRef="id-r177" xsi:type="Relationship" source="id-v6-n129" target="id-v6-n142" />
+        <connection identifier="id-v6-r180" relationshipRef="id-r180" xsi:type="Relationship" source="id-v6-n129" target="id-v6-n143" />
+        <connection identifier="id-v6-r183" relationshipRef="id-r183" xsi:type="Relationship" source="id-v6-n129" target="id-v6-n144" />
+        <connection identifier="id-v6-r185" relationshipRef="id-r185" xsi:type="Relationship" source="id-v6-n130" target="id-v6-n145" />
+        <connection identifier="id-v6-r187" relationshipRef="id-r187" xsi:type="Relationship" source="id-v6-n130" target="id-v6-n146" />
+        <connection identifier="id-v6-r189" relationshipRef="id-r189" xsi:type="Relationship" source="id-v6-n131" target="id-v6-n147" />
+        <connection identifier="id-v6-r190" relationshipRef="id-r190" xsi:type="Relationship" source="id-v6-n132" target="id-v6-n148" />
+        <connection identifier="id-v6-r191" relationshipRef="id-r191" xsi:type="Relationship" source="id-v6-n132" target="id-v6-n149" />
+        <connection identifier="id-v6-r192" relationshipRef="id-r192" xsi:type="Relationship" source="id-v6-n133" target="id-v6-n150" />
+        <connection identifier="id-v6-r193" relationshipRef="id-r193" xsi:type="Relationship" source="id-v6-n133" target="id-v6-n151" />
+        <connection identifier="id-v6-r194" relationshipRef="id-r194" xsi:type="Relationship" source="id-v6-n126" target="id-v6-n127" />
+        <connection identifier="id-v6-r195" relationshipRef="id-r195" xsi:type="Relationship" source="id-v6-n127" target="id-v6-n128" />
+        <connection identifier="id-v6-r196" relationshipRef="id-r196" xsi:type="Relationship" source="id-v6-n128" target="id-v6-n129" />
+        <connection identifier="id-v6-r197" relationshipRef="id-r197" xsi:type="Relationship" source="id-v6-n128" target="id-v6-n130" />
+        <connection identifier="id-v6-r198" relationshipRef="id-r198" xsi:type="Relationship" source="id-v6-n129" target="id-v6-n132" />
+        <connection identifier="id-v6-r199" relationshipRef="id-r199" xsi:type="Relationship" source="id-v6-n130" target="id-v6-n131" />
+        <connection identifier="id-v6-r208" relationshipRef="id-r208" xsi:type="Relationship" source="id-v6-n128" target="id-v6-n152" />
+        <connection identifier="id-v6-r209" relationshipRef="id-r209" xsi:type="Relationship" source="id-v6-n152" target="id-v6-n129" />
+      </view>
+      <view identifier="id-v7" xsi:type="Diagram"><name xml:lang="vi">TV3-07 Thực hiện và dịch chuyển (Implementation &amp; Migration)</name>
+        <node identifier="id-v7-n153" elementRef="id-PLT-1" xsi:type="Element" x="20" y="20" w="200" h="55" />
+        <node identifier="id-v7-n154" elementRef="id-PLT-2" xsi:type="Element" x="420" y="20" w="200" h="55" />
+        <node identifier="id-v7-n155" elementRef="id-PLT-3" xsi:type="Element" x="820" y="20" w="200" h="55" />
+        <node identifier="id-v7-n156" elementRef="id-WP-01" xsi:type="Element" x="20" y="120" w="170" h="55" />
+        <node identifier="id-v7-n157" elementRef="id-WP-02" xsi:type="Element" x="220" y="120" w="170" h="55" />
+        <node identifier="id-v7-n158" elementRef="id-WP-03" xsi:type="Element" x="420" y="120" w="170" h="55" />
+        <node identifier="id-v7-n159" elementRef="id-WP-04" xsi:type="Element" x="620" y="120" w="170" h="55" />
+        <node identifier="id-v7-n160" elementRef="id-WP-07" xsi:type="Element" x="20" y="195" w="170" h="55" />
+        <node identifier="id-v7-n161" elementRef="id-WP-05" xsi:type="Element" x="220" y="195" w="170" h="55" />
+        <node identifier="id-v7-n162" elementRef="id-WP-06" xsi:type="Element" x="420" y="195" w="170" h="55" />
+        <node identifier="id-v7-n163" elementRef="id-WP-08" xsi:type="Element" x="620" y="195" w="170" h="55" />
+        <node identifier="id-v7-n164" elementRef="id-GAP-01" xsi:type="Element" x="20" y="300" w="200" h="55" />
+        <node identifier="id-v7-n165" elementRef="id-GAP-02" xsi:type="Element" x="420" y="300" w="200" h="55" />
+        <node identifier="id-v7-n166" elementRef="id-GAP-03" xsi:type="Element" x="820" y="300" w="200" h="55" />
+        <connection identifier="id-v7-r119" relationshipRef="id-r119" xsi:type="Relationship" source="id-v7-n153" target="id-v7-n154" />
+        <connection identifier="id-v7-r120" relationshipRef="id-r120" xsi:type="Relationship" source="id-v7-n154" target="id-v7-n155" />
+        <connection identifier="id-v7-r122" relationshipRef="id-r122" xsi:type="Relationship" source="id-v7-n164" target="id-v7-n153" />
+        <connection identifier="id-v7-r123" relationshipRef="id-r123" xsi:type="Relationship" source="id-v7-n165" target="id-v7-n153" />
+        <connection identifier="id-v7-r124" relationshipRef="id-r124" xsi:type="Relationship" source="id-v7-n165" target="id-v7-n154" />
+        <connection identifier="id-v7-r125" relationshipRef="id-r125" xsi:type="Relationship" source="id-v7-n166" target="id-v7-n154" />
+        <connection identifier="id-v7-r126" relationshipRef="id-r126" xsi:type="Relationship" source="id-v7-n166" target="id-v7-n155" />
+        <connection identifier="id-v7-r194" relationshipRef="id-r194" xsi:type="Relationship" source="id-v7-n156" target="id-v7-n157" />
+        <connection identifier="id-v7-r195" relationshipRef="id-r195" xsi:type="Relationship" source="id-v7-n157" target="id-v7-n158" />
+        <connection identifier="id-v7-r196" relationshipRef="id-r196" xsi:type="Relationship" source="id-v7-n158" target="id-v7-n159" />
+        <connection identifier="id-v7-r197" relationshipRef="id-r197" xsi:type="Relationship" source="id-v7-n158" target="id-v7-n161" />
+        <connection identifier="id-v7-r198" relationshipRef="id-r198" xsi:type="Relationship" source="id-v7-n159" target="id-v7-n160" />
+        <connection identifier="id-v7-r199" relationshipRef="id-r199" xsi:type="Relationship" source="id-v7-n161" target="id-v7-n162" />
+        <connection identifier="id-v7-r200" relationshipRef="id-r200" xsi:type="Relationship" source="id-v7-n156" target="id-v7-n164" />
+        <connection identifier="id-v7-r201" relationshipRef="id-r201" xsi:type="Relationship" source="id-v7-n157" target="id-v7-n164" />
+        <connection identifier="id-v7-r202" relationshipRef="id-r202" xsi:type="Relationship" source="id-v7-n158" target="id-v7-n164" />
+        <connection identifier="id-v7-r203" relationshipRef="id-r203" xsi:type="Relationship" source="id-v7-n159" target="id-v7-n165" />
+        <connection identifier="id-v7-r204" relationshipRef="id-r204" xsi:type="Relationship" source="id-v7-n160" target="id-v7-n165" />
+        <connection identifier="id-v7-r205" relationshipRef="id-r205" xsi:type="Relationship" source="id-v7-n161" target="id-v7-n166" />
+        <connection identifier="id-v7-r206" relationshipRef="id-r206" xsi:type="Relationship" source="id-v7-n162" target="id-v7-n166" />
+        <connection identifier="id-v7-r207" relationshipRef="id-r207" xsi:type="Relationship" source="id-v7-n160" target="id-v7-n166" />
+      </view>
+    </diagrams>
+  </views>
+</model>
