@@ -9,6 +9,7 @@
 | `mock-server/public/index.html` | Giao diện bấm thử thay cho Figma (7 vai trò, 5 nhóm màn hình) gọi đúng API thật của mock |
 | `demo.sh` | Kịch bản gọi API bằng curl: E2E + ngoại lệ lõi + A/B/C |
 | `api-trace.txt` | Kết quả chạy `demo.sh all` (dán vào phụ lục báo cáo làm "API trace") |
+| `scenario-outage.sh`, `scenario-outage-trace.txt` | Thử nghiệm tình huống bất thường: Hệ thống đơn thuốc quốc gia ngừng → outbox gửi bù, không trùng (xem `05-verification/change-scenario.md`) |
 | `screenshots/*.png` | Ảnh chụp màn hình theo kịch bản (dùng cho báo cáo và slide) |
 | `screens.md` | Mô tả từng màn hình, ánh xạ BPMN task → màn hình → API |
 
@@ -45,4 +46,4 @@ Muốn xem tài liệu API dạng Swagger: mở https://editor.swagger.io và d�
 
 - Token cố định thay cho OIDC + MFA; chữ ký số, Hệ thống đơn thuốc quốc gia, cổng BHYT, SMS đều là mock.
 - Audit ghi đồng bộ trong bộ nhớ (thật: outbox → hàng đợi → AC-Audit, checkpoint ký số, WORM — ADR-003).
-- `POST /_demo/tamper` và `/_demo/reset` chỉ tồn tại trong mock để minh họa.
+- `POST /_demo/tamper`, `/_demo/national-rx` và `/_demo/reset` chỉ tồn tại trong mock để minh họa.
