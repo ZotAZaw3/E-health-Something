@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Xuất ảnh PNG cho các view trong ehealth-full-model.xml (để chèn báo cáo/slide).
 Chạy: node-less, cần Python + Playwright (chromium).  python3 render_views.py [VIEW_ID ...]
-Ảnh ra: 02-models/exports/<VIEW_ID>.png. Ảnh chỉ để minh họa; file nguồn chuẩn là Archi."""
+Ảnh ra: 02-models/exports/<VIEW_ID>.png. Ảnh chỉ để minh họa nhanh khi không có Archi. Ảnh trong exports/ hiện được xuất bằng Archi qua export_archi.ps1."""
 import os, sys, html, math
 from lxml import etree as ET
 HERE = os.path.dirname(os.path.abspath(__file__))

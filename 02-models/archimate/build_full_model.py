@@ -400,6 +400,35 @@ for i, (t, s, d, extra) in rels.items():
 V = ET.SubElement(ET.SubElement(root, q('views')), q('diagrams'))
 for v in views: V.append(v)
 
+# ---- Dọn bố cục cho Archi: tách nhóm chồng nhau, giãn khoảng cách để đường nối không đè lên hộp ----
+SX, SY, GROW_W, GROW_H = 1.3, 1.45, 14, 10
+def _box(n): return [int(n.get(k)) for k in 'xywh']
+def _shift(n, dy):
+    for m in n.iter(q('node')): m.set('y', str(int(m.get('y')) + dy))
+def _fix_overlap(parent):
+    """Hộp anh em chồng lên nhau theo chiều dọc → đẩy hộp dưới (và con của nó) xuống; nới hộp cha nếu cần."""
+    kids = sorted(parent.findall(q('node')), key=lambda n: (int(n.get('y')), int(n.get('x'))))
+    for k in kids: _fix_overlap(k)
+    for i, b in enumerate(kids):
+        for a in kids[:i]:
+            ax, ay, aw, ah = _box(a); bx, by, bw, bh = _box(b)
+            if ax < bx + bw and bx < ax + aw and ay < by + bh and by < ay + ah:
+                _shift(b, ay + ah + 15 - by)
+    if parent.tag == q('node') and kids:
+        px, py, pw, ph = _box(parent)
+        parent.set('h', str(max(ph, max(int(k.get('y')) + int(k.get('h')) for k in kids) + 10 - py)))
+def _spread(v):
+    for n in v.iter(q('node')):
+        x, y, w, h = _box(n); leaf = not n.findall(q('node'))
+        n.set('x', str(round(x * SX))); n.set('y', str(round(y * SY)))
+        if leaf and w >= 100: w, h = w + GROW_W, h + GROW_H      # hộp phần tử: rộng/cao thêm cho chữ 3 dòng
+        elif not leaf: w, h = round(w * SX), round(h * SY)        # nhóm/container: co giãn cùng tỉ lệ để chứa con
+        n.set('w', str(w)); n.set('h', str(h))
+    for bp in v.iter(q('bendpoint')):
+        bp.set('x', str(round(int(bp.get('x')) * SX))); bp.set('y', str(round(int(bp.get('y')) * SY)))
+for v in V:
+    _fix_overlap(v); _spread(v)
+
 # kiểm tra: id duy nhất, tham chiếu hợp lệ, quan hệ trong view khớp quan hệ mô hình
 ids = [x.get('identifier') for x in root.iter() if x.get('identifier')]
 dup = {x for x in ids if ids.count(x) > 1}
