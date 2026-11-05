@@ -1,0 +1,212 @@
+
+================ 0. Chuẩn bị: BN P001 đặt lịch, check-in (luồng chính BP-01, BP-02) ================
+
+================ 1. SỰ CỐ: Hệ thống đơn thuốc quốc gia ngừng (giả lập) ================
+
+$ POST /_demo/national-rx  [token: tok-dpo]  body: {"up":false}
+{
+  "nationalRxUp": false,
+  "outboxPending": 0,
+  "flushed": []
+}
+<<HTTP 200>>
+
+================ 2. Bác sĩ vẫn kê + ký đơn được (PR-01: không chặn khám chữa bệnh); đơn vào outbox, trạng thái liên thông QUEUED ================
+
+$ POST /prescriptions/RX-0003/issue  [token: tok-bs-an]
+{
+  "prescriptionId": "RX-0003",
+  "version": 1,
+  "encounterId": "ENC-0002",
+  "patientId": "P001",
+  "practitionerId": "bs-an",
+  "facility": "CS1",
+  "diagnosis": null,
+  "items": [
+    {
+      "itemId": "L1",
+      "drugCode": "CEFU500",
+      "drugName": "Cefuroxim 500mg",
+      "dosage": "1 viên x 2",
+      "quantity": 14,
+      "dispensedQty": 0,
+      "controlled": false
+    }
+  ],
+  "status": "ISSUED",
+  "safetyCheck": {
+    "alerts": [],
+    "overrideReason": null
+  },
+  "issuedAt": "2026-11-04T17:57:07.142Z",
+  "rxCode": "CS115027142-c",
+  "signature": {
+    "alg": "RS256",
+    "keyId": "kms://cs1/bs-an/2026",
+    "value": "WrTzYy/2DO0mK/YlXknWcgy6fHMeEF6X…",
+    "signedBy": "bs-an",
+    "provider": "CA ký số từ xa (mock)"
+  },
+  "nationalRx": {
+    "system": "EXT-NationalRxSystem (mock)",
+    "status": "QUEUED",
+    "queuedAt": "2026-11-04T17:57:07.142Z",
+    "attempts": 1,
+    "lastError": "503 từ hệ thống quốc gia"
+  },
+  "notification": {
+    "channel": "SMS",
+    "message": "Đơn thuốc CS115027142-c đã phát hành",
+    "status": "QUEUED"
+  }
+}
+<<HTTP 200>>
+
+================ 3. Nhà thuốc vẫn tra đơn qua cổng của phòng khám (không phụ thuộc hệ thống quốc gia) và cấp thuốc ================
+
+$ GET /pharmacy/prescriptions/CS115027142-c?verifier=5678  [token: tok-ds-nt01]
+{
+  "rxCode": "CS115027142-c",
+  "prescriptionId": "RX-0003",
+  "version": 1,
+  "status": "ISSUED",
+  "patient": {
+    "fullName": "Nguyễn Văn Hùng",
+    "birthYear": 1985
+  },
+  "prescriber": "BS Trần An",
+  "issuedAt": "2026-11-04T17:57:07.142Z",
+  "signatureValid": true,
+  "items": [
+    {
+      "itemId": "L1",
+      "drugCode": "CEFU500",
+      "drugName": "Cefuroxim 500mg",
+      "dosage": "1 viên x 2",
+      "quantity": 14,
+      "dispensedQty": 0,
+      "controlled": false
+    }
+  ],
+  "dispensable": true
+}
+<<HTTP 200>>
+
+$ POST /pharmacy/dispenses  [token: tok-ds-nt01]  body: {"rxCode":"CS115027142-c","items":[{"itemId":"L1","quantity":14}]}
+{
+  "dispenseId": "DSP-0005",
+  "idempotencyKey": "NT01-OUTAGE-0001",
+  "rxCode": "CS115027142-c",
+  "prescriptionId": "RX-0003",
+  "pharmacyId": "NT-01",
+  "pharmacistId": "ds-nt01",
+  "items": [
+    {
+      "itemId": "L1",
+      "quantity": 14
+    }
+  ],
+  "dispensedAt": "2026-11-04T17:57:07.241Z",
+  "prescriptionStatus": "DISPENSED"
+}
+<<HTTP 201>>
+
+================ 4. Giám sát: outbox đang tồn 1 đơn chưa liên thông ================
+
+$ GET /_demo/national-rx  [token: tok-dpo]
+{
+  "nationalRxUp": false,
+  "outboxPending": 1,
+  "outbox": [
+    {
+      "outboxId": "OBX-0004",
+      "prescriptionId": "RX-0003",
+      "event": "PrescriptionIssued",
+      "createdAt": "2026-11-04T17:57:07.142Z"
+    }
+  ]
+}
+<<HTTP 200>>
+
+================ 5. Hệ thống quốc gia hoạt động lại → gửi bù từ outbox, ghi audit SUBMIT_NATIONAL_RX ================
+
+$ POST /_demo/national-rx  [token: tok-dpo]  body: {"up":true}
+{
+  "nationalRxUp": true,
+  "outboxPending": 0,
+  "flushed": [
+    {
+      "prescriptionId": "RX-0003",
+      "rxCode": "CS115027142-c",
+      "queuedAt": "2026-11-04T17:57:07.142Z",
+      "submittedAt": "2026-11-04T17:57:07.322Z"
+    }
+  ]
+}
+<<HTTP 200>>
+
+================ 6. Gọi lại lần nữa (giả lập job chạy lặp) → không gửi trùng (idempotent) ================
+
+$ POST /_demo/national-rx  [token: tok-dpo]  body: {"up":true}
+{
+  "nationalRxUp": true,
+  "outboxPending": 0,
+  "flushed": []
+}
+<<HTTP 200>>
+
+================ 7. Kiểm tra trạng thái đơn và chuỗi audit vẫn hợp lệ ================
+
+$ GET /prescriptions/RX-0003  [token: tok-bs-an]
+{
+  "prescriptionId": "RX-0003",
+  "version": 1,
+  "encounterId": "ENC-0002",
+  "patientId": "P001",
+  "practitionerId": "bs-an",
+  "facility": "CS1",
+  "diagnosis": null,
+  "items": [
+    {
+      "itemId": "L1",
+      "drugCode": "CEFU500",
+      "drugName": "Cefuroxim 500mg",
+      "dosage": "1 viên x 2",
+      "quantity": 14,
+      "dispensedQty": 14,
+      "controlled": false
+    }
+  ],
+  "status": "DISPENSED",
+  "safetyCheck": {
+    "alerts": [],
+    "overrideReason": null
+  },
+  "issuedAt": "2026-11-04T17:57:07.142Z",
+  "rxCode": "CS115027142-c",
+  "signature": {
+    "alg": "RS256",
+    "keyId": "kms://cs1/bs-an/2026",
+    "value": "WrTzYy/2DO0mK/YlXknWcgy6fHMeEF6X…",
+    "signedBy": "bs-an",
+    "provider": "CA ký số từ xa (mock)"
+  },
+  "nationalRx": {
+    "system": "EXT-NationalRxSystem (mock)",
+    "status": "SUBMITTED",
+    "queuedAt": "2026-11-04T17:57:07.142Z",
+    "attempts": 2,
+    "lastError": null,
+    "submittedAt": "2026-11-04T17:57:07.322Z"
+  },
+  "assignedPharmacyId": "NT-01"
+}
+<<HTTP 200>>
+
+$ GET /audit-events/verify  [token: tok-dpo]
+{
+  "valid": true,
+  "checked": 8,
+  "lastHash": "1c1772b8f63c04b0fe46cb702171a10e33d92896468fbf250b4b6a4bda5d46d6"
+}
+<<HTTP 200>>

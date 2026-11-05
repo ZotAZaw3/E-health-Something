@@ -11,12 +11,13 @@ Bài tập lớn môn Kiến trúc Hệ thống thông tin: kiến trúc doanh n
 | `02-models/` | Mô hình Archi (Open Exchange XML), BPMN (`bpmn/`), ảnh xuất view (`exports/`), danh mục ứng dụng (`app-catalog.md`) và công nghệ (`tech-catalog.md`, `technology.md`) | TV1, TV2, TV3 |
 | `03-adr/` | ADR-001 kiểu tích hợp, ADR-002 RBAC+ABAC, ADR-003 kho audit, ADR-004 mô hình dữ liệu đơn thuốc | TV2, TV3 |
 | `04-prototype/` | OpenAPI, mock server Node (không cần cài thư viện), giao diện thử, kịch bản curl, ảnh chụp màn hình | TV3 |
-| `05-verification/` | Ma trận truy vết (RTM), gap & roadmap, sổ rủi ro | TV2, TV3 |
+| `05-verification/` | Ma trận truy vết (RTM), gap & roadmap, sổ rủi ro, kịch bản thay đổi/bất thường (`change-scenario.md`), câu hỏi bảo vệ (`defense-qa.md`) | TV2, TV3 |
 | `06-docs/` | Bản Markdown của tài liệu TV1 và TV2 (xuất từ Claude Docs) | TV1, TV2 |
+| `07-report/` | Báo cáo tổng hợp (`BaoCao-BTL-EHealth.md` → `.docx` bằng `build_report.sh`, cần pandoc) | Cả nhóm |
 
 ## Mở mô hình
 
-- **Archi:** File → Import → Open Exchange XML Model, chọn `02-models/ehealth-tv1-motivation-business.xml` và `02-models/archimate/ehealth-tv3-exchange.xml` (sinh lại bằng `python3 02-models/archimate/gen_tv3_exchange.py`).
+- **Archi:** File → Import → Open Exchange XML Model, chọn **`02-models/archimate/ehealth-full-model.xml`** (mô hình gộp đủ các tầng, 25 view; sinh lại bằng `python3 02-models/archimate/build_full_model.py`, xuất ảnh bằng `render_views.py`). File `ehealth-full-model.archimate` mở thẳng được trong Archi; ảnh view xuất bằng Archi qua `export_archi.ps1`. Hai file nguồn riêng của TV1 và TV3 vẫn giữ để tham khảo, không import chung với file gộp vì sẽ trùng phần tử.
 - **BPMN:** mở các file `02-models/bpmn/*.bpmn` bằng Camunda Modeler hoặc bpmn.io.
 
 ## Chạy prototype
