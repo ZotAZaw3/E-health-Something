@@ -17,7 +17,7 @@ Bài tập lớn môn Kiến trúc Hệ thống thông tin: kiến trúc doanh n
 
 ## Mở mô hình
 
-- **Archi:** File → Import → Open Exchange XML Model, chọn **`02-models/archimate/ehealth-full-model.xml`** (mô hình gộp đủ các tầng, 25 view; sinh lại bằng `python3 02-models/archimate/build_full_model.py`, xuất ảnh bằng `render_views.py`). Hai file nguồn riêng của TV1 và TV3 vẫn giữ để tham khảo, không import chung với file gộp vì sẽ trùng phần tử.
+- **Archi:** File → Import → Open Exchange XML Model, chọn **`02-models/archimate/ehealth-full-model.xml`** (mô hình gộp đủ các tầng, 25 view; sinh lại bằng `python3 02-models/archimate/build_full_model.py`, xuất ảnh bằng `render_views.py`). File `ehealth-full-model.archimate` mở thẳng được trong Archi; ảnh view xuất bằng Archi qua `export_archi.ps1`. Hai file nguồn riêng của TV1 và TV3 vẫn giữ để tham khảo, không import chung với file gộp vì sẽ trùng phần tử.
 - **BPMN:** mở các file `02-models/bpmn/*.bpmn` bằng Camunda Modeler hoặc bpmn.io.
 
 ## Chạy prototype
