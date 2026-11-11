@@ -14,6 +14,7 @@ Bài tập lớn môn Kiến trúc Hệ thống thông tin: kiến trúc doanh n
 | `05-verification/` | Ma trận truy vết (RTM), gap & roadmap, sổ rủi ro, kịch bản thay đổi/bất thường (`change-scenario.md`), câu hỏi bảo vệ (`defense-qa.md`) | TV2, TV3 |
 | `06-docs/` | Bản Markdown của tài liệu TV1 và TV2 (xuất từ Claude Docs) | TV1, TV2 |
 | `07-report/` | Báo cáo tổng hợp (`BaoCao-BTL-EHealth.md` → `.docx` bằng `build_report.sh`, cần pandoc) | Cả nhóm |
+| `results/` | **Bản nộp**: gom mọi sản phẩm theo đề vào một chỗ, kèm bảng đối chiếu ([`results/README.md`](results/README.md)) | Cả nhóm |
 
 ## Mở mô hình
 
