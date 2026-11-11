@@ -36,6 +36,8 @@ const slots = [];
 ['08:00','08:15','08:30','08:45','09:00'].forEach((t, i) =>
   slots.push({ slotId: `S-20261105-AN-${i+1}`, practitionerId: 'bs-an', practitionerName: 'BS Trần An', specialty: 'NOI', facility: 'CS1', start: `2026-11-05T${t}:00+07:00`, available: true }));
 const appointments = {}, encounters = {}, prescriptions = {}, dispenses = {}, breakGlass = {}, idem = {};
+// Tình huống bất thường (05-verification/change-scenario.md): Hệ thống đơn thuốc quốc gia ngừng → đơn vào outbox, gửi bù khi có lại (ADR-001)
+const nationalRx = { up: true, outbox: [] };
 let seq = 1; const id = (p) => `${p}-${String(seq++).padStart(4, '0')}`;
 
 // ---------- Audit append-only + chuỗi băm (ADR-003) ----------
@@ -193,7 +195,9 @@ const server = http.createServer(async (req, res) => {
     if (rx.status !== 'DRAFT') return problem(res, 409, 'Đơn đã phát hành', 'Không ký lại đơn đã phát hành; dùng điều chỉnh đơn (biến thể C)', { policyId: 'POL-05' });
     rx.status = 'ISSUED'; rx.issuedAt = new Date().toISOString(); rx.rxCode = `${rx.facility}${Date.now().toString().slice(-8)}-c`;
     rx.signature = { alg: 'RS256', keyId: 'kms://cs1/bs-an/2026', value: crypto.createHash('sha256').update(JSON.stringify(rx.items) + rx.rxCode).digest('base64').slice(0, 32) + '…', signedBy: u.userId, provider: 'CA ký số từ xa (mock)' };
-    rx.nationalRx = { system: 'EXT-NationalRxSystem (mock)', status: 'SUBMITTED', submittedAt: rx.issuedAt };
+    if (nationalRx.up) rx.nationalRx = { system: 'EXT-NationalRxSystem (mock)', status: 'SUBMITTED', submittedAt: rx.issuedAt, attempts: 1 };
+    else { rx.nationalRx = { system: 'EXT-NationalRxSystem (mock)', status: 'QUEUED', queuedAt: rx.issuedAt, attempts: 1, lastError: '503 từ hệ thống quốc gia' };
+      nationalRx.outbox.push({ outboxId: id('OBX'), prescriptionId: rx.prescriptionId, event: 'PrescriptionIssued', createdAt: rx.issuedAt }); }
     audit(u, 'SIGN', { type: 'Prescription', id: rx.prescriptionId, patientRef: rx.patientId }, { result: 'PERMIT', policyId: 'POL-01' }, { correlationId: corr });
     return send(res, 200, { ...rxView(rx), status: rxStatus(rx), notification: { channel: 'SMS', message: `Đơn thuốc ${rx.rxCode} đã phát hành`, status: 'QUEUED' } }); }
   if (m === 'GET' && (mm = p.match(/^\/prescriptions\/([^/]+)$/))) { if (!need(u, res, 'BR-BacSi', 'BR-BenhNhan')) return;
@@ -314,7 +318,17 @@ const server = http.createServer(async (req, res) => {
   if (m === 'POST' && p === '/_demo/tamper') { // CHỈ CÓ TRONG MOCK: giả lập kẻ xấu sửa 1 bản ghi để minh họa verify
     if (!need(u, res, 'BR-QuanTriBaoMat')) return; const e = auditLog[body.index ?? 0]; if (!e) return problem(res, 404, 'Không có bản ghi', '');
     e.decision = { ...e.decision, result: 'PERMIT' }; e.actor = { ...e.actor, userId: 'someone-else' }; return send(res, 200, { tampered: e.eventId }); }
-  if (m === 'POST' && p === '/_demo/reset') { Object.keys(appointments).forEach(k => delete appointments[k]); Object.keys(encounters).forEach(k => delete encounters[k]);
+  if (m === 'POST' && p === '/_demo/national-rx') { // CHỈ CÓ TRONG MOCK: bật/tắt Hệ thống đơn thuốc quốc gia
+    if (!need(u, res, 'BR-QuanTriBaoMat')) return; nationalRx.up = !!body.up; const flushed = [];
+    if (nationalRx.up) { while (nationalRx.outbox.length) { const o = nationalRx.outbox.shift(); const rx = prescriptions[o.prescriptionId]; if (!rx) continue;
+        if (rx.nationalRx.status === 'SUBMITTED') continue; // idempotent: không gửi lại đơn đã nộp
+        rx.nationalRx = { ...rx.nationalRx, status: 'SUBMITTED', submittedAt: new Date().toISOString(), attempts: rx.nationalRx.attempts + 1, lastError: null };
+        audit(null, 'SUBMIT_NATIONAL_RX', { type: 'Prescription', id: rx.prescriptionId, patientRef: rx.patientId }, { result: 'PERMIT', policyId: 'SYSTEM' }, { reason: 'OUTBOX_RETRY' });
+        flushed.push({ prescriptionId: rx.prescriptionId, rxCode: rx.rxCode, queuedAt: rx.nationalRx.queuedAt, submittedAt: rx.nationalRx.submittedAt }); } }
+    return send(res, 200, { nationalRxUp: nationalRx.up, outboxPending: nationalRx.outbox.length, flushed }); }
+  if (m === 'GET' && p === '/_demo/national-rx') { if (!need(u, res, 'BR-QuanTriBaoMat')) return;
+    return send(res, 200, { nationalRxUp: nationalRx.up, outboxPending: nationalRx.outbox.length, outbox: nationalRx.outbox }); }
+  if (m === 'POST' && p === '/_demo/reset') { nationalRx.up = true; nationalRx.outbox.length = 0; Object.keys(appointments).forEach(k => delete appointments[k]); Object.keys(encounters).forEach(k => delete encounters[k]);
     Object.keys(prescriptions).forEach(k => delete prescriptions[k]); Object.keys(dispenses).forEach(k => delete dispenses[k]); Object.keys(breakGlass).forEach(k => delete breakGlass[k]);
     Object.keys(idem).forEach(k => delete idem[k]); auditLog.length = 0; lastHash = '0'.repeat(64); slots.forEach(s => s.available = true); seq = 1; return send(res, 200, { reset: true }); }
 

@@ -16,6 +16,7 @@
 | ASSUMP-07 | Hệ thống ngoài (Cổng giám định BHYT, Hệ thống đơn thuốc quốc gia, SMS, phần mềm nhà thuốc, CA ký số) được **mock**. |
 | ASSUMP-08 | Ngân sách & thời gian chuyển đổi: 12 tháng, 3 giai đoạn (Plateau do TV3 đặt mã). |
 | ASSUMP-09 | Số liệu hiện trạng (thời gian chờ, tỷ lệ sai sót) là **giả định có chủ đích** để đặt mục tiêu đo được, ghi rõ trong báo cáo. |
+| ASSUMP-10 | Mỗi đơn thuốc tại một thời điểm chỉ được giao cho **một** nhà thuốc (nhà thuốc nội bộ hoặc 1 đối tác do BN chọn); muốn đổi nhà thuốc phải "trả đơn" về trạng thái chưa giao. Đề xuất bởi TV2 (ADR-004), nhóm thống nhất 2026-11-04. |
 
 ## 2. Stakeholder (SH)
 | Mã | Stakeholder | Mối quan tâm chính | Power / Interest |
@@ -225,3 +226,25 @@ Theo biến thể (chỉ giữ nhánh được giao; nhánh khác dùng cho ph�
 | BR-ThuNgan | Thu ngân (Role, Baseline + Retain) |
 
 File nguồn: `02-models/ehealth-tv1-motivation-business.xml` (Archi: File > Import > Open Exchange XML Model), `02-models/bpmn/*.bpmn` (Camunda Modeler), ảnh ở `02-models/exports/`.
+
+## 12. Bổ sung v0.3 (2026-11-04): tầng Chiến lược (Ch.7) — dùng trong `02-models/archimate/ehealth-full-model.xml`
+| Mã | Loại | Tên | Ghi chú |
+|---|---|---|---|
+| CAP-00 | Capability | Khám chữa bệnh ngoại trú (năng lực tổng) | gồm CAP-01..09 |
+| CAP-01 | Capability | Quản lý lịch hẹn & điều phối công suất | MỚI · hiện thực bởi BP-01 |
+| CAP-02 | Capability | Tiếp nhận & định danh người bệnh | NÂNG CẤP · BP-02 |
+| CAP-03 | Capability | Khám & quản lý hồ sơ lâm sàng | NÂNG CẤP · BP-03 |
+| CAP-04 | Capability | Kê đơn an toàn | MỚI · BP-04 |
+| CAP-05 | Capability | Liên thông đơn thuốc & cấp thuốc | MỚI · BP-05 |
+| CAP-06 | Capability | Kiểm soát truy cập & lưu vết | MỚI · BF-01 |
+| CAP-07 | Capability | Quản trị dữ liệu người bệnh liên cơ sở | MỚI · BP-06A (trọng tâm biến thể A) |
+| CAP-08 | Capability | Đo lường & cải tiến vận hành | NÂNG CẤP · BF-02 |
+| CAP-09 | Capability | Thanh toán & giám định BHYT | GIỮ · BP0-05 |
+| RS-01..04 | Resource | Đội ngũ y tế · Dữ liệu BN & đơn · Nền tảng số dùng chung · Mạng lưới nhà thuốc | |
+| COA-01 | Course of Action | Tuân thủ trước, tối ưu sau (bảo mật + kê đơn điện tử ở PLT-1) | realizes G-02, G-03 |
+| COA-02 | Course of Action | Số hóa đầu vào để giảm chờ | G-01 |
+| COA-03 | Course of Action | Liên thông qua cổng chuẩn, không buộc đối tác đổi phần mềm | G-04 |
+| COA-04 | Course of Action | Một hồ sơ BN dùng chung cho 2 cơ sở | G-05 |
+| VS-01 (.1–.5) | Value Stream | Khám ngoại trú đến khi nhận thuốc: Hẹn khám → Tiếp đón → Khám & chẩn đoán → Kê đơn an toàn → Nhận thuốc | |
+| VAL-01 | Value | Được khám đúng hẹn, nhận thuốc đúng và an toàn | cho SH-01 |
+| GRP-CoreApps | Grouping | Ứng dụng nghiệp vụ lõi (Target) | dùng ở view V-APP-1 |

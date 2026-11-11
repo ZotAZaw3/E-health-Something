@@ -75,9 +75,9 @@
 | Mã | Tên |
 |---|---|
 | PLT-0 | Hiện trạng (Baseline) |
-| PLT-1 | Nền tảng an toàn + Đặt lịch/Tiếp đón số |
-| PLT-2 | Bệnh án & Kê đơn điện tử tích hợp |
-| PLT-3 | Liên thông nhà thuốc + năng lực biến thể (Target) |
+| PLT-1 | Nền tảng an toàn & Kê đơn điện tử liên thông (cuối T4) |
+| PLT-2 | Đặt lịch, tiếp đón số & hồ sơ thống nhất (cuối T8) |
+| PLT-3 | Liên thông nhà thuốc & biến thể (Target, cuối T12) |
 | WP-01 … WP-08 | xem `05-verification/gap-roadmap.md` |
 | GAP-01 … | xem `05-verification/gap-roadmap.md` |
 | RSK-01 … RSK-08 | xem `05-verification/risk-register.md` |
